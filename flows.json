@@ -91,7 +91,7 @@
         "z": "a5c9772ae6334205",
         "name": "",
         "method": "GET",
-        "ret": "txt",
+        "ret": "obj",
         "paytoqs": "ignore",
         "url": "http://localhost:4000/users",
         "tls": "",
