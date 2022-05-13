@@ -255,13 +255,34 @@
         "id": "13a7c8ca5653048b",
         "type": "change",
         "z": "fc1877e6281f18c0",
-        "name": "",
+        "name": "Change Suite Header",
         "rules": [
             {
                 "t": "set",
                 "p": "payload.testCaseName",
                 "pt": "msg",
-                "to": "baab",
+                "to": "My First Test Suite",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.testCaseBase",
+                "pt": "msg",
+                "to": "My First Test Case Base",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.threads",
+                "pt": "msg",
+                "to": "3",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "payload.loop",
+                "pt": "msg",
+                "to": "10",
                 "tot": "str"
             }
         ],
@@ -270,7 +291,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 550,
+        "x": 460,
         "y": 580,
         "wires": [
             [
