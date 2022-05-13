@@ -243,9 +243,9 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 280,
+        "payload": "testas",
+        "payloadType": "str",
+        "x": 270,
         "y": 580,
         "wires": [
             [
@@ -260,11 +260,13 @@
         "name": "",
         "rules": [
             {
-                "t": "move",
+                "t": "change",
                 "p": "payload",
                 "pt": "msg",
+                "from": "testas",
+                "fromt": "str",
                 "to": "baba",
-                "tot": "msg"
+                "tot": "str"
             }
         ],
         "action": "",
@@ -272,7 +274,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 510,
+        "x": 520,
         "y": 580,
         "wires": [
             [
