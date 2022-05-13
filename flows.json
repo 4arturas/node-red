@@ -158,7 +158,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "\"body\": {\n                \"paymentId\": \"1321321231\",\n                \"amount\": 7.85,\n                \"currency\": \"EUR\",\n                \"unstructuredRemittanceInfo\": \"payment for Licensed Fresh Sausages\",\n                \"debtorAccount\": \"CY06904000010000000000201000\",\n                \"creditorAccount\": \"GB81SEOU00994400000088\",\n                \"debtor\": {\n                    \"address\": {\n                        \"country\": \"IL\",\n                        \"addressLine1\": \"86460 Dibbert Prairie Suite 085\",\n                        \"addressLine2\": \"East Lisandrofort, LK-50064-7200\"\n                    },\n                    \"name\": \"Howell Abshire\",\n                    \"privatePerson\": {\n                        \"dateAndPlaceOfBirth\": {\n                            \"dateOfBirth\": \"1999-12-08\",\n                            \"country\": \"LR\",\n                            \"city\": \"South Vaughn\",\n                            \"province\": \"Bedfordshire\"\n                        }\n                    }\n                },\n                \"creditor\": {\n                    \"name\": \"Chadd Turcotte\",\n                    \"privatePerson\": {\n                        \"other\": {\n                            \"id\": \"719-16-5638\",\n                            \"type\": \"NIDN\"\n                        }\n                    }\n                },\n                \"ultimateDebtor\": {\n                    \"name\": \"White, Hahn and Howe, Inc\",\n                    \"legalEntity\": {\n                        \"other\": {\n                            \"id\": \"59025467\",\n                            \"type\": \"COID\"\n                        }\n                    }\n                },\n                \"ultimateCreditor\": {\n                    \"name\": \"Wilderman and Sons, Inc\",\n                    \"legalEntity\": {\n                        \"other\": {\n                            \"id\": \"51073930\",\n                            \"type\": \"PRTRY\",\n                            \"proprietary\": \"CUSTOM ID TYPE\"\n                        }\n                    }\n                },\n                \"endToEnd\": \"KDX3287\"\n            }",
+        "template": "\"body\": {\n                \"paymentId\": \"1321321231\",\n                \"amount\": 7.85,\n                \"currency\": \"EUR\",\n                \"unstructuredRemittanceInfo\": \"payment for Licensed Fresh Sausages\",\n                \"debtorAccount\": \"${DEBTOR_ACCOUNT}\",\n                \"creditorAccount\": \"GB81SEOU00994400000088\",\n                \"debtor\": {\n                    \"address\": {\n                        \"country\": \"IL\",\n                        \"addressLine1\": \"86460 Dibbert Prairie Suite 085\",\n                        \"addressLine2\": \"East Lisandrofort, LK-50064-7200\"\n                    },\n                    \"name\": \"Howell Abshire\",\n                    \"privatePerson\": {\n                        \"dateAndPlaceOfBirth\": {\n                            \"dateOfBirth\": \"1999-12-08\",\n                            \"country\": \"LR\",\n                            \"city\": \"South Vaughn\",\n                            \"province\": \"Bedfordshire\"\n                        }\n                    }\n                },\n                \"creditor\": {\n                    \"name\": \"Chadd Turcotte\",\n                    \"privatePerson\": {\n                        \"other\": {\n                            \"id\": \"719-16-5638\",\n                            \"type\": \"NIDN\"\n                        }\n                    }\n                },\n                \"ultimateDebtor\": {\n                    \"name\": \"White, Hahn and Howe, Inc\",\n                    \"legalEntity\": {\n                        \"other\": {\n                            \"id\": \"59025467\",\n                            \"type\": \"COID\"\n                        }\n                    }\n                },\n                \"ultimateCreditor\": {\n                    \"name\": \"Wilderman and Sons, Inc\",\n                    \"legalEntity\": {\n                        \"other\": {\n                            \"id\": \"51073930\",\n                            \"type\": \"PRTRY\",\n                            \"proprietary\": \"CUSTOM ID TYPE\"\n                        }\n                    }\n                },\n                \"endToEnd\": \"KDX3287\"\n            }",
         "output": "json",
         "x": 580,
         "y": 240,
@@ -190,10 +190,12 @@
         "name": "Replace 1",
         "rules": [
             {
-                "t": "set",
-                "p": "payload.body.debtorAccount",
+                "t": "change",
+                "p": "payload",
                 "pt": "msg",
-                "to": "baba",
+                "from": "${DEBTOR_ACCOUNT}",
+                "fromt": "str",
+                "to": "CY06904000010000000000201000",
                 "tot": "str"
             }
         ],
@@ -202,8 +204,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 740,
-        "y": 260,
+        "x": 860,
+        "y": 280,
         "wires": [
             []
         ]
@@ -228,14 +230,10 @@
         "id": "be2b890187a6373c",
         "type": "inject",
         "z": "fc1877e6281f18c0",
-        "name": "",
+        "name": "Suite",
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
             }
         ],
         "repeat": "",
@@ -243,8 +241,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "testas",
-        "payloadType": "str",
+        "payload": "{\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"${TEST_OBJECTS}\"}",
+        "payloadType": "json",
         "x": 270,
         "y": 580,
         "wires": [
@@ -263,9 +261,9 @@
                 "t": "change",
                 "p": "payload",
                 "pt": "msg",
-                "from": "testas",
-                "fromt": "str",
-                "to": "baba1",
+                "from": "${TEST_CASE_NAME}",
+                "fromt": "re",
+                "to": "First Test",
                 "tot": "str"
             }
         ],
