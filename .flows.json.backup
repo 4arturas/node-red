@@ -1,11 +1,217 @@
 [
     {
+        "id": "fc1877e6281f18c0",
+        "type": "tab",
+        "label": "Test Project",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "a5c9772ae6334205",
         "type": "tab",
         "label": "Flow 1",
         "disabled": false,
         "info": "",
         "env": []
+    },
+    {
+        "id": "17d4ca0695dcb845",
+        "type": "http request",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://server.com",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "senderr": false,
+        "x": 1230,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "be2b890187a6373c",
+        "type": "inject",
+        "z": "fc1877e6281f18c0",
+        "name": "Collection",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"${TEST_OBJECTS}\"}",
+        "payloadType": "json",
+        "x": 100,
+        "y": 180,
+        "wires": [
+            [
+                "13a7c8ca5653048b"
+            ]
+        ]
+    },
+    {
+        "id": "13a7c8ca5653048b",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Suite",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.testCaseName",
+                "pt": "msg",
+                "to": "My First Test Suite",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.testCaseBase",
+                "pt": "msg",
+                "to": "My First Test Case Base",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.threads",
+                "pt": "msg",
+                "to": "3",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "payload.loop",
+                "pt": "msg",
+                "to": "10",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 180,
+        "wires": [
+            [
+                "174b227fae4519b5"
+            ]
+        ]
+    },
+    {
+        "id": "e7350c70b6cd2099",
+        "type": "debug",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "174b227fae4519b5",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Flow",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.flow",
+                "pt": "msg",
+                "to": "[{\"sendPayment\":true,\"checkPayment\":true}]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "7b6672b4216ba65a"
+            ]
+        ]
+    },
+    {
+        "id": "7b6672b4216ba65a",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Body",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.body",
+                "pt": "msg",
+                "to": "{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "45cb1caebcafb9dd"
+            ]
+        ]
+    },
+    {
+        "id": "45cb1caebcafb9dd",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Test1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.body.debtorAccount",
+                "pt": "msg",
+                "to": "111",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.body.creditorAccount",
+                "pt": "msg",
+                "to": "222",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
+                "e7350c70b6cd2099"
+            ]
+        ]
     },
     {
         "id": "a177f6a6daff1b0d",
@@ -48,8 +254,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 790,
-        "y": 220,
+        "x": 870,
+        "y": 180,
         "wires": []
     },
     {
