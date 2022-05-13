@@ -175,6 +175,33 @@
         "y": 180,
         "wires": [
             [
+                "45cb1caebcafb9dd"
+            ]
+        ]
+    },
+    {
+        "id": "45cb1caebcafb9dd",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Test1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.body.debtorAccount",
+                "pt": "msg",
+                "to": "111",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
                 "e7350c70b6cd2099"
             ]
         ]
