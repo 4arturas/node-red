@@ -191,6 +191,13 @@
                 "pt": "msg",
                 "to": "111",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.body.creditorAccount",
+                "pt": "msg",
+                "to": "222",
+                "tot": "str"
             }
         ],
         "action": "",
