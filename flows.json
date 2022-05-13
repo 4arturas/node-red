@@ -16,6 +16,14 @@
         "env": []
     },
     {
+        "id": "1796b95587b2be5b",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
         "id": "be2b890187a6373c",
         "type": "inject",
         "z": "fc1877e6281f18c0",
@@ -30,13 +38,15 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\"}",
+        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"\"}",
         "payloadType": "json",
         "x": 100,
         "y": 180,
         "wires": [
             [
-                "13a7c8ca5653048b"
+                "13a7c8ca5653048b",
+                "4bdb1bb131eb2e2a",
+                "58f78ec9a722d858"
             ]
         ]
     },
@@ -80,8 +90,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 230,
-        "y": 180,
+        "x": 350,
+        "y": 100,
         "wires": [
             [
                 "174b227fae4519b5"
@@ -93,7 +103,7 @@
         "type": "debug",
         "z": "fc1877e6281f18c0",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -101,8 +111,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1050,
-        "y": 100,
+        "x": 1190,
+        "y": 480,
         "wires": []
     },
     {
@@ -124,8 +134,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 350,
-        "y": 180,
+        "x": 490,
+        "y": 80,
         "wires": [
             [
                 "7b6672b4216ba65a"
@@ -155,7 +165,8 @@
         "y": 180,
         "wires": [
             [
-                "56354351b823c126"
+                "56354351b823c126",
+                "2159320ad33645e6"
             ]
         ]
     },
@@ -189,7 +200,7 @@
         "y": 100,
         "wires": [
             [
-                "e7350c70b6cd2099"
+                "bb655b1d61e64e7e"
             ]
         ]
     },
@@ -240,8 +251,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 580,
-        "y": 520,
+        "x": 480,
+        "y": 420,
         "wires": [
             []
         ]
@@ -274,6 +285,205 @@
         "reg": false,
         "x": 770,
         "y": 200,
+        "wires": [
+            [
+                "bb655b1d61e64e7e"
+            ]
+        ]
+    },
+    {
+        "id": "2159320ad33645e6",
+        "type": "debug",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "bb655b1d61e64e7e",
+        "type": "join",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": "false",
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "x": 950,
+        "y": 160,
+        "wires": [
+            [
+                "e7350c70b6cd2099",
+                "c4c7cb7502bfc5de"
+            ]
+        ]
+    },
+    {
+        "id": "c4c7cb7502bfc5de",
+        "type": "http request",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "authType": "",
+        "senderr": false,
+        "x": 1130,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bdb1bb131eb2e2a",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Suite 2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.testCaseName",
+                "pt": "msg",
+                "to": "My First Test Suite 2",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.testCaseBase",
+                "pt": "msg",
+                "to": "My First Test Case Base 2",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.threads",
+                "pt": "msg",
+                "to": "3",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "payload.loop",
+                "pt": "msg",
+                "to": "10",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "acc1d170c630c50a",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Suite 3",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.testCaseName",
+                "pt": "msg",
+                "to": "My First Test Suite 3",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.testCaseBase",
+                "pt": "msg",
+                "to": "My First Test Case Base 3",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.threads",
+                "pt": "msg",
+                "to": "3",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "payload.loop",
+                "pt": "msg",
+                "to": "10",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "58f78ec9a722d858",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Suite 2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.testCaseName",
+                "pt": "msg",
+                "to": "My First Test Suite 2",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.testCaseBase",
+                "pt": "msg",
+                "to": "My First Test Case Base 2",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.threads",
+                "pt": "msg",
+                "to": "3",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "payload.loop",
+                "pt": "msg",
+                "to": "10",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 380,
         "wires": [
             []
         ]
