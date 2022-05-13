@@ -100,7 +100,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 250,
+        "x": 230,
         "y": 180,
         "wires": [
             [
@@ -121,7 +121,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 890,
+        "x": 850,
         "y": 180,
         "wires": []
     },
@@ -144,7 +144,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
+        "x": 350,
         "y": 180,
         "wires": [
             [
@@ -171,11 +171,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 470,
         "y": 180,
         "wires": [
             [
-                "45cb1caebcafb9dd"
+                "56354351b823c126"
             ]
         ]
     },
@@ -205,11 +205,38 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 80,
+        "x": 710,
+        "y": 180,
         "wires": [
             [
                 "e7350c70b6cd2099"
+            ]
+        ]
+    },
+    {
+        "id": "56354351b823c126",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Server",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.testServer",
+                "pt": "msg",
+                "to": "{\"http\":\"http://server.com\",\"header\":[{\"autorization\":\"Fixed token\"}],\"method\":\"post\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 180,
+        "wires": [
+            [
+                "45cb1caebcafb9dd"
             ]
         ]
     },
