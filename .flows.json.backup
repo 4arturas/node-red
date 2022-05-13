@@ -16,26 +16,6 @@
         "env": []
     },
     {
-        "id": "17d4ca0695dcb845",
-        "type": "http request",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://server.com",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "bearer",
-        "senderr": false,
-        "x": 1230,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "be2b890187a6373c",
         "type": "inject",
         "z": "fc1877e6281f18c0",
@@ -50,18 +30,35 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"${TEST_OBJECTS}\"}",
+        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"\"}",
         "payloadType": "json",
         "x": 100,
         "y": 180,
         "wires": [
             [
-                "13a7c8ca5653048b"
+                "dab6903643459371"
             ]
         ]
     },
     {
-        "id": "13a7c8ca5653048b",
+        "id": "e7350c70b6cd2099",
+        "type": "debug",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "dab6903643459371",
         "type": "change",
         "z": "fc1877e6281f18c0",
         "name": "Suite",
@@ -104,29 +101,12 @@
         "y": 180,
         "wires": [
             [
-                "174b227fae4519b5"
+                "815e943525b8bea4"
             ]
         ]
     },
     {
-        "id": "e7350c70b6cd2099",
-        "type": "debug",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 890,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "174b227fae4519b5",
+        "id": "815e943525b8bea4",
         "type": "change",
         "z": "fc1877e6281f18c0",
         "name": "Flow",
@@ -148,12 +128,12 @@
         "y": 180,
         "wires": [
             [
-                "7b6672b4216ba65a"
+                "112ade4ec45d1126"
             ]
         ]
     },
     {
-        "id": "7b6672b4216ba65a",
+        "id": "76a4395a75daff27",
         "type": "change",
         "z": "fc1877e6281f18c0",
         "name": "Body",
@@ -171,33 +151,26 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 670,
         "y": 180,
         "wires": [
             [
-                "45cb1caebcafb9dd"
+                "a7e56321e01ee59a"
             ]
         ]
     },
     {
-        "id": "45cb1caebcafb9dd",
+        "id": "112ade4ec45d1126",
         "type": "change",
         "z": "fc1877e6281f18c0",
-        "name": "Test1",
+        "name": "Server",
         "rules": [
             {
                 "t": "set",
-                "p": "payload.body.debtorAccount",
+                "p": "payload.testServer",
                 "pt": "msg",
-                "to": "111",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.body.creditorAccount",
-                "pt": "msg",
-                "to": "222",
-                "tot": "str"
+                "to": "{\"http\":\"http://server.com\",\"header\":[{\"autorization\":\"Fixed token\"}],\"method\":\"post\"}",
+                "tot": "json"
             }
         ],
         "action": "",
@@ -205,8 +178,35 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 80,
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "76a4395a75daff27"
+            ]
+        ]
+    },
+    {
+        "id": "a7e56321e01ee59a",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "Test",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.testObjects",
+                "pt": "msg",
+                "to": "[{\"test1\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}},{\"test2\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 180,
         "wires": [
             [
                 "e7350c70b6cd2099"
@@ -254,8 +254,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 180,
+        "x": 690,
+        "y": 380,
         "wires": []
     },
     {
@@ -275,9 +275,30 @@
         "x": 430,
         "y": 160,
         "wires": [
-            [
-                "7dabf9eee090be0e"
-            ]
+            []
+        ]
+    },
+    {
+        "id": "b69ad76925972a8e",
+        "type": "inject",
+        "z": "a5c9772ae6334205",
+        "name": "Collection",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            []
         ]
     }
 ]
