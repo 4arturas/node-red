@@ -1,0 +1,77 @@
+[
+    {
+        "id": "a5c9772ae6334205",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a177f6a6daff1b0d",
+        "type": "inject",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "3d2ad406fb283f48"
+            ]
+        ]
+    },
+    {
+        "id": "7dabf9eee090be0e",
+        "type": "debug",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3d2ad406fb283f48",
+        "type": "http request",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:4000/users",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 430,
+        "y": 160,
+        "wires": [
+            [
+                "7dabf9eee090be0e"
+            ]
+        ]
+    }
+]
