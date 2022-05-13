@@ -342,11 +342,11 @@
         "id": "174b227fae4519b5",
         "type": "change",
         "z": "fc1877e6281f18c0",
-        "name": "Float",
+        "name": "Flow",
         "rules": [
             {
                 "t": "set",
-                "p": "payload.float",
+                "p": "payload.flow",
                 "pt": "msg",
                 "to": "[{\"sendPayment\":true,\"checkPayment\":true}]",
                 "tot": "json"
