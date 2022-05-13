@@ -260,11 +260,9 @@
         "name": "",
         "rules": [
             {
-                "t": "set",
+                "t": "delete",
                 "p": "payload",
-                "pt": "msg",
-                "to": "hello",
-                "tot": "str"
+                "pt": "msg"
             }
         ],
         "action": "",
@@ -272,7 +270,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
+        "x": 510,
         "y": 580,
         "wires": [
             [
