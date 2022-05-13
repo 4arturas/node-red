@@ -261,7 +261,7 @@
                 "t": "change",
                 "p": "payload",
                 "pt": "msg",
-                "from": "TEST_CASE_NAME",
+                "from": "testCaseName",
                 "fromt": "str",
                 "to": "First Test",
                 "tot": "str"
