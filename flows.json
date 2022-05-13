@@ -260,9 +260,11 @@
         "name": "",
         "rules": [
             {
-                "t": "delete",
+                "t": "move",
                 "p": "payload",
-                "pt": "msg"
+                "pt": "msg",
+                "to": "baba",
+                "tot": "msg"
             }
         ],
         "action": "",
