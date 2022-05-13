@@ -16,14 +16,6 @@
         "env": []
     },
     {
-        "id": "1796b95587b2be5b",
-        "type": "subflow",
-        "name": "Subflow 1",
-        "info": "",
-        "in": [],
-        "out": []
-    },
-    {
         "id": "be2b890187a6373c",
         "type": "inject",
         "z": "fc1877e6281f18c0",
@@ -44,14 +36,29 @@
         "y": 180,
         "wires": [
             [
-                "13a7c8ca5653048b",
-                "4bdb1bb131eb2e2a",
-                "58f78ec9a722d858"
+                "dab6903643459371"
             ]
         ]
     },
     {
-        "id": "13a7c8ca5653048b",
+        "id": "e7350c70b6cd2099",
+        "type": "debug",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "dab6903643459371",
         "type": "change",
         "z": "fc1877e6281f18c0",
         "name": "Suite",
@@ -90,33 +97,16 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 350,
-        "y": 100,
+        "x": 250,
+        "y": 180,
         "wires": [
             [
-                "174b227fae4519b5"
+                "815e943525b8bea4"
             ]
         ]
     },
     {
-        "id": "e7350c70b6cd2099",
-        "type": "debug",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1190,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "174b227fae4519b5",
+        "id": "815e943525b8bea4",
         "type": "change",
         "z": "fc1877e6281f18c0",
         "name": "Flow",
@@ -134,16 +124,16 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
-        "y": 80,
+        "x": 370,
+        "y": 180,
         "wires": [
             [
-                "7b6672b4216ba65a"
+                "112ade4ec45d1126"
             ]
         ]
     },
     {
-        "id": "7b6672b4216ba65a",
+        "id": "76a4395a75daff27",
         "type": "change",
         "z": "fc1877e6281f18c0",
         "name": "Body",
@@ -161,49 +151,16 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 470,
+        "x": 650,
         "y": 180,
         "wires": [
             [
-                "56354351b823c126",
-                "2159320ad33645e6"
+                "a7e56321e01ee59a"
             ]
         ]
     },
     {
-        "id": "45cb1caebcafb9dd",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Test1",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.body.debtorAccount",
-                "pt": "msg",
-                "to": "111",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.body.creditorAccount",
-                "pt": "msg",
-                "to": "222",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 770,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "56354351b823c126",
+        "id": "112ade4ec45d1126",
         "type": "change",
         "z": "fc1877e6281f18c0",
         "name": "Server",
@@ -221,26 +178,25 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 590,
+        "x": 510,
         "y": 180,
         "wires": [
             [
-                "45cb1caebcafb9dd",
-                "755059a0e7a81536"
+                "76a4395a75daff27"
             ]
         ]
     },
     {
-        "id": "3ec813c1d040cb45",
+        "id": "a7e56321e01ee59a",
         "type": "change",
         "z": "fc1877e6281f18c0",
-        "name": "Server 1",
+        "name": "Test",
         "rules": [
             {
                 "t": "set",
-                "p": "payload.testServer",
+                "p": "payload.testObjects",
                 "pt": "msg",
-                "to": "{\"http\":\"http://server1.com\",\"header\":[{\"autorization\":\"Fixed token\"}],\"method\":\"get\"}",
+                "to": "[{\"test1\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}},{\"test2\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]",
                 "tot": "json"
             }
         ],
@@ -249,196 +205,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 480,
-        "y": 420,
+        "x": 790,
+        "y": 180,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "755059a0e7a81536",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Test1",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.body.debtorAccount",
-                "pt": "msg",
-                "to": "333",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.body.creditorAccount",
-                "pt": "msg",
-                "to": "444",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 770,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "2159320ad33645e6",
-        "type": "debug",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 870,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "4bdb1bb131eb2e2a",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Suite 2",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.testCaseName",
-                "pt": "msg",
-                "to": "My First Test Suite 2",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.testCaseBase",
-                "pt": "msg",
-                "to": "My First Test Case Base 2",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.threads",
-                "pt": "msg",
-                "to": "3",
-                "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "payload.loop",
-                "pt": "msg",
-                "to": "10",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 320,
-        "y": 260,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "acc1d170c630c50a",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Suite 3",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.testCaseName",
-                "pt": "msg",
-                "to": "My First Test Suite 3",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.testCaseBase",
-                "pt": "msg",
-                "to": "My First Test Case Base 3",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.threads",
-                "pt": "msg",
-                "to": "3",
-                "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "payload.loop",
-                "pt": "msg",
-                "to": "10",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 280,
-        "y": 500,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "58f78ec9a722d858",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Suite 2",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.testCaseName",
-                "pt": "msg",
-                "to": "My First Test Suite 2",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.testCaseBase",
-                "pt": "msg",
-                "to": "My First Test Case Base 2",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.threads",
-                "pt": "msg",
-                "to": "3",
-                "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "payload.loop",
-                "pt": "msg",
-                "to": "10",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 260,
-        "y": 380,
-        "wires": [
-            []
+            [
+                "e7350c70b6cd2099"
+            ]
         ]
     },
     {
@@ -482,8 +254,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 180,
+        "x": 690,
+        "y": 380,
         "wires": []
     },
     {
@@ -503,9 +275,30 @@
         "x": 430,
         "y": 160,
         "wires": [
-            [
-                "7dabf9eee090be0e"
-            ]
+            []
+        ]
+    },
+    {
+        "id": "b69ad76925972a8e",
+        "type": "inject",
+        "z": "a5c9772ae6334205",
+        "name": "Collection",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            []
         ]
     }
 ]
