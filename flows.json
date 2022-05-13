@@ -283,7 +283,7 @@
                 "p": "payload.loop",
                 "pt": "msg",
                 "to": "10",
-                "tot": "str"
+                "tot": "num"
             }
         ],
         "action": "",
