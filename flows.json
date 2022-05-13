@@ -262,7 +262,7 @@
                 "p": "payload",
                 "pt": "msg",
                 "from": "${TEST_CASE_NAME}",
-                "fromt": "re",
+                "fromt": "str",
                 "to": "First Test",
                 "tot": "str"
             }
