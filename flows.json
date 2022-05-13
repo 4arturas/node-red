@@ -258,9 +258,11 @@
         "name": "",
         "rules": [
             {
-                "t": "set",
+                "t": "change",
                 "p": "payload",
                 "pt": "msg",
+                "from": "threads",
+                "fromt": "str",
                 "to": "baba",
                 "tot": "str"
             }
@@ -270,7 +272,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
+        "x": 520,
         "y": 580,
         "wires": [
             [
