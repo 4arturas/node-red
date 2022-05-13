@@ -199,9 +199,7 @@
         "x": 770,
         "y": 100,
         "wires": [
-            [
-                "bb655b1d61e64e7e"
-            ]
+            []
         ]
     },
     {
@@ -286,9 +284,7 @@
         "x": 770,
         "y": 200,
         "wires": [
-            [
-                "bb655b1d61e64e7e"
-            ]
+            []
         ]
     },
     {
@@ -296,7 +292,7 @@
         "type": "debug",
         "z": "fc1877e6281f18c0",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -306,49 +302,6 @@
         "x": 870,
         "y": 320,
         "wires": []
-    },
-    {
-        "id": "bb655b1d61e64e7e",
-        "type": "join",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "mode": "auto",
-        "build": "object",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "accumulate": "false",
-        "timeout": "",
-        "count": "",
-        "reduceRight": false,
-        "x": 950,
-        "y": 160,
-        "wires": [
-            [
-                "e7350c70b6cd2099",
-                "c4c7cb7502bfc5de"
-            ]
-        ]
-    },
-    {
-        "id": "c4c7cb7502bfc5de",
-        "type": "http request",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": false,
-        "url": "",
-        "persist": false,
-        "authType": "",
-        "senderr": false,
-        "x": 1130,
-        "y": 160,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "4bdb1bb131eb2e2a",
