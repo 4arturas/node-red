@@ -214,6 +214,124 @@
         ]
     },
     {
+        "id": "55179bea399ef5a8",
+        "type": "inject",
+        "z": "fc1877e6281f18c0",
+        "name": "JSON",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"collection\":{\"options\":{\"collectionName\":\"testtregtrerreion\",\"version\":1212,\"parameters\":{\"collectionBatchId\":\"xxxxxx\"}},\"suites\":[{\"suiteName\":\"suite1\",\"version\":1212,\"parameters\":{\"suiteBatchId\":\"yyyyyyyy111111\"},\"cases\":[{\"parameters\":{\"caseBatchId\":\"zzzzzzz1111111\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"clientName\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"authorization\":\"Fixeg token\",\"x-ray\":\"1234567\",\"referrerUrl\":\"asasas\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${collectionBatchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"saveRequest\":true,\"saveResponse\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"^.*\"}}}},{\"test2\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]},{\"parameters\":{\"caseBatchId\":\"zzzzzzz222222\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"name\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"autorization\":\"Fixeg token\",\"contetn-type\":\"application/json\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"51073930\"}}}},{\"test2\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]}]},{\"suiteName\":\"suite2\",\"version\":1212,\"parameters\":{\"suiteBatchId\":\"yyyyyyyy22222222\"},\"cases\":[{\"parameters\":{\"caseBatchId\":\"zzzzzzz1111111\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"clientName\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"authorization\":\"Fixeg token\",\"x-ray\":\"1234567\",\"referrerUrl\":\"asasas\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${collectionBatchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"saveRequest\":true,\"saveResponse\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"^.*\"}}}},{\"test2\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]},{\"parameters\":{\"caseBatchId\":\"zzzzzzz222222\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"name\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"autorization\":\"Fixeg token\",\"contetn-type\":\"application/json\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"51073930\"}}}},{\"test2\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]}]}]}}",
+        "payloadType": "json",
+        "x": 110,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "47b081cca8c36fb0",
+        "type": "inject",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "props": [
+            {
+                "p": "ctx",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 480,
+        "wires": [
+            [
+                "4d51be767a98884b"
+            ]
+        ]
+    },
+    {
+        "id": "4d51be767a98884b",
+        "type": "change",
+        "z": "fc1877e6281f18c0",
+        "name": "ctx++",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ctx",
+                "pt": "msg",
+                "to": "ctx+1",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 560,
+        "wires": [
+            [
+                "4645c65944f2c0b9",
+                "f20e022ddc15b992"
+            ]
+        ]
+    },
+    {
+        "id": "4645c65944f2c0b9",
+        "type": "debug",
+        "z": "fc1877e6281f18c0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "ctx",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "f20e022ddc15b992",
+        "type": "switch",
+        "z": "fc1877e6281f18c0",
+        "name": "while ( ctx < 10 )",
+        "property": "ctx",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "10",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 420,
+        "wires": [
+            [
+                "4d51be767a98884b"
+            ]
+        ]
+    },
+    {
         "id": "a177f6a6daff1b0d",
         "type": "inject",
         "z": "a5c9772ae6334205",
