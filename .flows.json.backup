@@ -2,7 +2,7 @@
     {
         "id": "fc1877e6281f18c0",
         "type": "tab",
-        "label": "Test Project",
+        "label": "Test JSON generator",
         "disabled": false,
         "info": "",
         "env": []
@@ -11,6 +11,14 @@
         "id": "a5c9772ae6334205",
         "type": "tab",
         "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b70b82bf8d00eb8a",
+        "type": "tab",
+        "label": "While Ex.",
         "disabled": false,
         "info": "",
         "env": []
@@ -237,9 +245,315 @@
         ]
     },
     {
-        "id": "47b081cca8c36fb0",
+        "id": "4216053bfcb91aab",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "Test1",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\"test1\": {\n  \"replace\": {\n    \"paymentId\": \"{{payload.collection.options.parameters.collectionBatchId}}-{{payload.suiteBatchId}}-{{payload.caseBatchId}}-{{payload.counter}}\",\n    \"debtorAccount\": \"CY06904000010000000000201000\",\n    \"creditorAccount\": \"CY06904000010000000000201000\",\n    \"privatePerson\": \"asas\"\n  },\n  \"remove\": [\n    \"unstructuredRemittanceInfo\",\n    \"ultimateCreditor\"\n  ],\n  \"result\": {\n    \"httpCode\": \"200\",\n    \"saveRequest\": true,\n    \"saveResponse\": true,\n    \"responseAssert\": {\n      \"ultimateCreditor.legalEntity[*].other.id\": \"^.*\"\n    }\n  }\n}",
+        "output": "str",
+        "x": 1090,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d2dd7ca0faca1580",
         "type": "inject",
-        "z": "fc1877e6281f18c0",
+        "z": "a5c9772ae6334205",
+        "name": "Collection",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"collection\":{\"options\":{\"collectionName\":\"testtregtrerreion\",\"version\":1212,\"parameters\":{\"collectionBatchId\":\"xxxxxx\"}},\"suites\":[]}}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ac34df0c0d40acb",
+        "type": "debug",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "81ddab1d7e69a73b",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "Test2",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\"test1\": {\n  \"replace\": {\n    \"paymentId\": \"{{payload.collection.options.parameters.collectionBatchId}}-{{payload.suiteBatchId}}-{{payload.caseBatchId}}-{{payload.counter}}\",\n    \"debtorAccount\": \"CY06904000010000000000201000\",\n    \"creditorAccount\": \"CY06904000010000000000201000\",\n    \"privatePerson\": \"asas\"\n  },\n  \"remove\": [\n    \"unstructuredRemittanceInfo\",\n    \"ultimateCreditor\"\n  ],\n  \"result\": {\n    \"httpCode\": \"200\",\n    \"saveRequest\": true,\n    \"saveResponse\": true,\n    \"responseAssert\": {\n      \"ultimateCreditor.legalEntity[*].other.id\": \"^.*\"\n    }\n  }\n}",
+        "output": "str",
+        "x": 1090,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b45019c110e4227c",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "This is the payload: {{payload}} !",
+        "output": "str",
+        "x": 1340,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a7209af28dd38398",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "Suite 1",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n  \"suiteName\": \"suite1\",\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": \"yyyyyyyy111111\"\n  },\n  \"cases\": [\n  ]\n}",
+        "output": "str",
+        "x": 480,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "44ede770c3e4ae8a",
+        "type": "change",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "706f719d940189c5",
+        "type": "function",
+        "z": "a5c9772ae6334205",
+        "name": "Suite Push",
+        "func": "const suite = {\n  \"suiteName\": \"suite1\",\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": \"yyyyyyyy111111\"\n  },\n  \"cases\": [\n  ]\n};\n\nnode.log(msg);\nconsole.log(msg);\n\nmsg.payload.collection.suites.push(suite);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0a0e88b992c841ca",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "Suite 2",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n  \"suiteName\": \"suite2\",\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": \"yyyyyyyy111111\"\n  },\n  \"cases\": [\n  ]\n}",
+        "output": "str",
+        "x": 480,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "86550ed6cd98abc8",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "Case 1",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "{\n  \"parameters\": {\n    \"caseBatchId\": \"zzzzzzz1111111\"\n  },\n  \"caseName\": \"OutgoingPaymentSimple\",\n  \"caseBase\": \"OutgoingPaymentSCT\",\n  \"threads\": 3,\n  \"loop\": 100,\n  \"flow\": [\n    {\n      \"sendPayment\": true,\n      \"checkPayment\": true\n    }\n  ],\n  \"server\": {{{payload.server}}},\n  \"body\": {{{payload.body}}}\n}",
+        "output": "str",
+        "x": 480,
+        "y": 100,
+        "wires": [
+            [
+                "6b955f963c46df52"
+            ]
+        ]
+    },
+    {
+        "id": "aa7137b012e4ce55",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "Server",
+        "field": "payload.server",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "plain",
+        "template": "{\n  \"clientName\": \"asas\",\n  \"http\": \"https://server.com\",\n  \"header\": {\n    \"authorization\": \"Fixeg token\",\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": \"post\"\n}",
+        "output": "str",
+        "x": 230,
+        "y": 100,
+        "wires": [
+            [
+                "4bedcc1740fb4d47"
+            ]
+        ]
+    },
+    {
+        "id": "4bedcc1740fb4d47",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "Body",
+        "field": "payload.body",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n  \"paymentId\": \"1321321231\",\n  \"amount\": 7.85,\n  \"currency\": \"EUR\",\n  \"unstructuredRemittanceInfo\": \"payment for Licensed Fresh Sausages\",\n  \"debtorAccount\": \"sdfsdfdsf\",\n  \"creditorAccount\": \"GB81SEOU00994400000088\",\n  \"debtor\": {\n    \"address\": {\n      \"country\": \"IL\",\n      \"addressLine1\": \"86460 Dibbert Prairie Suite 085\",\n      \"addressLine2\": \"East Lisandrofort, LK-50064-7200\"\n    },\n    \"name\": \"Howell Abshire\",\n    \"privatePerson\": {\n      \"dateAndPlaceOfBirth\": {\n        \"dateOfBirth\": \"1999-12-08\",\n        \"country\": \"LR\",\n        \"city\": \"South Vaughn\",\n        \"province\": \"Bedfordshire\"\n      }\n    }\n  },\n  \"creditor\": {\n    \"name\": \"Chadd Turcotte\",\n    \"privatePerson\": {\n      \"other\": {\n        \"id\": \"719-16-5638\",\n        \"type\": \"NIDN\"\n      }\n    }\n  },\n  \"ultimateDebtor\": {\n    \"name\": \"White, Hahn and Howe, Inc\",\n    \"legalEntity\": {\n      \"other\": {\n        \"id\": \"59025467\",\n        \"type\": \"COID\"\n      }\n    }\n  },\n  \"ultimateCreditor\": {\n    \"name\": \"Wilderman and Sons, Inc\",\n    \"legalEntity\": {\n      \"other\": {\n        \"id\": \"51073930\",\n        \"type\": \"PRTRY\",\n        \"proprietary\": \"CUSTOM ID TYPE\"\n      }\n    }\n  },\n  \"endToEnd\": \"KDX3287\"\n}",
+        "output": "str",
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "86550ed6cd98abc8"
+            ]
+        ]
+    },
+    {
+        "id": "afee49555c0baa25",
+        "type": "change",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "63c948b4098043a6",
+        "type": "inject",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "aa7137b012e4ce55"
+            ]
+        ]
+    },
+    {
+        "id": "c280cac6035a7fb2",
+        "type": "template",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "This is the payload: {{payload}} !",
+        "output": "str",
+        "x": 820,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6b955f963c46df52",
+        "type": "json",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 650,
+        "y": 100,
+        "wires": [
+            [
+                "1ac34df0c0d40acb"
+            ]
+        ]
+    },
+    {
+        "id": "9804ae9eb68137ee",
+        "type": "inject",
+        "z": "b70b82bf8d00eb8a",
         "name": "ctx = 0",
         "props": [
             {
@@ -253,18 +567,18 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 310,
-        "y": 660,
+        "x": 410,
+        "y": 280,
         "wires": [
             [
-                "4d51be767a98884b"
+                "b82bdc1deb8ef509"
             ]
         ]
     },
     {
-        "id": "4d51be767a98884b",
+        "id": "b82bdc1deb8ef509",
         "type": "change",
-        "z": "fc1877e6281f18c0",
+        "z": "b70b82bf8d00eb8a",
         "name": "ctx++",
         "rules": [
             {
@@ -280,19 +594,19 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
-        "y": 740,
+        "x": 630,
+        "y": 360,
         "wires": [
             [
-                "4645c65944f2c0b9",
-                "f20e022ddc15b992"
+                "7855f2d23e2157f5",
+                "7a6d9d05e5d9bf8a"
             ]
         ]
     },
     {
-        "id": "4645c65944f2c0b9",
+        "id": "7855f2d23e2157f5",
         "type": "debug",
-        "z": "fc1877e6281f18c0",
+        "z": "b70b82bf8d00eb8a",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -302,14 +616,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
-        "y": 660,
+        "x": 860,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "f20e022ddc15b992",
+        "id": "7a6d9d05e5d9bf8a",
         "type": "switch",
-        "z": "fc1877e6281f18c0",
+        "z": "b70b82bf8d00eb8a",
         "name": "while ( ctx < 10 )",
         "property": "ctx",
         "propertyType": "msg",
@@ -323,100 +637,12 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 540,
-        "y": 600,
+        "x": 640,
+        "y": 220,
         "wires": [
             [
-                "4d51be767a98884b"
+                "b82bdc1deb8ef509"
             ]
-        ]
-    },
-    {
-        "id": "a177f6a6daff1b0d",
-        "type": "inject",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 180,
-        "y": 100,
-        "wires": [
-            [
-                "3d2ad406fb283f48"
-            ]
-        ]
-    },
-    {
-        "id": "7dabf9eee090be0e",
-        "type": "debug",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 690,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "3d2ad406fb283f48",
-        "type": "http request",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "http://localhost:4000/users",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 430,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b69ad76925972a8e",
-        "type": "inject",
-        "z": "a5c9772ae6334205",
-        "name": "Collection",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"\"}",
-        "payloadType": "json",
-        "x": 140,
-        "y": 340,
-        "wires": [
-            []
         ]
     }
 ]
