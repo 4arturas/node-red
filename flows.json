@@ -2,7 +2,7 @@
     {
         "id": "fc1877e6281f18c0",
         "type": "tab",
-        "label": "Test Project",
+        "label": "Test JSON generator",
         "disabled": false,
         "info": "",
         "env": []
@@ -11,6 +11,14 @@
         "id": "a5c9772ae6334205",
         "type": "tab",
         "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b70b82bf8d00eb8a",
+        "type": "tab",
+        "label": "While Ex.",
         "disabled": false,
         "info": "",
         "env": []
@@ -237,101 +245,6 @@
         ]
     },
     {
-        "id": "47b081cca8c36fb0",
-        "type": "inject",
-        "z": "fc1877e6281f18c0",
-        "name": "ctx = 0",
-        "props": [
-            {
-                "p": "ctx",
-                "v": "0",
-                "vt": "num"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 310,
-        "y": 660,
-        "wires": [
-            [
-                "4d51be767a98884b"
-            ]
-        ]
-    },
-    {
-        "id": "4d51be767a98884b",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "ctx++",
-        "rules": [
-            {
-                "t": "set",
-                "p": "ctx",
-                "pt": "msg",
-                "to": "ctx+1",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 530,
-        "y": 740,
-        "wires": [
-            [
-                "4645c65944f2c0b9",
-                "f20e022ddc15b992"
-            ]
-        ]
-    },
-    {
-        "id": "4645c65944f2c0b9",
-        "type": "debug",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "ctx",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 760,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "f20e022ddc15b992",
-        "type": "switch",
-        "z": "fc1877e6281f18c0",
-        "name": "while ( ctx < 10 )",
-        "property": "ctx",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "lt",
-                "v": "10",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 540,
-        "y": 600,
-        "wires": [
-            [
-                "4d51be767a98884b"
-            ]
-        ]
-    },
-    {
         "id": "a177f6a6daff1b0d",
         "type": "inject",
         "z": "a5c9772ae6334205",
@@ -417,6 +330,101 @@
         "y": 340,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "9804ae9eb68137ee",
+        "type": "inject",
+        "z": "b70b82bf8d00eb8a",
+        "name": "ctx = 0",
+        "props": [
+            {
+                "p": "ctx",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "b82bdc1deb8ef509"
+            ]
+        ]
+    },
+    {
+        "id": "b82bdc1deb8ef509",
+        "type": "change",
+        "z": "b70b82bf8d00eb8a",
+        "name": "ctx++",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ctx",
+                "pt": "msg",
+                "to": "ctx+1",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "7855f2d23e2157f5",
+                "7a6d9d05e5d9bf8a"
+            ]
+        ]
+    },
+    {
+        "id": "7855f2d23e2157f5",
+        "type": "debug",
+        "z": "b70b82bf8d00eb8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "ctx",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7a6d9d05e5d9bf8a",
+        "type": "switch",
+        "z": "b70b82bf8d00eb8a",
+        "name": "while ( ctx < 10 )",
+        "property": "ctx",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "10",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 220,
+        "wires": [
+            [
+                "b82bdc1deb8ef509"
+            ]
         ]
     }
 ]
