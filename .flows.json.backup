@@ -127,6 +127,55 @@
         }
     },
     {
+        "id": "293ae38c7343ee6b",
+        "type": "subflow",
+        "name": "Server",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 200,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "de514f7d2c7030c9"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 920,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "03982fb6d7519e09",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "clientName",
+                "type": "str",
+                "value": "clientName"
+            },
+            {
+                "name": "http",
+                "type": "str",
+                "value": "https://server.com"
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 200,
+            "y": 80,
+            "wires": []
+        }
+    },
+    {
         "id": "8e227f858e741893",
         "type": "template",
         "z": "4a9935b75e76a65a",
@@ -463,6 +512,77 @@
         ]
     },
     {
+        "id": "de514f7d2c7030c9",
+        "type": "template",
+        "z": "293ae38c7343ee6b",
+        "name": "http://server.com",
+        "field": "payload.server",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n  \"clientName\": null,\n  \"http\": \"https://server.com\",\n  \"header\": {\n    \"authorization\": \"Fixeg token\",\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": \"post\"\n}",
+        "output": "json",
+        "x": 360,
+        "y": 200,
+        "wires": [
+            [
+                "e7fc4a28e66eade0"
+            ]
+        ]
+    },
+    {
+        "id": "e7fc4a28e66eade0",
+        "type": "change",
+        "z": "293ae38c7343ee6b",
+        "name": "Set Vars",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.server.clientName",
+                "pt": "msg",
+                "to": "clientName",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [
+                "03982fb6d7519e09"
+            ]
+        ]
+    },
+    {
+        "id": "03982fb6d7519e09",
+        "type": "change",
+        "z": "293ae38c7343ee6b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.server",
+                "pt": "msg",
+                "to": "null",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "be2b890187a6373c",
         "type": "inject",
         "z": "fc1877e6281f18c0",
@@ -704,7 +824,7 @@
         "y": 160,
         "wires": [
             [
-                "b13fdfdf981c85b1"
+                "a9d91ea7b8f1513c"
             ]
         ]
     },
@@ -713,7 +833,7 @@
         "type": "debug",
         "z": "a5c9772ae6334205",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -749,7 +869,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
+        "x": 490,
         "y": 160,
         "wires": [
             [
@@ -775,29 +895,33 @@
         ]
     },
     {
-        "id": "09553159165242a7",
-        "type": "change",
+        "id": "a9d91ea7b8f1513c",
+        "type": "subflow:293ae38c7343ee6b",
         "z": "a5c9772ae6334205",
         "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 160,
-        "y": 240,
+        "x": 310,
+        "y": 340,
         "wires": [
-            []
+            [
+                "5e1897dc5d00fe79"
+            ]
         ]
+    },
+    {
+        "id": "5e1897dc5d00fe79",
+        "type": "debug",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 340,
+        "wires": []
     },
     {
         "id": "9804ae9eb68137ee",
