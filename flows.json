@@ -10,7 +10,7 @@
     {
         "id": "a5c9772ae6334205",
         "type": "tab",
-        "label": "Collection",
+        "label": "Collection Flow",
         "disabled": false,
         "info": "",
         "env": []
@@ -269,6 +269,55 @@
         "status": {
             "x": 300,
             "y": 180,
+            "wires": []
+        }
+    },
+    {
+        "id": "27e8eeb55cc4ae2f",
+        "type": "subflow",
+        "name": "Collection",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 280,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "e1372830e163b054"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 700,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "643fbb64d45e1e28",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "collectionName",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "collectionBatchId",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 280,
+            "y": 120,
             "wires": []
         }
     },
@@ -715,6 +764,57 @@
         ]
     },
     {
+        "id": "e1372830e163b054",
+        "type": "template",
+        "z": "27e8eeb55cc4ae2f",
+        "name": "Collection",
+        "field": "payload.collection",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"collection\": {\n        \"options\": {\n            \"collectionName\": \"testtregtrerreion\",\n            \"version\": 1212,\n            \"parameters\": {\n                \"collectionBatchId\": \"xxxxxx\"\n            }\n        },\n        \"suites\": []\n    }\n}",
+        "output": "json",
+        "x": 400,
+        "y": 180,
+        "wires": [
+            [
+                "643fbb64d45e1e28"
+            ]
+        ]
+    },
+    {
+        "id": "643fbb64d45e1e28",
+        "type": "change",
+        "z": "27e8eeb55cc4ae2f",
+        "name": "Set Env Vars",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.collection.options.collectionName",
+                "pt": "msg",
+                "to": "collectionName",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "payload.collection.options.parameters.collectionBatchId",
+                "pt": "msg",
+                "to": "collectionBatchId",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "be2b890187a6373c",
         "type": "inject",
         "z": "fc1877e6281f18c0",
@@ -982,7 +1082,7 @@
         "type": "subflow:4a9935b75e76a65a",
         "z": "a5c9772ae6334205",
         "name": "",
-        "x": 310,
+        "x": 550,
         "y": 160,
         "wires": [
             [
@@ -1001,7 +1101,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 490,
+        "x": 730,
         "y": 160,
         "wires": [
             [
