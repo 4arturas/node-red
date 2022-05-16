@@ -35,7 +35,7 @@
                 "y": 100,
                 "wires": [
                     {
-                        "id": "8e227f858e741893"
+                        "id": "e52459fa9f4e90cc"
                     }
                 ]
             }
@@ -80,9 +80,13 @@
         "category": "",
         "in": [
             {
-                "x": 200,
-                "y": 160,
-                "wires": []
+                "x": 180,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "777d8c6cfcd79c3e"
+                    }
+                ]
             }
         ],
         "out": [
@@ -97,28 +101,12 @@
                 ]
             }
         ],
-        "env": [
-            {
-                "name": "caseBatchId",
-                "type": "str",
-                "value": "zzzzzzz1111111"
-            },
-            {
-                "name": "threads",
-                "type": "num",
-                "value": "4"
-            },
-            {
-                "name": "loop",
-                "type": "num",
-                "value": "101"
-            }
-        ],
+        "env": [],
         "meta": {},
         "color": "#DDAA99",
         "status": {
-            "x": 220,
-            "y": 80,
+            "x": 120,
+            "y": 40,
             "wires": []
         }
     },
@@ -155,22 +143,22 @@
             {
                 "name": "clientName",
                 "type": "str",
-                "value": "clientName"
+                "value": ""
             },
             {
                 "name": "http",
                 "type": "str",
-                "value": "https://server.com"
+                "value": ""
             },
             {
                 "name": "authorization",
                 "type": "str",
-                "value": "Fixed Token"
+                "value": ""
             },
             {
                 "name": "method",
                 "type": "str",
-                "value": "POST"
+                "value": ""
             }
         ],
         "meta": {},
@@ -285,25 +273,6 @@
         }
     },
     {
-        "id": "8e227f858e741893",
-        "type": "template",
-        "z": "4a9935b75e76a65a",
-        "name": "Suite",
-        "field": "payload.suite",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "{\n  \"suiteName\": null,\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": null\n  },\n  \"cases\": [\n  ]\n}",
-        "output": "json",
-        "x": 130,
-        "y": 100,
-        "wires": [
-            [
-                "2a273dad8d547814"
-            ]
-        ]
-    },
-    {
         "id": "980820d05d7010f3",
         "type": "function",
         "z": "4a9935b75e76a65a",
@@ -337,41 +306,6 @@
         "y": 280,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "2a273dad8d547814",
-        "type": "change",
-        "z": "4a9935b75e76a65a",
-        "name": "Set Suite Env Var",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.suite.suiteName",
-                "pt": "msg",
-                "to": "suiteName",
-                "tot": "env"
-            },
-            {
-                "t": "set",
-                "p": "payload.suite.parameters.suiteBatchId",
-                "pt": "msg",
-                "to": "suiteBatchId",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 290,
-        "y": 100,
-        "wires": [
-            [
-                "13abe75faafb5b79",
-                "6c973f4c16ede555"
-            ]
         ]
     },
     {
@@ -430,22 +364,26 @@
         ]
     },
     {
-        "id": "dba384fec8265ca8",
-        "type": "template",
-        "z": "f79468d09c2b4e79",
-        "name": "http://server.com",
-        "field": "payload.server",
-        "fieldType": "msg",
-        "format": "json",
-        "syntax": "plain",
-        "template": "{\n  \"clientName\": \"asas\",\n  \"http\": \"https://server.com\",\n  \"header\": {\n    \"authorization\": \"Fixeg token\",\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": \"post\"\n}",
-        "output": "json",
-        "x": 420,
-        "y": 240,
+        "id": "e52459fa9f4e90cc",
+        "type": "subflow:29f9222b83059643",
+        "z": "4a9935b75e76a65a",
+        "name": "",
+        "env": [
+            {
+                "name": "suiteName",
+                "value": "mySuiteName111",
+                "type": "str"
+            },
+            {
+                "name": "suiteBatchId",
+                "value": "mySuiteBatchID222",
+                "type": "str"
+            }
+        ],
+        "x": 150,
+        "y": 100,
         "wires": [
-            [
-                "803965d144a0d18b"
-            ]
+            []
         ]
     },
     {
@@ -561,62 +499,67 @@
         ]
     },
     {
-        "id": "7d414dca1bf66d61",
-        "type": "template",
+        "id": "777d8c6cfcd79c3e",
+        "type": "subflow:45a53fed240aa004",
         "z": "f79468d09c2b4e79",
-        "name": "Case 1",
-        "field": "payload.case",
-        "fieldType": "msg",
-        "format": "javascript",
-        "syntax": "mustache",
-        "template": "{\n  \"parameters\": {\n    \"caseBatchId\": null\n  },\n  \"caseName\": \"OutgoingPaymentSimple\",\n  \"caseBase\": \"OutgoingPaymentSCT\",\n  \"threads\": 3,\n  \"loop\": 100,\n  \"flow\": [\n    {\n      \"sendPayment\": true,\n      \"checkPayment\": true\n    }\n  ],\n  \"server\": null,\n  \"body\":   null,\n  \"objects\": []\n}",
-        "output": "json",
-        "x": 160,
-        "y": 120,
+        "name": "",
+        "env": [
+            {
+                "name": "caseBatchId",
+                "value": "my_caseBatchId_1111",
+                "type": "str"
+            },
+            {
+                "name": "threads",
+                "value": "11",
+                "type": "num"
+            },
+            {
+                "name": "loop",
+                "value": "12",
+                "type": "num"
+            }
+        ],
+        "x": 330,
+        "y": 240,
         "wires": [
             [
-                "fe81c6be0d46a1b3"
+                "b2ba78aef51f3734"
             ]
         ]
     },
     {
-        "id": "fe81c6be0d46a1b3",
-        "type": "change",
+        "id": "b2ba78aef51f3734",
+        "type": "subflow:293ae38c7343ee6b",
         "z": "f79468d09c2b4e79",
-        "name": "Set Case Env Var",
-        "rules": [
+        "name": "",
+        "env": [
             {
-                "t": "set",
-                "p": "payload.case.parameters.caseBatchId",
-                "pt": "msg",
-                "to": "caseBatchId",
-                "tot": "env"
+                "name": "clientName",
+                "value": "mySeverClient",
+                "type": "str"
             },
             {
-                "t": "set",
-                "p": "payload.case.threads",
-                "pt": "msg",
-                "to": "threads",
-                "tot": "env"
+                "name": "http",
+                "value": "https://google.com",
+                "type": "str"
             },
             {
-                "t": "set",
-                "p": "payload.case.loop",
-                "pt": "msg",
-                "to": "loop",
-                "tot": "env"
+                "name": "authorization",
+                "value": "Fixed Token",
+                "type": "str"
+            },
+            {
+                "name": "method",
+                "value": "POST",
+                "type": "str"
             }
         ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 310,
-        "y": 180,
+        "x": 450,
+        "y": 240,
         "wires": [
             [
-                "dba384fec8265ca8"
+                "803965d144a0d18b"
             ]
         ]
     },
