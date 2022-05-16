@@ -797,7 +797,7 @@
             },
             {
                 "t": "set",
-                "p": "collection.options.parameters.collectionBatchId",
+                "p": "payload.collection.options.parameters.collectionBatchId",
                 "pt": "msg",
                 "to": "collectionBatchId",
                 "tot": "jsonata"
