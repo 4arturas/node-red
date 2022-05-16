@@ -26,7 +26,7 @@
     {
         "id": "4a9935b75e76a65a",
         "type": "subflow",
-        "name": "Suite",
+        "name": "Suite Flow",
         "info": "",
         "category": "",
         "in": [
@@ -232,6 +232,55 @@
         "status": {
             "x": 260,
             "y": 140,
+            "wires": []
+        }
+    },
+    {
+        "id": "29f9222b83059643",
+        "type": "subflow",
+        "name": "Suite",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 300,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "605ccca383470d2b"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1040,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "7bcb025833299b46",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "suiteName",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "suiteBatchId",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#DDAA99",
+        "status": {
+            "x": 300,
+            "y": 180,
             "wires": []
         }
     },
@@ -733,6 +782,57 @@
         ]
     },
     {
+        "id": "605ccca383470d2b",
+        "type": "template",
+        "z": "29f9222b83059643",
+        "name": "Suite",
+        "field": "payload.suite",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n  \"suiteName\": null,\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": null\n  },\n  \"cases\": [\n  ]\n}",
+        "output": "json",
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "7bcb025833299b46"
+            ]
+        ]
+    },
+    {
+        "id": "7bcb025833299b46",
+        "type": "change",
+        "z": "29f9222b83059643",
+        "name": "Set Suite Env Var",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.suite.suiteName",
+                "pt": "msg",
+                "to": "suiteName",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "payload.suite.parameters.suiteBatchId",
+                "pt": "msg",
+                "to": "suiteBatchId",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "be2b890187a6373c",
         "type": "inject",
         "z": "fc1877e6281f18c0",
@@ -974,7 +1074,7 @@
         "y": 160,
         "wires": [
             [
-                "c60a78651372d2d5"
+                "4b22910c3bed5175"
             ]
         ]
     },
@@ -1000,7 +1100,7 @@
         "type": "subflow:4a9935b75e76a65a",
         "z": "a5c9772ae6334205",
         "name": "",
-        "x": 290,
+        "x": 310,
         "y": 160,
         "wires": [
             [
@@ -1067,8 +1167,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 530,
-        "y": 400,
+        "x": 550,
+        "y": 460,
         "wires": []
     },
     {
@@ -1095,6 +1195,17 @@
         ],
         "x": 310,
         "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4b22910c3bed5175",
+        "type": "subflow:29f9222b83059643",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "x": 310,
+        "y": 580,
         "wires": [
             [
                 "5e1897dc5d00fe79"
