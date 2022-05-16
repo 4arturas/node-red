@@ -1204,6 +1204,18 @@
         "type": "subflow:29f9222b83059643",
         "z": "a5c9772ae6334205",
         "name": "",
+        "env": [
+            {
+                "name": "suiteName",
+                "value": "My Suite",
+                "type": "str"
+            },
+            {
+                "name": "suiteBatchId",
+                "value": "suiteBatchId2222",
+                "type": "str"
+            }
+        ],
         "x": 310,
         "y": 580,
         "wires": [
