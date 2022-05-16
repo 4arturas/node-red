@@ -165,6 +165,16 @@
                 "name": "http",
                 "type": "str",
                 "value": "https://server.com"
+            },
+            {
+                "name": "authorization",
+                "type": "str",
+                "value": "Fixed Token"
+            },
+            {
+                "name": "method",
+                "type": "str",
+                "value": "POST"
             }
         ],
         "meta": {},
@@ -520,7 +530,7 @@
         "fieldType": "msg",
         "format": "json",
         "syntax": "mustache",
-        "template": "{\n  \"clientName\": null,\n  \"http\": \"https://server.com\",\n  \"header\": {\n    \"authorization\": \"Fixeg token\",\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": \"post\"\n}",
+        "template": "{\n  \"clientName\": null,\n  \"http\": null,\n  \"header\": {\n    \"authorization\": null,\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": null\n}",
         "output": "json",
         "x": 330,
         "y": 200,
@@ -548,6 +558,20 @@
                 "p": "payload.server.http",
                 "pt": "msg",
                 "to": "http",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "payload.server.header.authorization",
+                "pt": "msg",
+                "to": "authorization",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "payload.server.method",
+                "pt": "msg",
+                "to": "method",
                 "tot": "env"
             }
         ],
