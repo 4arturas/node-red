@@ -562,14 +562,14 @@
             },
             {
                 "t": "set",
-                "p": "payload.header.authorization",
+                "p": "payload.server.header.authorization",
                 "pt": "msg",
                 "to": "authorization",
                 "tot": "env"
             },
             {
                 "t": "set",
-                "p": "payload.header.method",
+                "p": "payload.server.header.method",
                 "pt": "msg",
                 "to": "method",
                 "tot": "env"
