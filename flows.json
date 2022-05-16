@@ -44,12 +44,7 @@
             {
                 "x": 1300,
                 "y": 100,
-                "wires": [
-                    {
-                        "id": "8c7b98efc638aa4e",
-                        "port": 0
-                    }
-                ]
+                "wires": []
             }
         ],
         "env": [
@@ -80,7 +75,7 @@
         "category": "",
         "in": [
             {
-                "x": 180,
+                "x": 220,
                 "y": 240,
                 "wires": [
                     {
@@ -276,19 +271,17 @@
         "id": "980820d05d7010f3",
         "type": "function",
         "z": "4a9935b75e76a65a",
-        "name": "Push Case Into Suite",
+        "name": "Push Case",
         "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.suite.cases.push(msg.payload.case);\n\nmsg.payload.case.server     = msg.payload.server;\nmsg.payload.case.body       = msg.payload.body;\nmsg.payload.case.objects    = msg.payload.objects;\n\n\ndelete msg.payload.server;\ndelete msg.payload.body;\ndelete msg.payload.objects;\ndelete msg.payload.case;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
+        "x": 690,
         "y": 100,
         "wires": [
-            [
-                "bda02361c6d46be0"
-            ]
+            []
         ]
     },
     {
@@ -313,54 +306,12 @@
         "type": "subflow:f79468d09c2b4e79",
         "z": "4a9935b75e76a65a",
         "name": "",
-        "x": 530,
+        "x": 310,
         "y": 100,
         "wires": [
             [
                 "980820d05d7010f3"
             ]
-        ]
-    },
-    {
-        "id": "bda02361c6d46be0",
-        "type": "subflow:f79468d09c2b4e79",
-        "z": "4a9935b75e76a65a",
-        "name": "",
-        "env": [
-            {
-                "name": "threads",
-                "value": "5",
-                "type": "num"
-            },
-            {
-                "name": "loop",
-                "value": "201",
-                "type": "num"
-            }
-        ],
-        "x": 930,
-        "y": 100,
-        "wires": [
-            [
-                "8c7b98efc638aa4e"
-            ]
-        ]
-    },
-    {
-        "id": "8c7b98efc638aa4e",
-        "type": "function",
-        "z": "4a9935b75e76a65a",
-        "name": "Push Case Into Suite",
-        "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.suite.cases.push(msg.payload.case);\n\nmsg.payload.case.server     = msg.payload.server;\nmsg.payload.case.body       = msg.payload.body;\nmsg.payload.case.objects    = msg.payload.objects;\n\n\ndelete msg.payload.server;\ndelete msg.payload.body;\ndelete msg.payload.objects;\ndelete msg.payload.case;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1100,
-        "y": 100,
-        "wires": [
-            []
         ]
     },
     {
@@ -1036,7 +987,7 @@
         "y": 160,
         "wires": [
             [
-                "4b22910c3bed5175"
+                "b13fdfdf981c85b1"
             ]
         ]
     },
@@ -1074,14 +1025,14 @@
         "id": "273e6953dbf9b6bc",
         "type": "function",
         "z": "a5c9772ae6334205",
-        "name": "Push Suite Into Collection",
+        "name": "Push Suite",
         "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.collection.suites.push(msg.payload.suite);\n\ndelete msg.payload.suite;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 530,
+        "x": 490,
         "y": 160,
         "wires": [
             [
