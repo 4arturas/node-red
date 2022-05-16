@@ -326,7 +326,7 @@
         "type": "function",
         "z": "4a9935b75e76a65a",
         "name": "Push Case",
-        "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.suite.cases.push(msg.payload.case);\n\nmsg.payload.case.server     = msg.payload.server;\nmsg.payload.case.body       = msg.payload.body;\nmsg.payload.case.objects    = msg.payload.objects;\n\n\ndelete msg.payload.server;\ndelete msg.payload.body;\ndelete msg.payload.objects;\ndelete msg.payload.case;\n\nreturn msg;",
+        "func": "\nmsg.payload.suite.cases.push(msg.payload.case);\n\nmsg.payload.case.server     = msg.payload.server;\nmsg.payload.case.body       = msg.payload.body;\nmsg.payload.case.objects    = msg.payload.objects;\n\n\ndelete msg.payload.server;\ndelete msg.payload.body;\ndelete msg.payload.objects;\ndelete msg.payload.case;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1019,29 +1019,6 @@
         ]
     },
     {
-        "id": "d2dd7ca0faca1580",
-        "type": "inject",
-        "z": "a5c9772ae6334205",
-        "name": "Collection",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"collection\":{\"options\":{\"collectionName\":\"testtregtrerreion\",\"version\":1212,\"parameters\":{\"collectionBatchId\":\"xxxxxx\"}},\"suites\":[]}}",
-        "payloadType": "json",
-        "x": 120,
-        "y": 520,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "4a6d7f360d63b7f6",
         "type": "debug",
         "z": "a5c9772ae6334205",
@@ -1103,84 +1080,6 @@
         "encoding": "none",
         "x": 1040,
         "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a9d91ea7b8f1513c",
-        "type": "subflow:293ae38c7343ee6b",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "x": 310,
-        "y": 340,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "5e1897dc5d00fe79",
-        "type": "debug",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 550,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "c60a78651372d2d5",
-        "type": "subflow:45a53fed240aa004",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "env": [
-            {
-                "name": "caseBatchId",
-                "value": "caseID1111",
-                "type": "str"
-            },
-            {
-                "name": "threads",
-                "value": "100",
-                "type": "num"
-            },
-            {
-                "name": "loop",
-                "value": "5",
-                "type": "num"
-            }
-        ],
-        "x": 310,
-        "y": 460,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4b22910c3bed5175",
-        "type": "subflow:29f9222b83059643",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "env": [
-            {
-                "name": "suiteName",
-                "value": "My Suite",
-                "type": "str"
-            },
-            {
-                "name": "suiteBatchId",
-                "value": "suiteBatchId2222",
-                "type": "str"
-            }
-        ],
-        "x": 310,
-        "y": 580,
         "wires": [
             []
         ]
