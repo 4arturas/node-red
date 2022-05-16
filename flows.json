@@ -42,7 +42,7 @@
         ],
         "out": [
             {
-                "x": 1300,
+                "x": 620,
                 "y": 100,
                 "wires": [
                     {
@@ -80,8 +80,8 @@
         "category": "",
         "in": [
             {
-                "x": 220,
-                "y": 240,
+                "x": 60,
+                "y": 100,
                 "wires": [
                     {
                         "id": "777d8c6cfcd79c3e"
@@ -91,8 +91,8 @@
         ],
         "out": [
             {
-                "x": 1360,
-                "y": 260,
+                "x": 1180,
+                "y": 120,
                 "wires": [
                     {
                         "id": "c122530013e27beb",
@@ -105,7 +105,7 @@
         "meta": {},
         "color": "#DDAA99",
         "status": {
-            "x": 120,
+            "x": 60,
             "y": 40,
             "wires": []
         }
@@ -129,7 +129,7 @@
         ],
         "out": [
             {
-                "x": 900,
+                "x": 840,
                 "y": 200,
                 "wires": [
                     {
@@ -162,10 +162,10 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "orange",
         "status": {
             "x": 200,
-            "y": 80,
+            "y": 120,
             "wires": []
         }
     },
@@ -216,7 +216,7 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "lightblue",
         "status": {
             "x": 260,
             "y": 140,
@@ -231,8 +231,8 @@
         "category": "",
         "in": [
             {
-                "x": 300,
-                "y": 260,
+                "x": 280,
+                "y": 200,
                 "wires": [
                     {
                         "id": "605ccca383470d2b"
@@ -242,8 +242,8 @@
         ],
         "out": [
             {
-                "x": 720,
-                "y": 260,
+                "x": 660,
+                "y": 200,
                 "wires": [
                     {
                         "id": "7bcb025833299b46",
@@ -265,10 +265,10 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "green",
         "status": {
-            "x": 300,
-            "y": 180,
+            "x": 280,
+            "y": 140,
             "wires": []
         }
     },
@@ -314,7 +314,7 @@
             }
         ],
         "meta": {},
-        "color": "#DDAA99",
+        "color": "red",
         "status": {
             "x": 280,
             "y": 120,
@@ -332,25 +332,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 690,
+        "x": 490,
         "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "13abe75faafb5b79",
-        "type": "function",
-        "z": "4a9935b75e76a65a",
-        "name": "",
-        "func": "\nnode.log(1111);\n\n//node.log(env.get(\"suiteName\"));\nnode.log(JSON.stringify(msg.payload.suite));\n\n\n//node.log(msg.payload.suite.parameters.suiteBatchId);\nnode.log(2222);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 840,
-        "y": 280,
         "wires": [
             []
         ]
@@ -360,7 +343,7 @@
         "type": "subflow:f79468d09c2b4e79",
         "z": "4a9935b75e76a65a",
         "name": "",
-        "x": 450,
+        "x": 310,
         "y": 100,
         "wires": [
             [
@@ -404,8 +387,8 @@
         "syntax": "mustache",
         "template": "{\n  \"paymentId\": \"1321321231\",\n  \"amount\": 7.85,\n  \"currency\": \"EUR\",\n  \"unstructuredRemittanceInfo\": \"payment for Licensed Fresh Sausages\",\n  \"debtorAccount\": \"sdfsdfdsf\",\n  \"creditorAccount\": \"GB81SEOU00994400000088\",\n  \"debtor\": {\n    \"address\": {\n      \"country\": \"IL\",\n      \"addressLine1\": \"86460 Dibbert Prairie Suite 085\",\n      \"addressLine2\": \"East Lisandrofort, LK-50064-7200\"\n    },\n    \"name\": \"Howell Abshire\",\n    \"privatePerson\": {\n      \"dateAndPlaceOfBirth\": {\n        \"dateOfBirth\": \"1999-12-08\",\n        \"country\": \"LR\",\n        \"city\": \"South Vaughn\",\n        \"province\": \"Bedfordshire\"\n      }\n    }\n  },\n  \"creditor\": {\n    \"name\": \"Chadd Turcotte\",\n    \"privatePerson\": {\n      \"other\": {\n        \"id\": \"719-16-5638\",\n        \"type\": \"NIDN\"\n      }\n    }\n  },\n  \"ultimateDebtor\": {\n    \"name\": \"White, Hahn and Howe, Inc\",\n    \"legalEntity\": {\n      \"other\": {\n        \"id\": \"59025467\",\n        \"type\": \"COID\"\n      }\n    }\n  },\n  \"ultimateCreditor\": {\n    \"name\": \"Wilderman and Sons, Inc\",\n    \"legalEntity\": {\n      \"other\": {\n        \"id\": \"51073930\",\n        \"type\": \"PRTRY\",\n        \"proprietary\": \"CUSTOM ID TYPE\"\n      }\n    }\n  },\n  \"endToEnd\": \"KDX3287\"\n}",
         "output": "json",
-        "x": 570,
-        "y": 240,
+        "x": 410,
+        "y": 100,
         "wires": [
             [
                 "4c1f162e63560710"
@@ -423,8 +406,8 @@
         "syntax": "mustache",
         "template": "{\n    \"test1\": {\n      \"replace\": {\n        \"paymentId\": \"{{payload.collection.options.parameters.collectionBatchId}}-{{payload.suite.parameters.suiteBatchId}}-{{payload.case.parameters.caseBatchId}}-{{payload.counter}}\",\n        \"debtorAccount\": \"CY06904000010000000000201000\",\n        \"creditorAccount\": \"CY06904000010000000000201000\",\n        \"privatePerson\": \"asas\"\n      },\n      \"remove\": [\n        \"unstructuredRemittanceInfo\",\n        \"ultimateCreditor\"\n      ],\n      \"result\": {\n        \"httpCode\": \"200\",\n        \"saveRequest\": true,\n        \"saveResponse\": true,\n        \"responseAssert\": {\n          \"ultimateCreditor.legalEntity[*].other.id\": \"^.*\"\n        }\n      }\n    }\n}",
         "output": "json",
-        "x": 830,
-        "y": 260,
+        "x": 670,
+        "y": 120,
         "wires": [
             [
                 "0472a2a068c37123"
@@ -442,8 +425,8 @@
         "syntax": "mustache",
         "template": "{\n    \"test2\": {\n      \"replace\": {\n        \"paymentId\": \"{{payload.collection.options.parameters.collectionBatchId}}-{{payload.suite.parameters.suiteBatchId}}-{{payload.case.parameters.caseBatchId}}-{{payload.counter}}\",\n        \"debtorAccount\": \"CY06904000010000000000201000\",\n        \"creditorAccount\": \"CY06904000010000000000201000\",\n        \"privatePerson\": \"asas\"\n      },\n      \"remove\": [\n        \"unstructuredRemittanceInfo\",\n        \"ultimateCreditor\"\n      ],\n      \"result\": {\n        \"httpCode\": \"200\",\n        \"saveRequest\": true,\n        \"saveResponse\": true,\n        \"responseAssert\": {\n          \"ultimateCreditor.legalEntity[*].other.id\": \"^.*\"\n        }\n      }\n    }\n}",
         "output": "json",
-        "x": 1090,
-        "y": 260,
+        "x": 930,
+        "y": 120,
         "wires": [
             [
                 "c122530013e27beb"
@@ -461,8 +444,8 @@
         "syntax": "mustache",
         "template": "[]",
         "output": "json",
-        "x": 700,
-        "y": 240,
+        "x": 540,
+        "y": 100,
         "wires": [
             [
                 "55701dea7a55261d"
@@ -480,8 +463,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1220,
-        "y": 260,
+        "x": 1060,
+        "y": 120,
         "wires": [
             []
         ]
@@ -497,8 +480,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 960,
-        "y": 260,
+        "x": 800,
+        "y": 120,
         "wires": [
             [
                 "2ccecb3665956fe6"
@@ -527,8 +510,8 @@
                 "type": "num"
             }
         ],
-        "x": 330,
-        "y": 240,
+        "x": 170,
+        "y": 100,
         "wires": [
             [
                 "b2ba78aef51f3734"
@@ -562,8 +545,8 @@
                 "type": "str"
             }
         ],
-        "x": 450,
-        "y": 240,
+        "x": 290,
+        "y": 100,
         "wires": [
             [
                 "803965d144a0d18b"
@@ -581,7 +564,7 @@
         "syntax": "mustache",
         "template": "{\n  \"clientName\": null,\n  \"http\": null,\n  \"header\": {\n    \"authorization\": null,\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": null\n}",
         "output": "json",
-        "x": 330,
+        "x": 310,
         "y": 200,
         "wires": [
             [
@@ -593,7 +576,7 @@
         "id": "e7fc4a28e66eade0",
         "type": "change",
         "z": "293ae38c7343ee6b",
-        "name": "Set Vars",
+        "name": "Set Env Vars",
         "rules": [
             {
                 "t": "set",
@@ -629,7 +612,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
+        "x": 470,
         "y": 200,
         "wires": [
             [
@@ -648,7 +631,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
+        "x": 680,
         "y": 200,
         "wires": [
             []
@@ -723,8 +706,8 @@
         "syntax": "mustache",
         "template": "{\n  \"suiteName\": null,\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": null\n  },\n  \"cases\": [\n  ]\n}",
         "output": "json",
-        "x": 410,
-        "y": 260,
+        "x": 390,
+        "y": 200,
         "wires": [
             [
                 "7bcb025833299b46"
@@ -735,7 +718,7 @@
         "id": "7bcb025833299b46",
         "type": "change",
         "z": "29f9222b83059643",
-        "name": "Set Suite Env Var",
+        "name": "Set Env Vars",
         "rules": [
             {
                 "t": "set",
@@ -757,8 +740,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 570,
-        "y": 260,
+        "x": 530,
+        "y": 200,
         "wires": [
             []
         ]
@@ -1052,8 +1035,8 @@
         "topic": "",
         "payload": "{\"collection\":{\"options\":{\"collectionName\":\"testtregtrerreion\",\"version\":1212,\"parameters\":{\"collectionBatchId\":\"xxxxxx\"}},\"suites\":[]}}",
         "payloadType": "json",
-        "x": 140,
-        "y": 160,
+        "x": 120,
+        "y": 520,
         "wires": [
             []
         ]
@@ -1080,7 +1063,7 @@
         "type": "subflow:4a9935b75e76a65a",
         "z": "a5c9772ae6334205",
         "name": "",
-        "x": 550,
+        "x": 430,
         "y": 160,
         "wires": [
             [
@@ -1099,7 +1082,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 730,
+        "x": 590,
         "y": 160,
         "wires": [
             [
@@ -1219,7 +1202,7 @@
                 "type": "str"
             }
         ],
-        "x": 360,
+        "x": 280,
         "y": 160,
         "wires": [
             [
@@ -1244,8 +1227,8 @@
         "topic": "",
         "payload": "{}",
         "payloadType": "json",
-        "x": 130,
-        "y": 680,
+        "x": 150,
+        "y": 160,
         "wires": [
             [
                 "a391789fe9209ba4"
