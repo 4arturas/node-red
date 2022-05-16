@@ -1201,8 +1201,44 @@
         "x": 310,
         "y": 580,
         "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a391789fe9209ba4",
+        "type": "subflow:27e8eeb55cc4ae2f",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "x": 320,
+        "y": 680,
+        "wires": [
             [
                 "5e1897dc5d00fe79"
+            ]
+        ]
+    },
+    {
+        "id": "da3383f103c9f291",
+        "type": "inject",
+        "z": "a5c9772ae6334205",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 680,
+        "wires": [
+            [
+                "a391789fe9209ba4"
             ]
         ]
     },
