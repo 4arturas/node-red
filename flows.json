@@ -188,11 +188,11 @@
         ],
         "out": [
             {
-                "x": 940,
+                "x": 700,
                 "y": 220,
                 "wires": [
                     {
-                        "id": "6e170e84c4830c25",
+                        "id": "f4cb34cdc2fb32e2",
                         "port": 0
                     }
                 ]
@@ -641,9 +641,7 @@
         "x": 550,
         "y": 220,
         "wires": [
-            [
-                "6e170e84c4830c25"
-            ]
+            []
         ]
     },
     {
@@ -663,23 +661,6 @@
             [
                 "f4cb34cdc2fb32e2"
             ]
-        ]
-    },
-    {
-        "id": "6e170e84c4830c25",
-        "type": "function",
-        "z": "45a53fed240aa004",
-        "name": "Delete Case variables",
-        "func": "delete msg.payload.case;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 220,
-        "wires": [
-            []
         ]
     },
     {
