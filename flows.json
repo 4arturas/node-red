@@ -720,7 +720,7 @@
         "type": "function",
         "z": "45a53fed240aa004",
         "name": "Delete Case variables",
-        "func": "//delete msg.payload.case;\nreturn msg;",
+        "func": "delete msg.payload.case;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
