@@ -1076,6 +1076,23 @@
         "type": "subflow:45a53fed240aa004",
         "z": "a5c9772ae6334205",
         "name": "",
+        "env": [
+            {
+                "name": "caseBatchId",
+                "value": "caseID1111",
+                "type": "str"
+            },
+            {
+                "name": "threads",
+                "value": "100",
+                "type": "num"
+            },
+            {
+                "name": "loop",
+                "value": "5",
+                "type": "num"
+            }
+        ],
         "x": 310,
         "y": 460,
         "wires": [
