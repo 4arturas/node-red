@@ -768,7 +768,7 @@
         "type": "template",
         "z": "27e8eeb55cc4ae2f",
         "name": "Collection",
-        "field": "payload.collection",
+        "field": "payload",
         "fieldType": "msg",
         "format": "json",
         "syntax": "mustache",
