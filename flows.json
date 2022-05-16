@@ -1046,12 +1046,12 @@
         "type": "file",
         "z": "a5c9772ae6334205",
         "name": "",
-        "filename": "./test.json",
+        "filename": "c:\\test.json",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1040,
+        "x": 1050,
         "y": 420,
         "wires": [
             []
