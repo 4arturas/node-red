@@ -1046,12 +1046,12 @@
         "type": "file",
         "z": "a5c9772ae6334205",
         "name": "",
-        "filename": "C:\\Users\\greta.skipare\\Desktop\\test.json",
+        "filename": "test.json",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1140,
+        "x": 1040,
         "y": 420,
         "wires": [
             []
