@@ -1048,7 +1048,7 @@
         "name": "",
         "filename": "trest.json",
         "appendNewline": true,
-        "createDir": false,
+        "createDir": true,
         "overwriteFile": "true",
         "encoding": "none",
         "x": 1040,
