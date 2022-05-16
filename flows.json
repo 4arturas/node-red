@@ -800,7 +800,7 @@
                 "p": "payload.collection.options.parameters.collectionBatchId",
                 "pt": "msg",
                 "to": "collectionBatchId",
-                "tot": "jsonata"
+                "tot": "env"
             }
         ],
         "action": "",
