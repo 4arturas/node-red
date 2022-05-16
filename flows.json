@@ -242,11 +242,11 @@
         ],
         "out": [
             {
-                "x": 920,
+                "x": 720,
                 "y": 260,
                 "wires": [
                     {
-                        "id": "aa9d755879813f53",
+                        "id": "7bcb025833299b46",
                         "port": 0
                     }
                 ]
@@ -709,25 +709,6 @@
         "to": "",
         "reg": false,
         "x": 570,
-        "y": 260,
-        "wires": [
-            [
-                "aa9d755879813f53"
-            ]
-        ]
-    },
-    {
-        "id": "aa9d755879813f53",
-        "type": "function",
-        "z": "29f9222b83059643",
-        "name": "Delete Suite Vars",
-        "func": "delete msg.payload.suite;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 770,
         "y": 260,
         "wires": [
             []
