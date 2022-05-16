@@ -145,7 +145,7 @@
         ],
         "out": [
             {
-                "x": 1240,
+                "x": 900,
                 "y": 200,
                 "wires": [
                     {
@@ -515,14 +515,14 @@
         "id": "de514f7d2c7030c9",
         "type": "template",
         "z": "293ae38c7343ee6b",
-        "name": "http://server.com",
+        "name": "Server",
         "field": "payload.server",
         "fieldType": "msg",
         "format": "json",
         "syntax": "mustache",
         "template": "{\n  \"clientName\": null,\n  \"http\": \"https://server.com\",\n  \"header\": {\n    \"authorization\": \"Fixeg token\",\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": \"post\"\n}",
         "output": "json",
-        "x": 360,
+        "x": 330,
         "y": 200,
         "wires": [
             [
@@ -542,6 +542,13 @@
                 "pt": "msg",
                 "to": "clientName",
                 "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "payload.server.http",
+                "pt": "msg",
+                "to": "http",
+                "tot": "env"
             }
         ],
         "action": "",
@@ -549,7 +556,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
+        "x": 500,
         "y": 200,
         "wires": [
             [
@@ -568,7 +575,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 820,
+        "x": 720,
         "y": 200,
         "wires": [
             []
