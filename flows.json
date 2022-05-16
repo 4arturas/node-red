@@ -593,7 +593,7 @@
         "type": "function",
         "z": "293ae38c7343ee6b",
         "name": "Delete server object",
-        "func": "\ndelete msg.payload.server;\n\nreturn msg;",
+        "func": "\n//delete msg.payload.server;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
