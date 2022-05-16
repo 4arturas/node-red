@@ -1209,6 +1209,18 @@
         "type": "subflow:27e8eeb55cc4ae2f",
         "z": "a5c9772ae6334205",
         "name": "",
+        "env": [
+            {
+                "name": "collectionName",
+                "value": "baba",
+                "type": "str"
+            },
+            {
+                "name": "collectionBatchId",
+                "value": "tete",
+                "type": "str"
+            }
+        ],
         "x": 320,
         "y": 680,
         "wires": [
