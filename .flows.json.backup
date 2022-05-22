@@ -1092,12 +1092,12 @@
         "env": [
             {
                 "name": "collectionName",
-                "value": "baba",
+                "value": "myCollectionName1111",
                 "type": "str"
             },
             {
                 "name": "collectionBatchId",
-                "value": "bubu",
+                "value": "myCollectionBatchId222",
                 "type": "str"
             }
         ],

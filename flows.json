@@ -10,7 +10,7 @@
     {
         "id": "a5c9772ae6334205",
         "type": "tab",
-        "label": "Collection Flow",
+        "label": "Collection",
         "disabled": false,
         "info": "",
         "env": []
@@ -24,9 +24,17 @@
         "env": []
     },
     {
+        "id": "d9c88a0a246ec309",
+        "type": "tab",
+        "label": "JTBD",
+        "disabled": false,
+        "info": "Jobs To Be Done",
+        "env": []
+    },
+    {
         "id": "4a9935b75e76a65a",
         "type": "subflow",
-        "name": "Suite Flow",
+        "name": "Suite",
         "info": "",
         "category": "",
         "in": [
@@ -35,18 +43,18 @@
                 "y": 100,
                 "wires": [
                     {
-                        "id": "e52459fa9f4e90cc"
+                        "id": "8e227f858e741893"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 620,
+                "x": 1300,
                 "y": 100,
                 "wires": [
                     {
-                        "id": "980820d05d7010f3",
+                        "id": "8c7b98efc638aa4e",
                         "port": 0
                     }
                 ]
@@ -75,24 +83,24 @@
     {
         "id": "f79468d09c2b4e79",
         "type": "subflow",
-        "name": "Case Flow",
+        "name": "Case",
         "info": "",
         "category": "",
         "in": [
             {
-                "x": 60,
-                "y": 100,
+                "x": 40,
+                "y": 120,
                 "wires": [
                     {
-                        "id": "777d8c6cfcd79c3e"
+                        "id": "7d414dca1bf66d61"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 1180,
-                "y": 120,
+                "x": 1360,
+                "y": 260,
                 "wires": [
                     {
                         "id": "c122530013e27beb",
@@ -101,7 +109,23 @@
                 ]
             }
         ],
-        "env": [],
+        "env": [
+            {
+                "name": "caseBatchId",
+                "type": "str",
+                "value": "zzzzzzz1111111"
+            },
+            {
+                "name": "threads",
+                "type": "num",
+                "value": "4"
+            },
+            {
+                "name": "loop",
+                "type": "num",
+                "value": "101"
+            }
+        ],
         "meta": {},
         "color": "#DDAA99",
         "status": {
@@ -129,7 +153,7 @@
         ],
         "out": [
             {
-                "x": 840,
+                "x": 1240,
                 "y": 200,
                 "wires": [
                     {
@@ -143,199 +167,110 @@
             {
                 "name": "clientName",
                 "type": "str",
-                "value": ""
+                "value": "clientName"
             },
             {
                 "name": "http",
                 "type": "str",
-                "value": ""
-            },
-            {
-                "name": "authorization",
-                "type": "str",
-                "value": ""
-            },
-            {
-                "name": "method",
-                "type": "str",
-                "value": ""
+                "value": "https://server.com"
             }
         ],
         "meta": {},
-        "color": "orange",
+        "color": "#DDAA99",
         "status": {
             "x": 200,
-            "y": 120,
+            "y": 80,
             "wires": []
         }
     },
     {
-        "id": "45a53fed240aa004",
-        "type": "subflow",
-        "name": "Case",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 260,
-                "y": 220,
-                "wires": [
-                    {
-                        "id": "a819cb16e240cfd9"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 700,
-                "y": 220,
-                "wires": [
-                    {
-                        "id": "f4cb34cdc2fb32e2",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "caseBatchId",
-                "type": "str",
-                "value": ""
-            },
-            {
-                "name": "threads",
-                "type": "num",
-                "value": ""
-            },
-            {
-                "name": "loop",
-                "type": "num",
-                "value": ""
-            }
-        ],
-        "meta": {},
-        "color": "lightblue",
-        "status": {
-            "x": 260,
-            "y": 140,
-            "wires": []
-        }
-    },
-    {
-        "id": "29f9222b83059643",
-        "type": "subflow",
+        "id": "8e227f858e741893",
+        "type": "template",
+        "z": "4a9935b75e76a65a",
         "name": "Suite",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 280,
-                "y": 200,
-                "wires": [
-                    {
-                        "id": "605ccca383470d2b"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 660,
-                "y": 200,
-                "wires": [
-                    {
-                        "id": "7bcb025833299b46",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "suiteName",
-                "type": "str",
-                "value": ""
-            },
-            {
-                "name": "suiteBatchId",
-                "type": "str",
-                "value": ""
-            }
-        ],
-        "meta": {},
-        "color": "green",
-        "status": {
-            "x": 280,
-            "y": 140,
-            "wires": []
-        }
-    },
-    {
-        "id": "27e8eeb55cc4ae2f",
-        "type": "subflow",
-        "name": "Collection",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 280,
-                "y": 180,
-                "wires": [
-                    {
-                        "id": "e1372830e163b054"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 700,
-                "y": 180,
-                "wires": [
-                    {
-                        "id": "643fbb64d45e1e28",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "collectionName",
-                "type": "str",
-                "value": ""
-            },
-            {
-                "name": "collectionBatchId",
-                "type": "str",
-                "value": ""
-            }
-        ],
-        "meta": {},
-        "color": "red",
-        "status": {
-            "x": 280,
-            "y": 120,
-            "wires": []
-        }
+        "field": "payload.suite",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n  \"suiteName\": null,\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": null\n  },\n  \"cases\": [\n  ]\n}",
+        "output": "json",
+        "x": 130,
+        "y": 100,
+        "wires": [
+            [
+                "2a273dad8d547814"
+            ]
+        ]
     },
     {
         "id": "980820d05d7010f3",
         "type": "function",
         "z": "4a9935b75e76a65a",
-        "name": "Push Case",
-        "func": "\nmsg.payload.suite.cases.push(msg.payload.case);\n\nmsg.payload.case.server     = msg.payload.server;\nmsg.payload.case.body       = msg.payload.body;\nmsg.payload.case.objects    = msg.payload.objects;\n\n\ndelete msg.payload.server;\ndelete msg.payload.body;\ndelete msg.payload.objects;\ndelete msg.payload.case;\n\nreturn msg;",
+        "name": "Push Case Into Suite",
+        "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.suite.cases.push(msg.payload.case);\n\nmsg.payload.case.server     = msg.payload.server;\nmsg.payload.case.body       = msg.payload.body;\nmsg.payload.case.objects    = msg.payload.objects;\n\n\ndelete msg.payload.server;\ndelete msg.payload.body;\ndelete msg.payload.objects;\ndelete msg.payload.case;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 490,
+        "x": 720,
         "y": 100,
         "wires": [
+            [
+                "bda02361c6d46be0"
+            ]
+        ]
+    },
+    {
+        "id": "13abe75faafb5b79",
+        "type": "function",
+        "z": "4a9935b75e76a65a",
+        "name": "",
+        "func": "\nnode.log(1111);\n\n//node.log(env.get(\"suiteName\"));\nnode.log(JSON.stringify(msg.payload.suite));\n\n\n//node.log(msg.payload.suite.parameters.suiteBatchId);\nnode.log(2222);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 280,
+        "wires": [
             []
+        ]
+    },
+    {
+        "id": "2a273dad8d547814",
+        "type": "change",
+        "z": "4a9935b75e76a65a",
+        "name": "Set Suite Env Var",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.suite.suiteName",
+                "pt": "msg",
+                "to": "suiteName",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "payload.suite.parameters.suiteBatchId",
+                "pt": "msg",
+                "to": "suiteBatchId",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 100,
+        "wires": [
+            [
+                "13abe75faafb5b79",
+                "6c973f4c16ede555"
+            ]
         ]
     },
     {
@@ -343,7 +278,7 @@
         "type": "subflow:f79468d09c2b4e79",
         "z": "4a9935b75e76a65a",
         "name": "",
-        "x": 310,
+        "x": 510,
         "y": 100,
         "wires": [
             [
@@ -352,27 +287,63 @@
         ]
     },
     {
-        "id": "e52459fa9f4e90cc",
-        "type": "subflow:29f9222b83059643",
+        "id": "bda02361c6d46be0",
+        "type": "subflow:f79468d09c2b4e79",
         "z": "4a9935b75e76a65a",
         "name": "",
         "env": [
             {
-                "name": "suiteName",
-                "value": "mySuiteName111",
-                "type": "str"
+                "name": "threads",
+                "value": "5",
+                "type": "num"
             },
             {
-                "name": "suiteBatchId",
-                "value": "mySuiteBatchID222",
-                "type": "str"
+                "name": "loop",
+                "value": "201",
+                "type": "num"
             }
         ],
-        "x": 150,
+        "x": 910,
         "y": 100,
         "wires": [
             [
-                "6c973f4c16ede555"
+                "8c7b98efc638aa4e"
+            ]
+        ]
+    },
+    {
+        "id": "8c7b98efc638aa4e",
+        "type": "function",
+        "z": "4a9935b75e76a65a",
+        "name": "Push Case Into Suite",
+        "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.suite.cases.push(msg.payload.case);\n\nmsg.payload.case.server     = msg.payload.server;\nmsg.payload.case.body       = msg.payload.body;\nmsg.payload.case.objects    = msg.payload.objects;\n\n\ndelete msg.payload.server;\ndelete msg.payload.body;\ndelete msg.payload.objects;\ndelete msg.payload.case;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dba384fec8265ca8",
+        "type": "template",
+        "z": "f79468d09c2b4e79",
+        "name": "http://server.com",
+        "field": "payload.server",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "plain",
+        "template": "{\n  \"clientName\": \"asas\",\n  \"http\": \"https://server.com\",\n  \"header\": {\n    \"authorization\": \"Fixeg token\",\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": \"post\"\n}",
+        "output": "json",
+        "x": 420,
+        "y": 240,
+        "wires": [
+            [
+                "803965d144a0d18b"
             ]
         ]
     },
@@ -387,11 +358,30 @@
         "syntax": "mustache",
         "template": "{\n  \"paymentId\": \"1321321231\",\n  \"amount\": 7.85,\n  \"currency\": \"EUR\",\n  \"unstructuredRemittanceInfo\": \"payment for Licensed Fresh Sausages\",\n  \"debtorAccount\": \"sdfsdfdsf\",\n  \"creditorAccount\": \"GB81SEOU00994400000088\",\n  \"debtor\": {\n    \"address\": {\n      \"country\": \"IL\",\n      \"addressLine1\": \"86460 Dibbert Prairie Suite 085\",\n      \"addressLine2\": \"East Lisandrofort, LK-50064-7200\"\n    },\n    \"name\": \"Howell Abshire\",\n    \"privatePerson\": {\n      \"dateAndPlaceOfBirth\": {\n        \"dateOfBirth\": \"1999-12-08\",\n        \"country\": \"LR\",\n        \"city\": \"South Vaughn\",\n        \"province\": \"Bedfordshire\"\n      }\n    }\n  },\n  \"creditor\": {\n    \"name\": \"Chadd Turcotte\",\n    \"privatePerson\": {\n      \"other\": {\n        \"id\": \"719-16-5638\",\n        \"type\": \"NIDN\"\n      }\n    }\n  },\n  \"ultimateDebtor\": {\n    \"name\": \"White, Hahn and Howe, Inc\",\n    \"legalEntity\": {\n      \"other\": {\n        \"id\": \"59025467\",\n        \"type\": \"COID\"\n      }\n    }\n  },\n  \"ultimateCreditor\": {\n    \"name\": \"Wilderman and Sons, Inc\",\n    \"legalEntity\": {\n      \"other\": {\n        \"id\": \"51073930\",\n        \"type\": \"PRTRY\",\n        \"proprietary\": \"CUSTOM ID TYPE\"\n      }\n    }\n  },\n  \"endToEnd\": \"KDX3287\"\n}",
         "output": "json",
-        "x": 410,
-        "y": 100,
+        "x": 570,
+        "y": 240,
         "wires": [
             [
                 "4c1f162e63560710"
+            ]
+        ]
+    },
+    {
+        "id": "7d414dca1bf66d61",
+        "type": "template",
+        "z": "f79468d09c2b4e79",
+        "name": "Case 1",
+        "field": "payload.case",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "{\n  \"parameters\": {\n    \"caseBatchId\": null\n  },\n  \"caseName\": \"OutgoingPaymentSimple\",\n  \"caseBase\": \"OutgoingPaymentSCT\",\n  \"threads\": 3,\n  \"loop\": 100,\n  \"flow\": [\n    {\n      \"sendPayment\": true,\n      \"checkPayment\": true\n    }\n  ],\n  \"server\": null,\n  \"body\":   null,\n  \"objects\": []\n}",
+        "output": "json",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "fe81c6be0d46a1b3"
             ]
         ]
     },
@@ -406,8 +396,8 @@
         "syntax": "mustache",
         "template": "{\n    \"test1\": {\n      \"replace\": {\n        \"paymentId\": \"{{payload.collection.options.parameters.collectionBatchId}}-{{payload.suite.parameters.suiteBatchId}}-{{payload.case.parameters.caseBatchId}}-{{payload.counter}}\",\n        \"debtorAccount\": \"CY06904000010000000000201000\",\n        \"creditorAccount\": \"CY06904000010000000000201000\",\n        \"privatePerson\": \"asas\"\n      },\n      \"remove\": [\n        \"unstructuredRemittanceInfo\",\n        \"ultimateCreditor\"\n      ],\n      \"result\": {\n        \"httpCode\": \"200\",\n        \"saveRequest\": true,\n        \"saveResponse\": true,\n        \"responseAssert\": {\n          \"ultimateCreditor.legalEntity[*].other.id\": \"^.*\"\n        }\n      }\n    }\n}",
         "output": "json",
-        "x": 670,
-        "y": 120,
+        "x": 830,
+        "y": 260,
         "wires": [
             [
                 "0472a2a068c37123"
@@ -425,8 +415,8 @@
         "syntax": "mustache",
         "template": "{\n    \"test2\": {\n      \"replace\": {\n        \"paymentId\": \"{{payload.collection.options.parameters.collectionBatchId}}-{{payload.suite.parameters.suiteBatchId}}-{{payload.case.parameters.caseBatchId}}-{{payload.counter}}\",\n        \"debtorAccount\": \"CY06904000010000000000201000\",\n        \"creditorAccount\": \"CY06904000010000000000201000\",\n        \"privatePerson\": \"asas\"\n      },\n      \"remove\": [\n        \"unstructuredRemittanceInfo\",\n        \"ultimateCreditor\"\n      ],\n      \"result\": {\n        \"httpCode\": \"200\",\n        \"saveRequest\": true,\n        \"saveResponse\": true,\n        \"responseAssert\": {\n          \"ultimateCreditor.legalEntity[*].other.id\": \"^.*\"\n        }\n      }\n    }\n}",
         "output": "json",
-        "x": 930,
-        "y": 120,
+        "x": 1090,
+        "y": 260,
         "wires": [
             [
                 "c122530013e27beb"
@@ -444,8 +434,8 @@
         "syntax": "mustache",
         "template": "[]",
         "output": "json",
-        "x": 540,
-        "y": 100,
+        "x": 700,
+        "y": 240,
         "wires": [
             [
                 "55701dea7a55261d"
@@ -463,8 +453,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1060,
-        "y": 120,
+        "x": 1220,
+        "y": 260,
         "wires": [
             []
         ]
@@ -480,8 +470,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
-        "y": 120,
+        "x": 960,
+        "y": 260,
         "wires": [
             [
                 "2ccecb3665956fe6"
@@ -489,158 +479,9 @@
         ]
     },
     {
-        "id": "777d8c6cfcd79c3e",
-        "type": "subflow:45a53fed240aa004",
-        "z": "f79468d09c2b4e79",
-        "name": "",
-        "env": [
-            {
-                "name": "caseBatchId",
-                "value": "my_caseBatchId_1111",
-                "type": "str"
-            },
-            {
-                "name": "threads",
-                "value": "11",
-                "type": "num"
-            },
-            {
-                "name": "loop",
-                "value": "12",
-                "type": "num"
-            }
-        ],
-        "x": 170,
-        "y": 100,
-        "wires": [
-            [
-                "b2ba78aef51f3734"
-            ]
-        ]
-    },
-    {
-        "id": "b2ba78aef51f3734",
-        "type": "subflow:293ae38c7343ee6b",
-        "z": "f79468d09c2b4e79",
-        "name": "",
-        "env": [
-            {
-                "name": "clientName",
-                "value": "mySeverClient",
-                "type": "str"
-            },
-            {
-                "name": "http",
-                "value": "https://google.com",
-                "type": "str"
-            },
-            {
-                "name": "authorization",
-                "value": "Fixed Token",
-                "type": "str"
-            },
-            {
-                "name": "method",
-                "value": "POST",
-                "type": "str"
-            }
-        ],
-        "x": 290,
-        "y": 100,
-        "wires": [
-            [
-                "803965d144a0d18b"
-            ]
-        ]
-    },
-    {
-        "id": "de514f7d2c7030c9",
-        "type": "template",
-        "z": "293ae38c7343ee6b",
-        "name": "Server",
-        "field": "payload.server",
-        "fieldType": "msg",
-        "format": "json",
-        "syntax": "mustache",
-        "template": "{\n  \"clientName\": null,\n  \"http\": null,\n  \"header\": {\n    \"authorization\": null,\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": null\n}",
-        "output": "json",
-        "x": 310,
-        "y": 200,
-        "wires": [
-            [
-                "e7fc4a28e66eade0"
-            ]
-        ]
-    },
-    {
-        "id": "e7fc4a28e66eade0",
+        "id": "fe81c6be0d46a1b3",
         "type": "change",
-        "z": "293ae38c7343ee6b",
-        "name": "Set Env Vars",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.server.clientName",
-                "pt": "msg",
-                "to": "clientName",
-                "tot": "env"
-            },
-            {
-                "t": "set",
-                "p": "payload.server.http",
-                "pt": "msg",
-                "to": "http",
-                "tot": "env"
-            },
-            {
-                "t": "set",
-                "p": "payload.server.header.authorization",
-                "pt": "msg",
-                "to": "authorization",
-                "tot": "env"
-            },
-            {
-                "t": "set",
-                "p": "payload.server.header.method",
-                "pt": "msg",
-                "to": "method",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 470,
-        "y": 200,
-        "wires": [
-            [
-                "ffa4330dae1613e8"
-            ]
-        ]
-    },
-    {
-        "id": "ffa4330dae1613e8",
-        "type": "function",
-        "z": "293ae38c7343ee6b",
-        "name": "Delete server object",
-        "func": "\ndelete msg.payload.server;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 680,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f4cb34cdc2fb32e2",
-        "type": "change",
-        "z": "45a53fed240aa004",
+        "z": "f79468d09c2b4e79",
         "name": "Set Case Env Var",
         "rules": [
             {
@@ -670,68 +511,44 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 550,
-        "y": 220,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a819cb16e240cfd9",
-        "type": "template",
-        "z": "45a53fed240aa004",
-        "name": "Case",
-        "field": "payload.case",
-        "fieldType": "msg",
-        "format": "javascript",
-        "syntax": "mustache",
-        "template": "{\n  \"parameters\": {\n    \"caseBatchId\": null\n  },\n  \"caseName\": \"OutgoingPaymentSimple\",\n  \"caseBase\": \"OutgoingPaymentSCT\",\n  \"threads\": null,\n  \"loop\": null,\n  \"flow\": [\n    {\n      \"sendPayment\": true,\n      \"checkPayment\": true\n    }\n  ],\n  \"server\": null,\n  \"body\":   null,\n  \"objects\": []\n}",
-        "output": "json",
-        "x": 370,
-        "y": 220,
+        "x": 310,
+        "y": 180,
         "wires": [
             [
-                "f4cb34cdc2fb32e2"
+                "dba384fec8265ca8"
             ]
         ]
     },
     {
-        "id": "605ccca383470d2b",
+        "id": "de514f7d2c7030c9",
         "type": "template",
-        "z": "29f9222b83059643",
-        "name": "Suite",
-        "field": "payload.suite",
+        "z": "293ae38c7343ee6b",
+        "name": "http://server.com",
+        "field": "payload.server",
         "fieldType": "msg",
         "format": "json",
         "syntax": "mustache",
-        "template": "{\n  \"suiteName\": null,\n  \"version\": 1212,\n  \"parameters\": {\n    \"suiteBatchId\": null\n  },\n  \"cases\": [\n  ]\n}",
+        "template": "{\n  \"clientName\": null,\n  \"http\": \"https://server.com\",\n  \"header\": {\n    \"authorization\": \"Fixeg token\",\n    \"x-ray\": \"1234567\",\n    \"referrerUrl\": \"asasas\"\n  },\n  \"method\": \"post\"\n}",
         "output": "json",
-        "x": 390,
+        "x": 360,
         "y": 200,
         "wires": [
             [
-                "7bcb025833299b46"
+                "e7fc4a28e66eade0"
             ]
         ]
     },
     {
-        "id": "7bcb025833299b46",
+        "id": "e7fc4a28e66eade0",
         "type": "change",
-        "z": "29f9222b83059643",
-        "name": "Set Env Vars",
+        "z": "293ae38c7343ee6b",
+        "name": "Set Vars",
         "rules": [
             {
                 "t": "set",
-                "p": "payload.suite.suiteName",
+                "p": "payload.server.clientName",
                 "pt": "msg",
-                "to": "suiteName",
-                "tot": "env"
-            },
-            {
-                "t": "set",
-                "p": "payload.suite.parameters.suiteBatchId",
-                "pt": "msg",
-                "to": "suiteBatchId",
+                "to": "clientName",
                 "tot": "env"
             }
         ],
@@ -740,59 +557,27 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 560,
         "y": 200,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e1372830e163b054",
-        "type": "template",
-        "z": "27e8eeb55cc4ae2f",
-        "name": "Collection",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "json",
-        "syntax": "mustache",
-        "template": "{\n    \"collection\": {\n        \"options\": {\n            \"collectionName\": null,\n            \"version\": 1212,\n            \"parameters\": {\n                \"collectionBatchId\": null\n            }\n        },\n        \"suites\": []\n    }\n}",
-        "output": "json",
-        "x": 400,
-        "y": 180,
-        "wires": [
             [
-                "643fbb64d45e1e28"
+                "ffa4330dae1613e8"
             ]
         ]
     },
     {
-        "id": "643fbb64d45e1e28",
-        "type": "change",
-        "z": "27e8eeb55cc4ae2f",
-        "name": "Set Env Vars",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.collection.options.collectionName",
-                "pt": "msg",
-                "to": "collectionName",
-                "tot": "env"
-            },
-            {
-                "t": "set",
-                "p": "payload.collection.options.parameters.collectionBatchId",
-                "pt": "msg",
-                "to": "collectionBatchId",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 570,
-        "y": 180,
+        "id": "ffa4330dae1613e8",
+        "type": "function",
+        "z": "293ae38c7343ee6b",
+        "name": "Delete server object",
+        "func": "\ndelete msg.payload.server;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 200,
         "wires": [
             []
         ]
@@ -1019,11 +804,36 @@
         ]
     },
     {
+        "id": "d2dd7ca0faca1580",
+        "type": "inject",
+        "z": "a5c9772ae6334205",
+        "name": "Collection",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"collection\":{\"options\":{\"collectionName\":\"testtregtrerreion\",\"version\":1212,\"parameters\":{\"collectionBatchId\":\"xxxxxx\"}},\"suites\":[]}}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "a9d91ea7b8f1513c"
+            ]
+        ]
+    },
+    {
         "id": "4a6d7f360d63b7f6",
         "type": "debug",
         "z": "a5c9772ae6334205",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1040,7 +850,7 @@
         "type": "subflow:4a9935b75e76a65a",
         "z": "a5c9772ae6334205",
         "name": "",
-        "x": 430,
+        "x": 290,
         "y": 160,
         "wires": [
             [
@@ -1052,14 +862,14 @@
         "id": "273e6953dbf9b6bc",
         "type": "function",
         "z": "a5c9772ae6334205",
-        "name": "Push Suite",
+        "name": "Push Suite Into Collection",
         "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.collection.suites.push(msg.payload.suite);\n\ndelete msg.payload.suite;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
+        "x": 490,
         "y": 160,
         "wires": [
             [
@@ -1073,66 +883,45 @@
         "type": "file",
         "z": "a5c9772ae6334205",
         "name": "",
-        "filename": "test.json",
+        "filename": "/home/arturas/.node-red/projects/node-red/test.json",
         "appendNewline": true,
-        "createDir": true,
+        "createDir": false,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1040,
+        "x": 1170,
         "y": 420,
         "wires": [
             []
         ]
     },
     {
-        "id": "a391789fe9209ba4",
-        "type": "subflow:27e8eeb55cc4ae2f",
+        "id": "a9d91ea7b8f1513c",
+        "type": "subflow:293ae38c7343ee6b",
         "z": "a5c9772ae6334205",
         "name": "",
-        "env": [
-            {
-                "name": "collectionName",
-                "value": "myCollectionName1111",
-                "type": "str"
-            },
-            {
-                "name": "collectionBatchId",
-                "value": "myCollectionBatchId222",
-                "type": "str"
-            }
-        ],
-        "x": 280,
-        "y": 160,
+        "x": 310,
+        "y": 340,
         "wires": [
             [
-                "b13fdfdf981c85b1"
+                "5e1897dc5d00fe79"
             ]
         ]
     },
     {
-        "id": "da3383f103c9f291",
-        "type": "inject",
+        "id": "5e1897dc5d00fe79",
+        "type": "debug",
         "z": "a5c9772ae6334205",
         "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{}",
-        "payloadType": "json",
-        "x": 150,
-        "y": 160,
-        "wires": [
-            [
-                "a391789fe9209ba4"
-            ]
-        ]
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 340,
+        "wires": []
     },
     {
         "id": "9804ae9eb68137ee",
@@ -1228,5 +1017,222 @@
                 "b82bdc1deb8ef509"
             ]
         ]
+    },
+    {
+        "id": "5e0ddaade57f14fe",
+        "type": "inject",
+        "z": "d9c88a0a246ec309",
+        "name": "Situacija",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 260,
+        "wires": [
+            [
+                "8341a933b165eceb"
+            ]
+        ]
+    },
+    {
+        "id": "8341a933b165eceb",
+        "type": "change",
+        "z": "d9c88a0a246ec309",
+        "name": "Motyvacija",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 260,
+        "wires": [
+            [
+                "886151dd6f39346c"
+            ]
+        ]
+    },
+    {
+        "id": "886151dd6f39346c",
+        "type": "debug",
+        "z": "d9c88a0a246ec309",
+        "name": "Rezultatas",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "69688b15eb0d1015",
+        "type": "inject",
+        "z": "d9c88a0a246ec309",
+        "name": "When...",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 400,
+        "wires": [
+            [
+                "213ae8abae4ea3b3"
+            ]
+        ]
+    },
+    {
+        "id": "213ae8abae4ea3b3",
+        "type": "switch",
+        "z": "d9c88a0a246ec309",
+        "name": "I want to...",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 400,
+        "wires": [
+            [
+                "1106b568bf2064d0"
+            ]
+        ]
+    },
+    {
+        "id": "1106b568bf2064d0",
+        "type": "debug",
+        "z": "d9c88a0a246ec309",
+        "name": "So I can...",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "eb86f27a56533232",
+        "type": "inject",
+        "z": "d9c88a0a246ec309",
+        "name": "Situation",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "0def639bf5173b3d"
+            ]
+        ]
+    },
+    {
+        "id": "0def639bf5173b3d",
+        "type": "change",
+        "z": "d9c88a0a246ec309",
+        "name": "Motivation",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 320,
+        "wires": [
+            [
+                "43819c375eb57831"
+            ]
+        ]
+    },
+    {
+        "id": "43819c375eb57831",
+        "type": "debug",
+        "z": "d9c88a0a246ec309",
+        "name": "Expected outcome",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 320,
+        "wires": []
     }
 ]
