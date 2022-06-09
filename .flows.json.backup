@@ -32,6 +32,14 @@
         "env": []
     },
     {
+        "id": "f03d232b4fcc4b3e",
+        "type": "tab",
+        "label": "HttpServer",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "4a9935b75e76a65a",
         "type": "subflow",
         "name": "Suite",
@@ -1113,7 +1121,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 230,
-        "y": 400,
+        "y": 380,
         "wires": [
             [
                 "213ae8abae4ea3b3"
@@ -1233,6 +1241,49 @@
         "statusType": "auto",
         "x": 690,
         "y": 320,
+        "wires": []
+    },
+    {
+        "id": "59ff2a1.fa600d4",
+        "type": "http in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "url": "/hello",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 660,
+        "y": 360,
+        "wires": [
+            [
+                "54c1e70d.ab3e18"
+            ]
+        ]
+    },
+    {
+        "id": "54c1e70d.ab3e18",
+        "type": "template",
+        "z": "f03d232b4fcc4b3e",
+        "name": "page",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<html>\n    <head></head>\n    <body>\n        <h1>Hello World!</h1>\n    </body>\n</html>",
+        "x": 810,
+        "y": 360,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "266c286f.d993d8",
+        "type": "http response",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "x": 950,
+        "y": 360,
         "wires": []
     }
 ]
