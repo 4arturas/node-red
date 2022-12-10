@@ -2,7 +2,9 @@
     "name": "node-red-github",
     "description": "A Node-RED Project",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-browser-utils": "0.0.11"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",

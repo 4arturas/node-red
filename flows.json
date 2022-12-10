@@ -16,14 +16,6 @@
         "env": []
     },
     {
-        "id": "b70b82bf8d00eb8a",
-        "type": "tab",
-        "label": "While Ex.",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "d9c88a0a246ec309",
         "type": "tab",
         "label": "JTBD",
@@ -35,6 +27,30 @@
         "id": "f03d232b4fcc4b3e",
         "type": "tab",
         "label": "HttpServer",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b70b82bf8d00eb8a",
+        "type": "tab",
+        "label": "While Ex.",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ec6dd8cedef27505",
+        "type": "tab",
+        "label": "Test Flow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7184d5a8972f1fe0",
+        "type": "tab",
+        "label": "websocket",
         "disabled": false,
         "info": "",
         "env": []
@@ -190,6 +206,21 @@
             "y": 80,
             "wires": []
         }
+    },
+    {
+        "id": "b79df368d7aaac79",
+        "type": "websocket-listener",
+        "path": "/ws/machine",
+        "wholemsg": "false"
+    },
+    {
+        "id": "33535f303afacccb",
+        "type": "websocket-client",
+        "path": "ws://127.0.0.1:1880/ws/machine",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": ""
     },
     {
         "id": "8e227f858e741893",
@@ -932,101 +963,6 @@
         "wires": []
     },
     {
-        "id": "9804ae9eb68137ee",
-        "type": "inject",
-        "z": "b70b82bf8d00eb8a",
-        "name": "ctx = 0",
-        "props": [
-            {
-                "p": "ctx",
-                "v": "0",
-                "vt": "num"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 410,
-        "y": 280,
-        "wires": [
-            [
-                "b82bdc1deb8ef509"
-            ]
-        ]
-    },
-    {
-        "id": "b82bdc1deb8ef509",
-        "type": "change",
-        "z": "b70b82bf8d00eb8a",
-        "name": "ctx++",
-        "rules": [
-            {
-                "t": "set",
-                "p": "ctx",
-                "pt": "msg",
-                "to": "ctx+1",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 630,
-        "y": 360,
-        "wires": [
-            [
-                "7855f2d23e2157f5",
-                "7a6d9d05e5d9bf8a"
-            ]
-        ]
-    },
-    {
-        "id": "7855f2d23e2157f5",
-        "type": "debug",
-        "z": "b70b82bf8d00eb8a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "ctx",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 860,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "7a6d9d05e5d9bf8a",
-        "type": "switch",
-        "z": "b70b82bf8d00eb8a",
-        "name": "while ( ctx < 10 )",
-        "property": "ctx",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "lt",
-                "v": "10",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 640,
-        "y": 220,
-        "wires": [
-            [
-                "b82bdc1deb8ef509"
-            ]
-        ]
-    },
-    {
         "id": "5e0ddaade57f14fe",
         "type": "inject",
         "z": "d9c88a0a246ec309",
@@ -1285,5 +1221,352 @@
         "x": 950,
         "y": 360,
         "wires": []
+    },
+    {
+        "id": "9804ae9eb68137ee",
+        "type": "inject",
+        "z": "b70b82bf8d00eb8a",
+        "name": "ctx = 0",
+        "props": [
+            {
+                "p": "ctx",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "b82bdc1deb8ef509"
+            ]
+        ]
+    },
+    {
+        "id": "b82bdc1deb8ef509",
+        "type": "change",
+        "z": "b70b82bf8d00eb8a",
+        "name": "ctx++",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ctx",
+                "pt": "msg",
+                "to": "ctx+1",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "7855f2d23e2157f5",
+                "7a6d9d05e5d9bf8a"
+            ]
+        ]
+    },
+    {
+        "id": "7855f2d23e2157f5",
+        "type": "debug",
+        "z": "b70b82bf8d00eb8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "ctx",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7a6d9d05e5d9bf8a",
+        "type": "switch",
+        "z": "b70b82bf8d00eb8a",
+        "name": "while ( ctx < 10 )",
+        "property": "ctx",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "10",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 220,
+        "wires": [
+            [
+                "b82bdc1deb8ef509"
+            ]
+        ]
+    },
+    {
+        "id": "7899bdf9b70815ce",
+        "type": "inject",
+        "z": "ec6dd8cedef27505",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"text\":\"However, because of the way conditional variables are implemented, what will actually happen is that they each will wake up one at a time, acquiring the mutex lock, then releasing it. However, while they are being released, they compete with one another, and they also compete with the next write. We profiled this approach, and the result was that we could see how we were spending pretty much all of our time in just synchronizing threads. Instead, we moved to a different approach, in which the first write will actually start off a new thread, dedicated to writing batches. The way it works, when a thread want to write a batch, it will add that to a queue and wake up the background writer thread, then wait on an event. The background writer will read all the current batches and merge them into a single write transaction.\",\"HMM_WORDS\":300,\"SYMBOL_START\":0,\"SYMBOL_END\":1}",
+        "payloadType": "json",
+        "x": 510,
+        "y": 100,
+        "wires": [
+            [
+                "c7a413c228cd2e16"
+            ]
+        ]
+    },
+    {
+        "id": "4cfe93465a25b5ff",
+        "type": "debug",
+        "z": "ec6dd8cedef27505",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c7a413c228cd2e16",
+        "type": "function",
+        "z": "ec6dd8cedef27505",
+        "name": "hmm_Init",
+        "func": "const SYMBOL_START  = msg.payload.SYMBOL_START;\nconst SYMBOL_END    = msg.payload.SYMBOL_END;\nconst HMM_WORDS     = msg.payload.HMM_WORDS;\n\nconst word = new Array( HMM_WORDS );\nconst end = new Array( HMM_WORDS );\nconst bigram = new Array( HMM_WORDS );\n\nfor ( let y = 0; y < HMM_WORDS; y++ )\n{\n    end[y] = 0;\n    bigram[y] = new Array( HMM_WORDS );\n    for ( let x = 0; x < HMM_WORDS; x++ )\n    {\n        bigram[y][x] = new Array( HMM_WORDS );\n        bigram[y][x] = 0;\n    } // end for x\n} // end for y\n\nword[SYMBOL_START]  = '!start!';\nword[SYMBOL_END]    = '!end!';\n\nmsg.payload.word = word;\nmsg.payload.end = end;\nmsg.payload.bigram = bigram;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 100,
+        "wires": [
+            [
+                "c6f153758686df1a"
+            ]
+        ]
+    },
+    {
+        "id": "aa499e2eb77deb54",
+        "type": "function",
+        "z": "ec6dd8cedef27505",
+        "name": "hmm_ParseText",
+        "func": "const text = msg.payload.text;\n\nlet word = '';\nlet first = 1;\n\nfor ( let i = 0; i < text.length; i++ )\n{\n    const c = text.charAt(i);\n    if ( c === ',' ) continue;\n    \n} // end for i\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c6f153758686df1a",
+        "type": "function",
+        "z": "ec6dd8cedef27505",
+        "name": "hmm_SplitText",
+        "func": "\nreturn msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 100,
+        "wires": [
+            [
+                "4cfe93465a25b5ff"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "97b99259ec4c8671",
+        "type": "split",
+        "z": "ec6dd8cedef27505",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 210,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83e0257de19abd28",
+        "type": "http in",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "url": "/web",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "da7d2b952a3c8df0"
+            ]
+        ]
+    },
+    {
+        "id": "8cf3deb298512f66",
+        "type": "http response",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1030,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6248cd7fd679aa6e",
+        "type": "template",
+        "z": "7184d5a8972f1fe0",
+        "name": "HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Title</title>\n    <script>\n        {{{payload.websocket}}}\n    </script>\n</head>\n<body>\nHello\n</body>\n</html>",
+        "output": "str",
+        "x": 850,
+        "y": 360,
+        "wires": [
+            [
+                "8cf3deb298512f66"
+            ]
+        ]
+    },
+    {
+        "id": "d42f9d0712bcedbb",
+        "type": "websocket in",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "server": "b79df368d7aaac79",
+        "client": "",
+        "x": 420,
+        "y": 520,
+        "wires": [
+            [
+                "dbf524f28cfd16cf"
+            ]
+        ]
+    },
+    {
+        "id": "dbf524f28cfd16cf",
+        "type": "debug",
+        "z": "7184d5a8972f1fe0",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "aaf7e06cd66dfdea",
+        "type": "websocket out",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "server": "b79df368d7aaac79",
+        "client": "",
+        "x": 650,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "58f3d52ede958831",
+        "type": "inject",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 450,
+        "y": 580,
+        "wires": [
+            [
+                "aaf7e06cd66dfdea"
+            ]
+        ]
+    },
+    {
+        "id": "da7d2b952a3c8df0",
+        "type": "template",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "field": "payload.websocket",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "const ws = new WebSocket('ws://127.0.0.1:1880/ws/machine');\nws.onmessage = function (e) {\n    console.log(e);\n}\nws.onopen = function () {\n    console.log('A client connected!');\n    ws.send('A client connected');\n}",
+        "output": "str",
+        "x": 640,
+        "y": 360,
+        "wires": [
+            [
+                "6248cd7fd679aa6e"
+            ]
+        ]
     }
 ]
