@@ -48,14 +48,6 @@
         "env": []
     },
     {
-        "id": "99cea75be0b7ec6a",
-        "type": "tab",
-        "label": "Teachable machines",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "7184d5a8972f1fe0",
         "type": "tab",
         "label": "websocket",
@@ -1195,29 +1187,11 @@
         "url": "/hello",
         "method": "get",
         "swaggerDoc": "",
-        "x": 660,
-        "y": 360,
+        "x": 160,
+        "y": 140,
         "wires": [
             [
-                "54c1e70d.ab3e18"
-            ]
-        ]
-    },
-    {
-        "id": "54c1e70d.ab3e18",
-        "type": "template",
-        "z": "f03d232b4fcc4b3e",
-        "name": "page",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "<html>\n    <head></head>\n    <body>\n        <h1>Hello World!</h1>\n    </body>\n</html>",
-        "x": 810,
-        "y": 360,
-        "wires": [
-            [
-                "266c286f.d993d8"
+                "7e73aef5e421cf29"
             ]
         ]
     },
@@ -1226,9 +1200,103 @@
         "type": "http response",
         "z": "f03d232b4fcc4b3e",
         "name": "",
-        "x": 950,
-        "y": 360,
+        "x": 1030,
+        "y": 220,
         "wires": []
+    },
+    {
+        "id": "7e73aef5e421cf29",
+        "type": "file in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/index.html",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 670,
+        "y": 140,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "68572dadaaea1467",
+        "type": "file in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/test.js",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 660,
+        "y": 220,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "77ac86f8d9cda0e5",
+        "type": "http in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "url": "/react/test.js",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 220,
+        "wires": [
+            [
+                "68572dadaaea1467"
+            ]
+        ]
+    },
+    {
+        "id": "f5280916e3560f07",
+        "type": "file in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/ImageModal.js",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "5fdb6b26612b3512",
+        "type": "http in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "url": "/react/ImageModal.js",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 300,
+        "wires": [
+            [
+                "f5280916e3560f07"
+            ]
+        ]
     },
     {
         "id": "9804ae9eb68137ee",
@@ -1439,35 +1507,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "2c3671f72140df12",
-        "type": "camera",
-        "z": "99cea75be0b7ec6a",
-        "name": "",
-        "x": 510,
-        "y": 320,
-        "wires": [
-            [
-                "fc41c99c24d439d6"
-            ]
-        ]
-    },
-    {
-        "id": "fc41c99c24d439d6",
-        "type": "debug",
-        "z": "99cea75be0b7ec6a",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1010,
-        "y": 320,
-        "wires": []
     },
     {
         "id": "83e0257de19abd28",

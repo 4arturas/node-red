@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin="anonymous"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.20.0-alpha.1/antd.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.20.0-alpha.1/antd.compact.css"/>
+
+
+<!--    <script src="../react/src/babel.min.js" crossorigin="anonymous"></script>
+    <script crossorigin src="../react/src/react.production.min.js"></script>
+    <script crossorigin src="../react/src/react-dom.production.min.js"></script>
+
+    <script src="../react/src/antd.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../react/src/antd.compact.css"/>-->
+
+    <script type="text/babel" src="react/ImageModal.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<script src="react/test.js" crossorigin="anonymous"></script>
+
+<div id="root"></div>
+
+
+
+<script type="text/babel">
+    const App = () => {
+        const [liked, setLiked] = React.useState(false);
+        const { Option } = antd.Select;
+
+
+        const dataSource = [
+            {
+                key: '1',
+                name: 'Mike',
+                age: 32,
+                address: '10 Downing Street',
+            },
+            {
+                key: '2',
+                name: 'John',
+                age: 42,
+                address: '10 Downing Street',
+            },
+        ];
+
+        const columns = [
+            {
+                title: 'Name',
+                dataIndex: 'name',
+                key: 'name',
+            },
+            {
+                title: 'Age',
+                dataIndex: 'age',
+                key: 'age',
+            },
+            {
+                title: 'Address',
+                dataIndex: 'address',
+                key: 'address',
+            },
+        ];
+
+        // if (liked) return <p>You liked this</p>
+        return <div style={{margin:'20px'}}>
+            <div>
+                <antd.Select defaultValue="-1" style={{ width: 220 }} showSearch>
+                    <antd.Select.Option value={0}>Choose</antd.Select.Option>
+                    <antd.Select.Option value={1}>A</antd.Select.Option>
+                    <antd.Select.Option value={2}>B</antd.Select.Option>
+                </antd.Select>
+            </div>
+            <div>
+                <antd.Table dataSource={dataSource} columns={columns} />
+            </div>
+            <div>
+                <ImageModal/>
+            </div>
+        </div>
+    };
+</script>
+<script type="text/babel">
+    ReactDOM.render(
+        <App />,
+        document.getElementById('root')
+    );
+</script>
+
+</body>
+</html>
