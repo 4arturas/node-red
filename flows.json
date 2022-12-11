@@ -1553,36 +1553,6 @@
         ]
     },
     {
-        "id": "f7c48b3a834b7877",
-        "type": "inject",
-        "z": "f03d232b4fcc4b3e",
-        "d": true,
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "5",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 1110,
-        "y": 540,
-        "wires": [
-            [
-                "ce6adba5081d840f"
-            ]
-        ]
-    },
-    {
         "id": "ce6adba5081d840f",
         "type": "websocket out",
         "z": "f03d232b4fcc4b3e",
@@ -1646,8 +1616,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 540,
-        "y": 700,
+        "x": 560,
+        "y": 740,
         "wires": []
     },
     {
@@ -1758,54 +1728,18 @@
         "y": 660,
         "wires": [
             [
-                "ac4b43de5fc4fc08",
                 "0648de1adc9bb5ce"
             ],
             [
-                "4301fe8e545229fa",
-                "0648de1adc9bb5ce"
+                "9bd6cc45287fc9e6"
             ],
             [
-                "68b89b9e15e7d11c"
+                "2f7ffb0a5faef15c"
             ],
             [
                 "8e34fbd988384994"
             ]
         ]
-    },
-    {
-        "id": "4301fe8e545229fa",
-        "type": "debug",
-        "z": "f03d232b4fcc4b3e",
-        "name": "refresh",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 540,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "ac4b43de5fc4fc08",
-        "type": "debug",
-        "z": "f03d232b4fcc4b3e",
-        "name": "insert",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 530,
-        "y": 520,
-        "wires": []
     },
     {
         "id": "7b32b19d64d48a84",
@@ -1824,35 +1758,56 @@
         ]
     },
     {
-        "id": "68b89b9e15e7d11c",
-        "type": "debug",
-        "z": "f03d232b4fcc4b3e",
-        "name": "delete",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 530,
-        "y": 640,
-        "wires": []
-    },
-    {
         "id": "0648de1adc9bb5ce",
         "type": "function",
         "z": "f03d232b4fcc4b3e",
         "name": "insert",
-        "func": "const jSon1 = [\n    { \"clien_id\": 1, \"amount\": 3 },\n    { \"clien_id\": 2, \"amount\": 3 },\n    { \"clien_id\": 3, \"amount\": 3 }\n];\n\nconst jSon2 = jSon1;\n\nconst jSonP27 = jSon1;\n\nconst jSonResponse = {\n    action: 0,\n    jSon1: jSon1,\n    jSon2: jSon2,\n    jSon3: jSonP27,\n};\nmsg.payload = jSonResponse;\nreturn msg;",
+        "func": "const jSonFromFrontend = msg.payload.data;\n\nconst jSon1 = [\n    { \"clien_id\": 1, \"amount\": jSonFromFrontend.traceId },\n    { \"clien_id\": 2, \"amount\": 3 },\n    { \"clien_id\": 3, \"amount\": 3 }\n];\n\nconst jSon2 = jSon1;\n\nconst jSonP27 = jSon1;\n\nconst jSonResponse = {\n    action: 0,\n    jSon1: jSon1,\n    jSon2: jSon2,\n    jSon3: jSonP27,\n};\nmsg.payload = jSonResponse;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 790,
-        "y": 580,
+        "x": 550,
+        "y": 560,
+        "wires": [
+            [
+                "ce6adba5081d840f"
+            ]
+        ]
+    },
+    {
+        "id": "9bd6cc45287fc9e6",
+        "type": "function",
+        "z": "f03d232b4fcc4b3e",
+        "name": "refresh",
+        "func": "\nconst jSon1 = [\n    { \"clien_id\": 1, \"amount\": 3 },\n    { \"clien_id\": 2, \"amount\": 3 },\n    { \"clien_id\": 3, \"amount\": 3 }\n];\n\nconst jSon2 = jSon1;\n\nconst jSonP27 = jSon1;\n\nconst jSonResponse = {\n    action: 0,\n    jSon1: jSon1,\n    jSon2: jSon2,\n    jSon3: jSonP27,\n};\nmsg.payload = jSonResponse;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 620,
+        "wires": [
+            [
+                "ce6adba5081d840f"
+            ]
+        ]
+    },
+    {
+        "id": "2f7ffb0a5faef15c",
+        "type": "function",
+        "z": "f03d232b4fcc4b3e",
+        "name": "delete",
+        "func": "\nconst jSon1 = [\n    { \"clien_id\": 1, \"amount\": 7 },\n    { \"clien_id\": 2, \"amount\": 8 },\n    { \"clien_id\": 3, \"amount\": 9 }\n];\n\nconst jSon2 = jSon1;\n\nconst jSonP27 = jSon1;\n\nconst jSonResponse = {\n    action: 0,\n    jSon1: jSon1,\n    jSon2: jSon2,\n    jSon3: jSonP27,\n};\nmsg.payload = jSonResponse;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 680,
         "wires": [
             [
                 "ce6adba5081d840f"
