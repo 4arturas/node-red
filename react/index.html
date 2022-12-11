@@ -19,9 +19,10 @@
     <script src="../react/src/antd.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../react/src/antd.compact.css"/>-->
 
-    <script type="text/babel" src="react/ImageModal.js" crossorigin="anonymous"></script>
-    <script type="text/babel" src="react/WebSocketTest.js" crossorigin="anonymous"></script>
-    <script type="text/babel" src="react/Traverse.js" crossorigin="anonymous"></script>
+<!--    <script type="text/babel" src="react/ImageModal.js" crossorigin="anonymous"></script>-->
+<!--    <script type="text/babel" src="react/WebSocketTest.js" crossorigin="anonymous"></script>-->
+<!--    <script type="text/babel" src="react/Traverse.js" crossorigin="anonymous"></script>-->
+    <script type="text/babel" src="react/P27.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -36,60 +37,9 @@
         const [liked, setLiked] = React.useState(false);
         const { Option } = antd.Select;
 
-
-        const dataSource = [
-            {
-                key: '1',
-                name: 'Mike',
-                age: 32,
-                address: '10 Downing Street',
-            },
-            {
-                key: '2',
-                name: 'John',
-                age: 42,
-                address: '10 Downing Street',
-            },
-        ];
-
-        const columns = [
-            {
-                title: 'Name',
-                dataIndex: 'name',
-                key: 'name',
-            },
-            {
-                title: 'Age',
-                dataIndex: 'age',
-                key: 'age',
-            },
-            {
-                title: 'Address',
-                dataIndex: 'address',
-                key: 'address',
-            },
-        ];
-
-        // if (liked) return <p>You liked this</p>
         return <div style={{margin:'20px'}}>
             <div>
-                <antd.Select defaultValue="-1" style={{ width: 220 }} showSearch>
-                    <antd.Select.Option value={0}>Choose</antd.Select.Option>
-                    <antd.Select.Option value={1}>A</antd.Select.Option>
-                    <antd.Select.Option value={2}>B</antd.Select.Option>
-                </antd.Select>
-            </div>
-            <div>
-                <antd.Table dataSource={dataSource} columns={columns} />
-            </div>
-            <div>
-                <ImageModal/>
-            </div>
-            <div>
-                <WebSocketTest/>
-            </div>
-            <div>
-                <Traverse/>
+                <P27/>
             </div>
         </div>
     };

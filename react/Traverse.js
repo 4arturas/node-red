@@ -127,6 +127,13 @@ const Traverse = () => {
         <div>
             <div>Traverse</div>
             <antd.Table dataSource={dataSource} columns={columns} pagination={false}/>
+            <div>
+                <antd.Select defaultValue="-1" style={{ width: 220 }} showSearch>
+                    <antd.Select.Option value={0}>Choose</antd.Select.Option>
+                    <antd.Select.Option value={1}>A</antd.Select.Option>
+                    <antd.Select.Option value={2}>B</antd.Select.Option>
+                </antd.Select>
+            </div>
         </div>
 
     )
