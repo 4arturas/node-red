@@ -24,14 +24,6 @@
         "env": []
     },
     {
-        "id": "f03d232b4fcc4b3e",
-        "type": "tab",
-        "label": "HttpServer",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "b70b82bf8d00eb8a",
         "type": "tab",
         "label": "While Ex.",
@@ -43,6 +35,14 @@
         "id": "ec6dd8cedef27505",
         "type": "tab",
         "label": "Test Flow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f03d232b4fcc4b3e",
+        "type": "tab",
+        "label": "HttpServer React",
         "disabled": false,
         "info": "",
         "env": []
@@ -221,6 +221,12 @@
         "wholemsg": "false",
         "hb": "0",
         "subprotocol": ""
+    },
+    {
+        "id": "65fccb54d6cf3d7f",
+        "type": "websocket-listener",
+        "path": "/ws/react",
+        "wholemsg": "false"
     },
     {
         "id": "8e227f858e741893",
@@ -1180,125 +1186,6 @@
         "wires": []
     },
     {
-        "id": "59ff2a1.fa600d4",
-        "type": "http in",
-        "z": "f03d232b4fcc4b3e",
-        "name": "",
-        "url": "/hello",
-        "method": "get",
-        "swaggerDoc": "",
-        "x": 160,
-        "y": 140,
-        "wires": [
-            [
-                "7e73aef5e421cf29"
-            ]
-        ]
-    },
-    {
-        "id": "266c286f.d993d8",
-        "type": "http response",
-        "z": "f03d232b4fcc4b3e",
-        "name": "",
-        "x": 1030,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "7e73aef5e421cf29",
-        "type": "file in",
-        "z": "f03d232b4fcc4b3e",
-        "name": "",
-        "filename": ".node-red/projects/node-red/react/index.html",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 670,
-        "y": 140,
-        "wires": [
-            [
-                "266c286f.d993d8"
-            ]
-        ]
-    },
-    {
-        "id": "68572dadaaea1467",
-        "type": "file in",
-        "z": "f03d232b4fcc4b3e",
-        "name": "",
-        "filename": ".node-red/projects/node-red/react/test.js",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 660,
-        "y": 220,
-        "wires": [
-            [
-                "266c286f.d993d8"
-            ]
-        ]
-    },
-    {
-        "id": "77ac86f8d9cda0e5",
-        "type": "http in",
-        "z": "f03d232b4fcc4b3e",
-        "name": "",
-        "url": "/react/test.js",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 180,
-        "y": 220,
-        "wires": [
-            [
-                "68572dadaaea1467"
-            ]
-        ]
-    },
-    {
-        "id": "f5280916e3560f07",
-        "type": "file in",
-        "z": "f03d232b4fcc4b3e",
-        "name": "",
-        "filename": ".node-red/projects/node-red/react/ImageModal.js",
-        "filenameType": "str",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 680,
-        "y": 300,
-        "wires": [
-            [
-                "266c286f.d993d8"
-            ]
-        ]
-    },
-    {
-        "id": "5fdb6b26612b3512",
-        "type": "http in",
-        "z": "f03d232b4fcc4b3e",
-        "name": "",
-        "url": "/react/ImageModal.js",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 210,
-        "y": 300,
-        "wires": [
-            [
-                "f5280916e3560f07"
-            ]
-        ]
-    },
-    {
         "id": "9804ae9eb68137ee",
         "type": "inject",
         "z": "b70b82bf8d00eb8a",
@@ -1507,6 +1394,259 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "59ff2a1.fa600d4",
+        "type": "http in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "url": "/react",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "7e73aef5e421cf29"
+            ]
+        ]
+    },
+    {
+        "id": "266c286f.d993d8",
+        "type": "http response",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "x": 1110,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "7e73aef5e421cf29",
+        "type": "file in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/index.html",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 670,
+        "y": 140,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "68572dadaaea1467",
+        "type": "file in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/test.js",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 660,
+        "y": 220,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "77ac86f8d9cda0e5",
+        "type": "http in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "url": "/react/test.js",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 220,
+        "wires": [
+            [
+                "68572dadaaea1467"
+            ]
+        ]
+    },
+    {
+        "id": "f5280916e3560f07",
+        "type": "file in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/ImageModal.js",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "5fdb6b26612b3512",
+        "type": "http in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "url": "/react/ImageModal.js",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 300,
+        "wires": [
+            [
+                "f5280916e3560f07"
+            ]
+        ]
+    },
+    {
+        "id": "8d9a7d7eef29e155",
+        "type": "http in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "url": "/react/WebSocketTest.js",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 380,
+        "wires": [
+            [
+                "aba8749fd67bf0c3"
+            ]
+        ]
+    },
+    {
+        "id": "aba8749fd67bf0c3",
+        "type": "file in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/WebSocketTest.js",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 690,
+        "y": 380,
+        "wires": [
+            [
+                "266c286f.d993d8"
+            ]
+        ]
+    },
+    {
+        "id": "f7c48b3a834b7877",
+        "type": "inject",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 600,
+        "wires": [
+            [
+                "ce6adba5081d840f"
+            ]
+        ]
+    },
+    {
+        "id": "ce6adba5081d840f",
+        "type": "websocket out",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "server": "65fccb54d6cf3d7f",
+        "client": "",
+        "x": 380,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "c3bca1cfd22180d1",
+        "type": "inject",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello",
+        "payloadType": "str",
+        "x": 150,
+        "y": 680,
+        "wires": [
+            [
+                "ce6adba5081d840f"
+            ]
+        ]
+    },
+    {
+        "id": "2a63a69f0a893163",
+        "type": "websocket in",
+        "z": "f03d232b4fcc4b3e",
+        "name": "",
+        "server": "65fccb54d6cf3d7f",
+        "client": "",
+        "x": 630,
+        "y": 640,
+        "wires": [
+            [
+                "8e34fbd988384994"
+            ]
+        ]
+    },
+    {
+        "id": "8e34fbd988384994",
+        "type": "debug",
+        "z": "f03d232b4fcc4b3e",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 640,
+        "wires": []
     },
     {
         "id": "83e0257de19abd28",
