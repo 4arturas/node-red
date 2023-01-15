@@ -1,21 +1,5 @@
 [
     {
-        "id": "fc1877e6281f18c0",
-        "type": "tab",
-        "label": "Test JSON generator",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "a5c9772ae6334205",
-        "type": "tab",
-        "label": "Collection",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "d9c88a0a246ec309",
         "type": "tab",
         "label": "JTBD",
@@ -32,9 +16,9 @@
         "env": []
     },
     {
-        "id": "ec6dd8cedef27505",
+        "id": "5067ad5bc159023f",
         "type": "tab",
-        "label": "Test Flow",
+        "label": "OpenAI",
         "disabled": false,
         "info": "",
         "env": []
@@ -51,6 +35,22 @@
         "id": "7184d5a8972f1fe0",
         "type": "tab",
         "label": "websocket",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a6828adb58c9e145",
+        "type": "tab",
+        "label": "Function from file example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "533a2b371d46e27a",
+        "type": "tab",
+        "label": "Examples",
         "disabled": false,
         "info": "",
         "env": []
@@ -208,6 +208,17 @@
         }
     },
     {
+        "id": "6f575682.81c368",
+        "type": "subflow",
+        "name": "Send to TTS",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
         "id": "b79df368d7aaac79",
         "type": "websocket-listener",
         "path": "/ws/machine",
@@ -227,6 +238,21 @@
         "type": "websocket-listener",
         "path": "/ws/react",
         "wholemsg": "false"
+    },
+    {
+        "id": "f59321b99d54e840",
+        "type": "ttsultimate-config",
+        "name": "TTS Service",
+        "noderedipaddress": "AUTODISCOVER",
+        "noderedport": "1980",
+        "purgediratrestart": "leave",
+        "ttsservice": "googletranslate",
+        "TTSRootFolderPath": ""
+    },
+    {
+        "id": "cc2050a953749795",
+        "type": "openaiApiKey",
+        "name": ""
     },
     {
         "id": "8e227f858e741893",
@@ -628,347 +654,6 @@
         ]
     },
     {
-        "id": "be2b890187a6373c",
-        "type": "inject",
-        "z": "fc1877e6281f18c0",
-        "name": "Collection",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"batchId\":1,\"testCaseName\":\"${TEST_CASE_NAME}\",\"testCaseBase\":\"${TEST_CASE_BASE}\",\"threads\":\"${THREADS}\",\"loop\":\"${LOOP}\",\"flow\":\"${FLOW}\",\"testServer\":\"${TEST_SERVER}\",\"body\":\"${BODY}\",\"testObjects\":\"\"}",
-        "payloadType": "json",
-        "x": 100,
-        "y": 180,
-        "wires": [
-            [
-                "dab6903643459371"
-            ]
-        ]
-    },
-    {
-        "id": "e7350c70b6cd2099",
-        "type": "debug",
-        "z": "fc1877e6281f18c0",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 970,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "dab6903643459371",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Suite",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.testCaseName",
-                "pt": "msg",
-                "to": "My First Test Suite",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.testCaseBase",
-                "pt": "msg",
-                "to": "My First Test Case Base",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload.threads",
-                "pt": "msg",
-                "to": "3",
-                "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "payload.loop",
-                "pt": "msg",
-                "to": "10",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 250,
-        "y": 180,
-        "wires": [
-            [
-                "815e943525b8bea4"
-            ]
-        ]
-    },
-    {
-        "id": "815e943525b8bea4",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Flow",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.flow",
-                "pt": "msg",
-                "to": "[{\"sendPayment\":true,\"checkPayment\":true}]",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 390,
-        "y": 180,
-        "wires": [
-            [
-                "112ade4ec45d1126"
-            ]
-        ]
-    },
-    {
-        "id": "76a4395a75daff27",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Body",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.body",
-                "pt": "msg",
-                "to": "{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 670,
-        "y": 180,
-        "wires": [
-            [
-                "a7e56321e01ee59a"
-            ]
-        ]
-    },
-    {
-        "id": "112ade4ec45d1126",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Server",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.testServer",
-                "pt": "msg",
-                "to": "{\"http\":\"http://server.com\",\"header\":[{\"autorization\":\"Fixed token\"}],\"method\":\"post\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 530,
-        "y": 180,
-        "wires": [
-            [
-                "76a4395a75daff27"
-            ]
-        ]
-    },
-    {
-        "id": "a7e56321e01ee59a",
-        "type": "change",
-        "z": "fc1877e6281f18c0",
-        "name": "Test",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload.testObjects",
-                "pt": "msg",
-                "to": "[{\"test1\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}},{\"test2\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 810,
-        "y": 180,
-        "wires": [
-            [
-                "e7350c70b6cd2099"
-            ]
-        ]
-    },
-    {
-        "id": "55179bea399ef5a8",
-        "type": "inject",
-        "z": "fc1877e6281f18c0",
-        "name": "JSON",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"collection\":{\"options\":{\"collectionName\":\"testtregtrerreion\",\"version\":1212,\"parameters\":{\"collectionBatchId\":\"xxxxxx\"}},\"suites\":[{\"suiteName\":\"suite1\",\"version\":1212,\"parameters\":{\"suiteBatchId\":\"yyyyyyyy111111\"},\"cases\":[{\"parameters\":{\"caseBatchId\":\"zzzzzzz1111111\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"clientName\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"authorization\":\"Fixeg token\",\"x-ray\":\"1234567\",\"referrerUrl\":\"asasas\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${collectionBatchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"saveRequest\":true,\"saveResponse\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"^.*\"}}}},{\"test2\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]},{\"parameters\":{\"caseBatchId\":\"zzzzzzz222222\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"name\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"autorization\":\"Fixeg token\",\"contetn-type\":\"application/json\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"51073930\"}}}},{\"test2\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]}]},{\"suiteName\":\"suite2\",\"version\":1212,\"parameters\":{\"suiteBatchId\":\"yyyyyyyy22222222\"},\"cases\":[{\"parameters\":{\"caseBatchId\":\"zzzzzzz1111111\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"clientName\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"authorization\":\"Fixeg token\",\"x-ray\":\"1234567\",\"referrerUrl\":\"asasas\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${collectionBatchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"saveRequest\":true,\"saveResponse\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"^.*\"}}}},{\"test2\":{\"replace\":{\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]},{\"parameters\":{\"caseBatchId\":\"zzzzzzz222222\"},\"caseName\":\"OutgoingPaymentSimple\",\"caseBase\":\"OutgoingPaymentSCT\",\"threads\":3,\"loop\":100,\"flow\":[{\"sendPayment\":true,\"checkPayment\":true}],\"server\":{\"name\":\"asas\",\"http\":\"https://server/com\",\"header\":{\"autorization\":\"Fixeg token\",\"contetn-type\":\"application/json\"},\"method\":\"post\"},\"body\":{\"paymentId\":\"1321321231\",\"amount\":7.85,\"currency\":\"EUR\",\"unstructuredRemittanceInfo\":\"payment for Licensed Fresh Sausages\",\"debtorAccount\":\"sdfsdfdsf\",\"creditorAccount\":\"GB81SEOU00994400000088\",\"debtor\":{\"address\":{\"country\":\"IL\",\"addressLine1\":\"86460 Dibbert Prairie Suite 085\",\"addressLine2\":\"East Lisandrofort, LK-50064-7200\"},\"name\":\"Howell Abshire\",\"privatePerson\":{\"dateAndPlaceOfBirth\":{\"dateOfBirth\":\"1999-12-08\",\"country\":\"LR\",\"city\":\"South Vaughn\",\"province\":\"Bedfordshire\"}}},\"creditor\":{\"name\":\"Chadd Turcotte\",\"privatePerson\":{\"other\":{\"id\":\"719-16-5638\",\"type\":\"NIDN\"}}},\"ultimateDebtor\":{\"name\":\"White, Hahn and Howe, Inc\",\"legalEntity\":{\"other\":{\"id\":\"59025467\",\"type\":\"COID\"}}},\"ultimateCreditor\":{\"name\":\"Wilderman and Sons, Inc\",\"legalEntity\":{\"other\":{\"id\":\"51073930\",\"type\":\"PRTRY\",\"proprietary\":\"CUSTOM ID TYPE\"}}},\"endToEnd\":\"KDX3287\"},\"objects\":[{\"test1\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\",\"privatePerson\":\"asas\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"responseAssert\":{\"ultimateCreditor.legalEntity[*].other.id\":\"51073930\"}}}},{\"test2\":{\"replace\":{\"paymentId\":\"${batchid}-${suiteBatchId}-${caseBatchId}-${counter}\",\"debtorAccount\":\"CY06904000010000000000201000\",\"creditorAccount\":\"CY06904000010000000000201000\"},\"remove\":[\"unstructuredRemittanceInfo\",\"ultimateCreditor\"],\"result\":{\"httpCode\":\"200\",\"responseSave\":true,\"reponseAssert\":{\"ultimateCreditor.legalEntity[0].other.id\":\"51073930\"}}}}]}]}]}}",
-        "payloadType": "json",
-        "x": 110,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "d2dd7ca0faca1580",
-        "type": "inject",
-        "z": "a5c9772ae6334205",
-        "name": "Collection",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"collection\":{\"options\":{\"collectionName\":\"testtregtrerreion\",\"version\":1212,\"parameters\":{\"collectionBatchId\":\"xxxxxx\"}},\"suites\":[]}}",
-        "payloadType": "json",
-        "x": 140,
-        "y": 160,
-        "wires": [
-            [
-                "a9d91ea7b8f1513c"
-            ]
-        ]
-    },
-    {
-        "id": "4a6d7f360d63b7f6",
-        "type": "debug",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1150,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "b13fdfdf981c85b1",
-        "type": "subflow:4a9935b75e76a65a",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "x": 290,
-        "y": 160,
-        "wires": [
-            [
-                "273e6953dbf9b6bc"
-            ]
-        ]
-    },
-    {
-        "id": "273e6953dbf9b6bc",
-        "type": "function",
-        "z": "a5c9772ae6334205",
-        "name": "Push Suite Into Collection",
-        "func": "\nnode.log(msg.payload.suite);\n\nmsg.payload.collection.suites.push(msg.payload.suite);\n\ndelete msg.payload.suite;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 490,
-        "y": 160,
-        "wires": [
-            [
-                "4a6d7f360d63b7f6",
-                "3ff1cd9256fd597f"
-            ]
-        ]
-    },
-    {
-        "id": "3ff1cd9256fd597f",
-        "type": "file",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "filename": "/home/arturas/.node-red/projects/node-red/test.json",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 1170,
-        "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a9d91ea7b8f1513c",
-        "type": "subflow:293ae38c7343ee6b",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "x": 310,
-        "y": 340,
-        "wires": [
-            [
-                "5e1897dc5d00fe79"
-            ]
-        ]
-    },
-    {
-        "id": "5e1897dc5d00fe79",
-        "type": "debug",
-        "z": "a5c9772ae6334205",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 490,
-        "y": 340,
-        "wires": []
-    },
-    {
         "id": "5e0ddaade57f14fe",
         "type": "inject",
         "z": "d9c88a0a246ec309",
@@ -1281,13 +966,17 @@
         ]
     },
     {
-        "id": "7899bdf9b70815ce",
+        "id": "3d8bfb0be9994c4d",
         "type": "inject",
-        "z": "ec6dd8cedef27505",
+        "z": "5067ad5bc159023f",
         "name": "",
         "props": [
             {
                 "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
             }
         ],
         "repeat": "",
@@ -1295,21 +984,657 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"text\":\"However, because of the way conditional variables are implemented, what will actually happen is that they each will wake up one at a time, acquiring the mutex lock, then releasing it. However, while they are being released, they compete with one another, and they also compete with the next write. We profiled this approach, and the result was that we could see how we were spending pretty much all of our time in just synchronizing threads. Instead, we moved to a different approach, in which the first write will actually start off a new thread, dedicated to writing batches. The way it works, when a thread want to write a batch, it will add that to a queue and wake up the background writer thread, then wait on an event. The background writer will read all the current batches and merge them into a single write transaction.\",\"HMM_WORDS\":300,\"SYMBOL_START\":0,\"SYMBOL_END\":1}",
-        "payloadType": "json",
-        "x": 510,
-        "y": 100,
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 180,
         "wires": [
             [
-                "c7a413c228cd2e16"
+                "60b68cee014c0435"
             ]
         ]
     },
     {
-        "id": "4cfe93465a25b5ff",
+        "id": "60b68cee014c0435",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "completions",
+        "func": "msg.api = 'completions';\nmsg.params = {\n    \"model\": \"text-davinci-003\",\n    \"prompt\": \"Say this is a test\",\n    \"max_tokens\": 7,\n    \"temperature\": 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "0d52ffcad06954ef"
+            ]
+        ]
+    },
+    {
+        "id": "49da3439585bd9a3",
         "type": "debug",
-        "z": "ec6dd8cedef27505",
-        "name": "debug 1",
+        "z": "5067ad5bc159023f",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9e1f34cfae373eb9",
+        "type": "inject",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 260,
+        "wires": [
+            [
+                "991a8313a2cab258"
+            ]
+        ]
+    },
+    {
+        "id": "991a8313a2cab258",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "images/generations",
+        "func": "// 바닷가에서 우주선 위에서 뛰고 있는 웰시코기 강아지 그림을 하나 그려주세요. \n// Draw a picture of a Welsh Corgi puppy jumping on a spaceship at the beach.\n// Picture of a Welsh Corgi puppy watching the Qatar World Cup football match\n\nmsg.api = 'images/generations';\nmsg.params = {\n    \"prompt\": \"Picture of a Welsh Corgi puppy watching the Qatar World Cup football match\",\n    \"n\": 10,\n    \"size\": \"1024x1024\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 260,
+        "wires": [
+            [
+                "6f81f4a3de6db513"
+            ]
+        ]
+    },
+    {
+        "id": "869a5d806cc50107",
+        "type": "debug",
+        "z": "5067ad5bc159023f",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9456b548f1af7b4e",
+        "type": "inject",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 300,
+        "wires": [
+            [
+                "071ca84bf3b11c0a"
+            ]
+        ]
+    },
+    {
+        "id": "071ca84bf3b11c0a",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "embeddings",
+        "func": "msg.api = 'embeddings';\nmsg.params = {\n    \"input\": \"The food was delicious and the waiter...\",\n    \"model\": \"text-similarity-babbage-001\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 300,
+        "wires": [
+            [
+                "1295de0b07100713"
+            ]
+        ]
+    },
+    {
+        "id": "38b1cb2c366662c6",
+        "type": "debug",
+        "z": "5067ad5bc159023f",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ee06b57774344783",
+        "type": "inject",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "ad5c86c64c07b775"
+            ]
+        ]
+    },
+    {
+        "id": "ad5c86c64c07b775",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "moderations",
+        "func": "msg.api = 'moderations';\nmsg.params = {\n    \"input\": \"I want to love them.\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "e4c7c21a92b140b4"
+            ]
+        ]
+    },
+    {
+        "id": "a4b90856e183068a",
+        "type": "debug",
+        "z": "5067ad5bc159023f",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "664c11412d21d763",
+        "type": "inject",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 220,
+        "wires": [
+            [
+                "61b355f7fba423f4"
+            ]
+        ]
+    },
+    {
+        "id": "61b355f7fba423f4",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "edits",
+        "func": "msg.api = 'edits';\nmsg.params = {\n    \"model\": \"text-davinci-edit-001\",\n    \"input\": \"What day of the wek is it?\",\n    \"instruction\": \"Fix the spelling mistakes\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 220,
+        "wires": [
+            [
+                "0fea5bec0cb866ed"
+            ]
+        ]
+    },
+    {
+        "id": "7d37ac44609b4d27",
+        "type": "debug",
+        "z": "5067ad5bc159023f",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c5c0802857ec85dc",
+        "type": "http request",
+        "z": "5067ad5bc159023f",
+        "name": "file download",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 820,
+        "y": 500,
+        "wires": [
+            [
+                "68910284fe09bf02",
+                "9d00caf15bb35304"
+            ]
+        ]
+    },
+    {
+        "id": "0d36f9f43374775e",
+        "type": "inject",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 500,
+        "wires": [
+            [
+                "1cf1f404ddbd6e11"
+            ]
+        ]
+    },
+    {
+        "id": "4476731c9dfab059",
+        "type": "file",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1190,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68910284fe09bf02",
+        "type": "debug",
+        "z": "5067ad5bc159023f",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9d00caf15bb35304",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "set filename",
+        "func": "msg.filename = '/home/arturas/Downloads/'+msg.filename \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 500,
+        "wires": [
+            [
+                "4476731c9dfab059"
+            ]
+        ]
+    },
+    {
+        "id": "1cf1f404ddbd6e11",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "set url",
+        "func": "// msg.url = 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-SCLTb2ewE6eMW58Etzdfylpb.png?st=2022-12-12T03%3A48%3A08Z&se=2022-12-12T05%3A48%3A08Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T03%3A18%3A35Z&ske=2022-12-13T03%3A18%3A35Z&sks=b&skv=2021-08-06&sig=TpyjubAqF061ToVFtweYxXgzoBa%2BUDy2wmh/8AS9pq4%3D';\nmsg.url = msg.payload.url;\nfor(var i in msg.url.split('/')){\n    // node.error(i);\n    if (msg.url.split('/')[i].indexOf('.png')>-1){\n        // node.error(msg.url.split('/')[i].split('.png')[0]);\n        msg.filename = msg.url.split('/')[i].split('.png')[0] + '.png';\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 500,
+        "wires": [
+            [
+                "c5c0802857ec85dc"
+            ]
+        ]
+    },
+    {
+        "id": "37a8b61e71d21285",
+        "type": "inject",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 460,
+        "wires": [
+            [
+                "9ad39dc23c4ed9c5"
+            ]
+        ]
+    },
+    {
+        "id": "9ad39dc23c4ed9c5",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "images/generations",
+        "func": "// 바닷가에서 우주선 위에서 뛰고 있는 웰시코기 강아지 그림을 하나 그려주세요. \n// Draw a picture of a Welsh Corgi puppy jumping on a spaceship at the beach.\n// Picture of a Welsh Corgi puppy watching the Qatar World Cup football match\n// A Jindo dog riding an elevator at the top of Baekdu Mountain\n// A painting of Elon Musk flying to Mars in space\n// An illustration of a mysterious sloth having fun in space\n// An illustration of a mysterious sloth prince having fun in his spaceship in space\n// An illustration of the mysterious Prince Pikachu attending his coronation in space\n// An illustration of the mysterious Prince Pikachu attending his coronation while being celebrated by several people in space.\n// Welsh corgi puppy at the coronation ceremony amidst congratulations from space\n// Photos where the goddess meets the mysterious sky castle\n// Art painting where the goddess meets the mystical sky castle\n// Mysterious White Tiger and White Goddess A work of art that exudes a mysterious atmosphere\n// An astronaut riding a horse in the style of Andy Warhol 앤디 워홀 스타일의 말을 타고 있는 우주비행사\n// An astronaut riding a horse in a photorealistic style\n// An astronaut lounging in a tropical resort in space in a vaporwave style\n// An astronaut playing basketball with cats in space in a photorealistic style\n// Michael Jordan can't dunk in realistic style\nmsg.api = 'images/generations';\nmsg.params = {\n    \"prompt\": \"Tarot futuristic looking Foll card\",\n    \"n\": 1,\n    \"size\": \"1024x1024\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 460,
+        "wires": [
+            [
+                "321ae0cd28ce93c5"
+            ]
+        ]
+    },
+    {
+        "id": "3da4a8098a72232f",
+        "type": "debug",
+        "z": "5067ad5bc159023f",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "de796efee52e68b3",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "set res",
+        "func": "msg.payload = msg.payload.data;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 460,
+        "wires": [
+            [
+                "319186907e6ca9bb"
+            ]
+        ]
+    },
+    {
+        "id": "319186907e6ca9bb",
+        "type": "split",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1080,
+        "y": 460,
+        "wires": [
+            [
+                "5b541733cb81f246"
+            ]
+        ]
+    },
+    {
+        "id": "5b541733cb81f246",
+        "type": "delay",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "3",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1240,
+        "y": 460,
+        "wires": [
+            [
+                "1cf1f404ddbd6e11"
+            ]
+        ]
+    },
+    {
+        "id": "f6d67177e6fb50f1",
+        "type": "inject",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "0f3f92368f295f18"
+            ]
+        ]
+    },
+    {
+        "id": "0f3f92368f295f18",
+        "type": "function",
+        "z": "5067ad5bc159023f",
+        "name": "function 1",
+        "func": "msg.payload = [{ \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-c677ghbJ7SZdZrt9EG8yUMXQ.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=3gvJt6bn8K1vWYfqEbaIPXiroG7kjYUdZgQcs0KN6fY%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-LR6RT1dq7SmJOSd50fmrgmZR.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=IENLX0pxGGYragdYfd1TUnz/7WeiBa0XSU9R8dcCyMo%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-Qh9zwcSpRJHHMuyAMpe1lhhO.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=cPCZ1Kd5NZyA%2BfdOMh5RbnL3/0sKt/Kt/afHps0GE08%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-vMO7phNsMXT8jOvtZXhB0NP3.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=DJ/W6eCOX4dSrlR65uF3I1zoCmgXFBWN0igAQx1atok%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-k0TB7A9t55CDk2HMlMSkLFUU.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=zz2a/fcmrmOPjN98qpsgLZLyG2uNSaWUhV/YDHqhlQ0%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-tyjOv1gTnyDoNF4g9df0W0UR.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=WqjCiIoDYglpqMjWttCnmeQko1lKlF38t3IcL95vLMQ%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-Fs3vtOUU122PuIUbaklIOtH8.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=WPZPzCVJoY/7YV46W4zgv4OBYLXTEV3A6sYfHOc8iqI%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-WKjU5AFfNGNEdwA4LAOSxuC3.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=n/r8Lk2V17V0yEPU5RJtoTY8d1%2BUo/8tHBIOYV0SVUc%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-eVsS8sxgT5ihQZDhYeNBXZ5p.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=OOj7p/mHhFUZhJ3nWLKfegjfHaUdtN79P8K9c/xRyYk%3D\" }, { \"url\": \"https://oaidalleapiprodscus.blob.core.windows.net/private/org-SmxuoMSGDcf6Id0DvHHr9RvB/user-b1aKLHzDKrM2Qf4lXFQmgLc6/img-8Oly7yoDGV55I4UYudnJfamB.png?st=2022-12-12T04%3A29%3A43Z&se=2022-12-12T06%3A29%3A43Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-12-12T04%3A29%3A56Z&ske=2022-12-13T04%3A29%3A56Z&sks=b&skv=2021-08-06&sig=vDc2Mbp6Z32xgYqWeUrz8OAzmgaJkmoQohnpmIjljhY%3D\" }];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "b63ea2bd42e15c38"
+            ]
+        ]
+    },
+    {
+        "id": "b63ea2bd42e15c38",
+        "type": "split",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 750,
+        "y": 380,
+        "wires": [
+            [
+                "055f7740ec3abcb9"
+            ]
+        ]
+    },
+    {
+        "id": "055f7740ec3abcb9",
+        "type": "delay",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "3",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 380,
+        "wires": [
+            [
+                "910b1e9cb25f69b3"
+            ]
+        ]
+    },
+    {
+        "id": "910b1e9cb25f69b3",
+        "type": "debug",
+        "z": "5067ad5bc159023f",
+        "name": "debug 13",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -1318,81 +1643,99 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1240,
-        "y": 100,
+        "x": 1100,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "c7a413c228cd2e16",
-        "type": "function",
-        "z": "ec6dd8cedef27505",
-        "name": "hmm_Init",
-        "func": "const SYMBOL_START  = msg.payload.SYMBOL_START;\nconst SYMBOL_END    = msg.payload.SYMBOL_END;\nconst HMM_WORDS     = msg.payload.HMM_WORDS;\n\nconst word = new Array( HMM_WORDS );\nconst end = new Array( HMM_WORDS );\nconst bigram = new Array( HMM_WORDS );\n\nfor ( let y = 0; y < HMM_WORDS; y++ )\n{\n    end[y] = 0;\n    bigram[y] = new Array( HMM_WORDS );\n    for ( let x = 0; x < HMM_WORDS; x++ )\n    {\n        bigram[y][x] = new Array( HMM_WORDS );\n        bigram[y][x] = 0;\n    } // end for x\n} // end for y\n\nword[SYMBOL_START]  = '!start!';\nword[SYMBOL_END]    = '!end!';\n\nmsg.payload.word = word;\nmsg.payload.end = end;\nmsg.payload.bigram = bigram;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 680,
-        "y": 100,
+        "id": "0d52ffcad06954ef",
+        "type": "openai",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "api": "",
+        "creds": "cc2050a953749795",
+        "x": 800,
+        "y": 180,
         "wires": [
             [
-                "c6f153758686df1a"
+                "49da3439585bd9a3"
             ]
         ]
     },
     {
-        "id": "aa499e2eb77deb54",
-        "type": "function",
-        "z": "ec6dd8cedef27505",
-        "name": "hmm_ParseText",
-        "func": "const text = msg.payload.text;\n\nlet word = '';\nlet first = 1;\n\nfor ( let i = 0; i < text.length; i++ )\n{\n    const c = text.charAt(i);\n    if ( c === ',' ) continue;\n    \n} // end for i\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 960,
-        "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c6f153758686df1a",
-        "type": "function",
-        "z": "ec6dd8cedef27505",
-        "name": "hmm_SplitText",
-        "func": "\nreturn msg;",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 940,
-        "y": 100,
+        "id": "6f81f4a3de6db513",
+        "type": "openai",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "api": "",
+        "creds": "cc2050a953749795",
+        "x": 800,
+        "y": 260,
         "wires": [
             [
-                "4cfe93465a25b5ff"
-            ],
-            []
+                "869a5d806cc50107"
+            ]
         ]
     },
     {
-        "id": "97b99259ec4c8671",
-        "type": "split",
-        "z": "ec6dd8cedef27505",
+        "id": "1295de0b07100713",
+        "type": "openai",
+        "z": "5067ad5bc159023f",
         "name": "",
-        "splt": "\\n",
-        "spltType": "str",
-        "arraySplt": 1,
-        "arraySpltType": "len",
-        "stream": false,
-        "addname": "",
-        "x": 210,
-        "y": 440,
+        "api": "",
+        "creds": "cc2050a953749795",
+        "x": 800,
+        "y": 300,
         "wires": [
-            []
+            [
+                "38b1cb2c366662c6"
+            ]
+        ]
+    },
+    {
+        "id": "e4c7c21a92b140b4",
+        "type": "openai",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "api": "",
+        "creds": "cc2050a953749795",
+        "x": 800,
+        "y": 340,
+        "wires": [
+            [
+                "a4b90856e183068a"
+            ]
+        ]
+    },
+    {
+        "id": "0fea5bec0cb866ed",
+        "type": "openai",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "api": "",
+        "creds": "cc2050a953749795",
+        "x": 800,
+        "y": 220,
+        "wires": [
+            [
+                "7d37ac44609b4d27"
+            ]
+        ]
+    },
+    {
+        "id": "321ae0cd28ce93c5",
+        "type": "openai",
+        "z": "5067ad5bc159023f",
+        "name": "",
+        "api": "",
+        "creds": "cc2050a953749795",
+        "x": 800,
+        "y": 460,
+        "wires": [
+            [
+                "3da4a8098a72232f",
+                "de796efee52e68b3"
+            ]
         ]
     },
     {
@@ -1950,5 +2293,186 @@
                 "6248cd7fd679aa6e"
             ]
         ]
+    },
+    {
+        "id": "2b5433c167f34753",
+        "type": "file in",
+        "z": "a6828adb58c9e145",
+        "name": "",
+        "filename": ".node-red/test.js",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 520,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b165353165d655c",
+        "type": "debug",
+        "z": "a6828adb58c9e145",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "062954a5539c3bb2",
+        "type": "inject",
+        "z": "a6828adb58c9e145",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 240,
+        "wires": [
+            [
+                "4bf000224b3781e9",
+                "ca0f3c96b1cb87eb"
+            ]
+        ]
+    },
+    {
+        "id": "7dec678a28fa7e37",
+        "type": "function",
+        "z": "a6828adb58c9e145",
+        "name": "function 4",
+        "func": "\nvar func = new Function(\"return \" + msg.payload)();\nconst num = func();\nconsole.log( num );\n//fn.x = 10;\nmsg.payload = num;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 180,
+        "wires": [
+            [
+                "1b165353165d655c"
+            ]
+        ]
+    },
+    {
+        "id": "4bf000224b3781e9",
+        "type": "template",
+        "z": "a6828adb58c9e145",
+        "name": "function without parameters",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "function test()\n{\n    return 5;\n}",
+        "output": "str",
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "7dec678a28fa7e37"
+            ]
+        ]
+    },
+    {
+        "id": "ca0f3c96b1cb87eb",
+        "type": "template",
+        "z": "a6828adb58c9e145",
+        "name": "function with parameters",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "function test(a)\n{\n    return a + a;\n}",
+        "output": "str",
+        "x": 490,
+        "y": 320,
+        "wires": [
+            [
+                "5d43e2110c584d64"
+            ]
+        ]
+    },
+    {
+        "id": "5d43e2110c584d64",
+        "type": "function",
+        "z": "a6828adb58c9e145",
+        "name": "function 5",
+        "func": "var func = new Function(\"return \" + msg.payload)();\nconst num = func(3);\nmsg.payload = num;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 320,
+        "wires": [
+            [
+                "1b165353165d655c"
+            ]
+        ]
+    },
+    {
+        "id": "faa550264d8902f3",
+        "type": "inject",
+        "z": "533a2b371d46e27a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "$now()",
+        "payloadType": "jsonata",
+        "x": 400,
+        "y": 380,
+        "wires": [
+            [
+                "b7372db29b08a43f"
+            ]
+        ]
+    },
+    {
+        "id": "b7372db29b08a43f",
+        "type": "debug",
+        "z": "533a2b371d46e27a",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 380,
+        "wires": []
     }
 ]

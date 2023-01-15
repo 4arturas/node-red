@@ -1,14 +1,12 @@
 {
-  "name": "node-red-github",
-  "description": "A Node-RED Project",
-  "version": "0.0.1",
-  "dependencies": {
-    "node-red-contrib-browser-utils": "0.0.11"
-  },
-  "node-red": {
-    "settings": {
-      "flowFile": "flows.json",
-      "credentialsFile": "flows_cred.json"
+    "name": "node-red-github",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "dependencies": {},
+    "node-red": {
+        "settings": {
+            "flowFile": "flows.json",
+            "credentialsFile": "flows_cred.json"
+        }
     }
-  }
 }
