@@ -56,6 +56,14 @@
         "env": []
     },
     {
+        "id": "35a4f5ffd108afaa",
+        "type": "tab",
+        "label": "Herro",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "4a9935b75e76a65a",
         "type": "subflow",
         "name": "Suite",
@@ -217,6 +225,124 @@
         "out": [],
         "env": [],
         "color": "#DDAA99"
+    },
+    {
+        "id": "c080735c3b2e661f",
+        "type": "group",
+        "z": "35a4f5ffd108afaa",
+        "name": "HERO'S STEPS CARDS",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "6232921449696c56",
+            "1f343e6bb8519a2a",
+            "9e75bf06577706e9",
+            "b2ca9f43bddaa235",
+            "31062ff062e78a4c",
+            "956c40cef8e47e16",
+            "9c2190e83394516c",
+            "b039c4e842373e09",
+            "4ec78c120bf42a3a",
+            "7ec885efd16abb92",
+            "1617e8e2bb86329c",
+            "08ef5b1f843038b6",
+            "32b82980b91dd3de",
+            "2e2873a7e8944fdb",
+            "bb01eee731d3a898"
+        ],
+        "x": 14,
+        "y": 439,
+        "w": 1372,
+        "h": 562
+    },
+    {
+        "id": "00862118b435a1a7",
+        "type": "group",
+        "z": "35a4f5ffd108afaa",
+        "name": "10 READERS'S STEPS CARDS",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4e4ab2c54b9fa073",
+            "347d2ac42e821b50",
+            "eb5b0fd191b9821a",
+            "f529fc5432ae8155",
+            "ab29fb87ea4c06f9",
+            "7ad1a0c99ee13c67",
+            "2661ded7866de731",
+            "7824525e71dd688d",
+            "f3182786fe1f2a17",
+            "bc861751a1b19d27"
+        ],
+        "x": 34,
+        "y": 1219,
+        "w": 1262,
+        "h": 402
+    },
+    {
+        "id": "87285eca5226e916",
+        "type": "group",
+        "z": "35a4f5ffd108afaa",
+        "name": "2 LEVEL CARDS",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4d3e0d5042a1385f",
+            "624534cad709b4a2"
+        ],
+        "x": 314,
+        "y": 1259,
+        "w": 522,
+        "h": 82
+    },
+    {
+        "id": "9b29753bae23ff6b",
+        "type": "group",
+        "z": "35a4f5ffd108afaa",
+        "name": "3 CHARACTER CARDS",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "32173120e2685e90",
+            "9e45477dfac653d7",
+            "1e0a9ff4a3ef4b56",
+            "3381474b63847bed"
+        ],
+        "x": 304,
+        "y": 1019,
+        "w": 592,
+        "h": 142
+    },
+    {
+        "id": "33fb1e68903c32d8",
+        "type": "group",
+        "z": "35a4f5ffd108afaa",
+        "name": "ASSETS",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "25741aebae9499a1",
+            "68531779796741a5",
+            "3edc5a908bee516c",
+            "e106990e59bdd880",
+            "b4cdc2c98b547f95",
+            "64bace815e13bcac",
+            "958fa39261f90af4",
+            "6cf696a89b208cd9",
+            "f3010bb0dc0867cf",
+            "3e46630bcdad778f",
+            "54e631b8713f7276",
+            "7c4e3bdfb934f2b1"
+        ],
+        "x": 244,
+        "y": 79,
+        "w": 792,
+        "h": 302
     },
     {
         "id": "b79df368d7aaac79",
@@ -2474,5 +2600,872 @@
         "x": 700,
         "y": 380,
         "wires": []
+    },
+    {
+        "id": "6232921449696c56",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "OW",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 90,
+        "y": 960,
+        "wires": [
+            [
+                "1f343e6bb8519a2a"
+            ]
+        ],
+        "info": "# Ordinary world\n\nWho is the hero? What is world like at the beginning?\n\nthe hero is still in his familiar environment– Neo is an unsatisfied hacker looking for an answer;"
+    },
+    {
+        "id": "1f343e6bb8519a2a",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "CTA",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 880,
+        "wires": [
+            [
+                "9e75bf06577706e9"
+            ]
+        ],
+        "info": "# Call to action\n\n... Laks the balance? Who is the Messanger?\n\nsomething happens to change the balance – He follows the \"white rabbit\";"
+    },
+    {
+        "id": "9e75bf06577706e9",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "RC",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 800,
+        "wires": [
+            [
+                "b2ca9f43bddaa235"
+            ]
+        ],
+        "info": "# Refusal of the call\n\nWhat is he fear? What happens to change his mind?\n\nthe hero is hesitant– He should climb the roof but he's afraid;"
+    },
+    {
+        "id": "b2ca9f43bddaa235",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "M",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 740,
+        "wires": [
+            [
+                "31062ff062e78a4c"
+            ]
+        ],
+        "info": "# Meeting the mentor\n\nWho guides the hero? How does the mentor help him?\n\nhe meets a mentor who guides him – He sees Morpheus and he's offered the two pills;"
+    },
+    {
+        "id": "31062ff062e78a4c",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "T",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 660,
+        "wires": [
+            [
+                "956c40cef8e47e16"
+            ]
+        ],
+        "info": "# Crossing the first threshold\n\n... he lose? What is he hoping to gain?\n\nhe finally decides to enter the new world – He chooses the right pill and the real action begins!"
+    },
+    {
+        "id": "956c40cef8e47e16",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "Tr",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 600,
+        "wires": [
+            [
+                "9c2190e83394516c"
+            ]
+        ],
+        "info": "# Trials\n\n... he learning? How is he doing in the world?"
+    },
+    {
+        "id": "9c2190e83394516c",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "Al",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 540,
+        "wires": [
+            [
+                "b039c4e842373e09"
+            ]
+        ],
+        "info": "# Allies\n\n.. ey? How do they complete the hero?"
+    },
+    {
+        "id": "b039c4e842373e09",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "E",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 480,
+        "wires": [
+            [
+                "4ec78c120bf42a3a"
+            ]
+        ],
+        "info": "# Enemies\n\nWho/What is he fighting? Are the enemies similar to the hero?"
+    },
+    {
+        "id": "4ec78c120bf42a3a",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "F",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 500,
+        "wires": [
+            [
+                "7ec885efd16abb92"
+            ]
+        ],
+        "info": "# Fulfillment\n\n... completed. Hero ready. What has he learnt/loss?"
+    },
+    {
+        "id": "7ec885efd16abb92",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "IC",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 540,
+        "wires": [
+            [
+                "1617e8e2bb86329c"
+            ]
+        ],
+        "info": "# To the inner cave\n\n... face? How is he getting ready for the ordeal?"
+    },
+    {
+        "id": "1617e8e2bb86329c",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "O",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 600,
+        "wires": [
+            [
+                "08ef5b1f843038b6"
+            ]
+        ],
+        "info": "# The Ordeal\n\n... face-off with the enemy. How does it go?"
+    },
+    {
+        "id": "08ef5b1f843038b6",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "Rw",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 660,
+        "wires": [
+            [
+                "32b82980b91dd3de"
+            ]
+        ],
+        "info": "# Reward\n\nWhat does he gain? How has he changed?"
+    },
+    {
+        "id": "32b82980b91dd3de",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "RB",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 720,
+        "wires": [
+            [
+                "2e2873a7e8944fdb"
+            ]
+        ],
+        "info": "# The Road Back\n\n... What consequences does he have to face?"
+    },
+    {
+        "id": "2e2873a7e8944fdb",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "Re",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1270,
+        "y": 780,
+        "wires": [
+            [
+                "bb01eee731d3a898"
+            ]
+        ],
+        "info": "# Resurection\n\n... the last trial? How he is purified by that?"
+    },
+    {
+        "id": "bb01eee731d3a898",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "c080735c3b2e661f",
+        "name": "C",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1310,
+        "y": 860,
+        "wires": [
+            []
+        ],
+        "info": "# Conclusion\n\n... the consequences of the Journey?"
+    },
+    {
+        "id": "4e4ab2c54b9fa073",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "Prologue",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 1580,
+        "wires": [
+            [
+                "347d2ac42e821b50"
+            ]
+        ],
+        "info": "To tell something before beginning?"
+    },
+    {
+        "id": "347d2ac42e821b50",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "TheSet-Up",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 1500,
+        "wires": [
+            [
+                "eb5b0fd191b9821a"
+            ]
+        ],
+        "info": "...ce the characters and give the preliminary info."
+    },
+    {
+        "id": "eb5b0fd191b9821a",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "The Ctalyst",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 1440,
+        "wires": [
+            [
+                "f529fc5432ae8155"
+            ]
+        ],
+        "info": "...ting incident that makes the plot move on."
+    },
+    {
+        "id": "f529fc5432ae8155",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "The Rising Action",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 1380,
+        "wires": [
+            [
+                "ab29fb87ea4c06f9"
+            ]
+        ],
+        "info": "ACT TWO: Introduce changes, enemies, new characters."
+    },
+    {
+        "id": "ab29fb87ea4c06f9",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "The Mid-Point",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1320,
+        "wires": [
+            [
+                "7ad1a0c99ee13c67"
+            ]
+        ],
+        "info": "... turning point half way through."
+    },
+    {
+        "id": "7ad1a0c99ee13c67",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "The Crisis",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 1260,
+        "wires": [
+            [
+                "2661ded7866de731"
+            ]
+        ],
+        "info": "The \"all is lost\" moment."
+    },
+    {
+        "id": "2661ded7866de731",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "The Climax",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 1340,
+        "wires": [
+            [
+                "7824525e71dd688d"
+            ]
+        ],
+        "info": "... the most exciting moment, the keystone."
+    },
+    {
+        "id": "7824525e71dd688d",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "The Solution",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 1500,
+        "wires": [
+            [
+                "f3182786fe1f2a17"
+            ]
+        ],
+        "info": "ACT THREE: The stakes are higher and the conflicts are solved."
+    },
+    {
+        "id": "f3182786fe1f2a17",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "Epilogue",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 1560,
+        "wires": [
+            []
+        ],
+        "info": "To tell something after the end."
+    },
+    {
+        "id": "4d3e0d5042a1385f",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "87285eca5226e916",
+        "name": "Order of the events",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1300,
+        "wires": [
+            []
+        ],
+        "info": "How do you want to tell your story? In which order?"
+    },
+    {
+        "id": "624534cad709b4a2",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "87285eca5226e916",
+        "name": "Conflicts Evolution",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1300,
+        "wires": [
+            []
+        ],
+        "info": "The development of external or internal movements."
+    },
+    {
+        "id": "bc861751a1b19d27",
+        "type": "comment",
+        "z": "35a4f5ffd108afaa",
+        "g": "00862118b435a1a7",
+        "name": "",
+        "info": " - Which part of the story should I tell at the beginning?\n - Which part of which character is the event that catalyses the whole plot?\n - When do I want the audience to reach its most emotional moment?",
+        "x": 210,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "32173120e2685e90",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "9b29753bae23ff6b",
+        "name": "Hero #1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1120,
+        "wires": [
+            []
+        ],
+        "info": "Write on this row what happens to the main charcter."
+    },
+    {
+        "id": "9e45477dfac653d7",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "9b29753bae23ff6b",
+        "name": "Hero #2",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 1120,
+        "wires": [
+            []
+        ],
+        "info": "Write on this row what happens to the 2nd main charcter."
+    },
+    {
+        "id": "1e0a9ff4a3ef4b56",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "9b29753bae23ff6b",
+        "name": "Narrator",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1120,
+        "wires": [
+            []
+        ],
+        "info": "Does he have his own story? (Or use this card as a 3rd Hero)"
+    },
+    {
+        "id": "3381474b63847bed",
+        "type": "comment",
+        "z": "35a4f5ffd108afaa",
+        "g": "9b29753bae23ff6b",
+        "name": "",
+        "info": "Although most stories have just one hero, you will have three **CHARACTERS** cards. By placing them on the left of your **HERO’S** STEPS cards, you will be able to manage the development of three different characters.",
+        "x": 560,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "25741aebae9499a1",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Heroes",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 120,
+        "wires": [
+            [
+                "68531779796741a5"
+            ]
+        ],
+        "info": "...m. What are they needs? What are they weaknesses?"
+    },
+    {
+        "id": "68531779796741a5",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Allies",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 120,
+        "wires": [
+            [
+                "3edc5a908bee516c"
+            ]
+        ],
+        "info": "Do the have a side story you need to refer to?"
+    },
+    {
+        "id": "3edc5a908bee516c",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Enemies",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 120,
+        "wires": [
+            [
+                "b4cdc2c98b547f95"
+            ]
+        ],
+        "info": "...? Do the have a side story you need to refer to?"
+    },
+    {
+        "id": "e106990e59bdd880",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "function 6",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [
+                "25741aebae9499a1"
+            ]
+        ],
+        "info": "Place the Asset cards wherever you want."
+    },
+    {
+        "id": "b4cdc2c98b547f95",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Narrator",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [
+                "64bace815e13bcac"
+            ]
+        ],
+        "info": "Who is the Narrator? Does he have his own story?"
+    },
+    {
+        "id": "64bace815e13bcac",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "SubPlot #1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 240,
+        "wires": [
+            [
+                "958fa39261f90af4"
+            ]
+        ],
+        "info": "Is there a side story you need to refer to?"
+    },
+    {
+        "id": "958fa39261f90af4",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "SubPlot #2",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 240,
+        "wires": [
+            [
+                "6cf696a89b208cd9"
+            ]
+        ],
+        "info": "Is there a side story you need to refer to?"
+    },
+    {
+        "id": "6cf696a89b208cd9",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Concept and Theme",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 240,
+        "wires": [
+            [
+                "f3010bb0dc0867cf"
+            ]
+        ],
+        "info": "What is the general idea of your story?"
+    },
+    {
+        "id": "f3010bb0dc0867cf",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Form",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 340,
+        "wires": [
+            [
+                "3e46630bcdad778f"
+            ]
+        ],
+        "info": "Which techniques/styles are you using?"
+    },
+    {
+        "id": "3e46630bcdad778f",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "MoodBoard",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 340,
+        "wires": [
+            [
+                "54e631b8713f7276"
+            ]
+        ],
+        "info": "..a some inspirational pictures around this card."
+    },
+    {
+        "id": "54e631b8713f7276",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Space",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "7c4e3bdfb934f2b1"
+            ]
+        ],
+        "info": "...d of the story like? Add drawings, pics, maps!"
+    },
+    {
+        "id": "7c4e3bdfb934f2b1",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "\"Magical\" Objects",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 340,
+        "wires": [
+            []
+        ],
+        "info": "... important objects? How do the propel the story?"
     }
 ]
