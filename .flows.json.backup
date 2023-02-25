@@ -253,7 +253,7 @@
         ],
         "x": 14,
         "y": 439,
-        "w": 1372,
+        "w": 1412,
         "h": 562
     },
     {
@@ -316,6 +316,33 @@
         "y": 1019,
         "w": 592,
         "h": 142
+    },
+    {
+        "id": "33fb1e68903c32d8",
+        "type": "group",
+        "z": "35a4f5ffd108afaa",
+        "name": "ASSETS",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "25741aebae9499a1",
+            "68531779796741a5",
+            "3edc5a908bee516c",
+            "e106990e59bdd880",
+            "b4cdc2c98b547f95",
+            "64bace815e13bcac",
+            "958fa39261f90af4",
+            "6cf696a89b208cd9",
+            "f3010bb0dc0867cf",
+            "3e46630bcdad778f",
+            "54e631b8713f7276",
+            "7c4e3bdfb934f2b1"
+        ],
+        "x": 24,
+        "y": 99,
+        "w": 792,
+        "h": 302
     },
     {
         "id": "b79df368d7aaac79",
@@ -2579,14 +2606,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "OW",
+        "name": "Ordinary World",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 90,
+        "x": 120,
         "y": 960,
         "wires": [
             [
@@ -2600,14 +2627,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "CTA",
+        "name": "Call to Action",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 170,
+        "x": 190,
         "y": 880,
         "wires": [
             [
@@ -2621,14 +2648,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "RC",
+        "name": "Refusal of the Call",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 250,
+        "x": 290,
         "y": 800,
         "wires": [
             [
@@ -2642,14 +2669,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "M",
+        "name": "Meeting the Mentor",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 330,
+        "x": 370,
         "y": 740,
         "wires": [
             [
@@ -2663,14 +2690,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "T",
+        "name": "Crossing the First Threshold",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 410,
+        "x": 480,
         "y": 660,
         "wires": [
             [
@@ -2684,7 +2711,7 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "Tr",
+        "name": "Trials",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -2705,7 +2732,7 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "Al",
+        "name": "Allies",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -2726,14 +2753,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "E",
+        "name": "Enemies",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
+        "x": 720,
         "y": 480,
         "wires": [
             [
@@ -2747,14 +2774,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "F",
+        "name": "Fulfillment",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 850,
+        "x": 870,
         "y": 500,
         "wires": [
             [
@@ -2768,14 +2795,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "IC",
+        "name": "To the Inner Cave",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 970,
+        "x": 1010,
         "y": 540,
         "wires": [
             [
@@ -2789,14 +2816,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "O",
+        "name": "The Ordeal",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1050,
+        "x": 1070,
         "y": 600,
         "wires": [
             [
@@ -2810,14 +2837,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "Rw",
+        "name": "Reward",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1150,
+        "x": 1160,
         "y": 660,
         "wires": [
             [
@@ -2831,14 +2858,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "RB",
+        "name": "The Road Back",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1210,
+        "x": 1240,
         "y": 720,
         "wires": [
             [
@@ -2852,14 +2879,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "Re",
+        "name": "Resurection",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1270,
+        "x": 1290,
         "y": 780,
         "wires": [
             [
@@ -2873,14 +2900,14 @@
         "type": "function",
         "z": "35a4f5ffd108afaa",
         "g": "c080735c3b2e661f",
-        "name": "C",
+        "name": "Conclusion",
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1310,
+        "x": 1330,
         "y": 860,
         "wires": [
             []
@@ -3195,6 +3222,7 @@
         "id": "25741aebae9499a1",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "Heroes",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3202,10 +3230,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 120,
+        "x": 320,
+        "y": 140,
         "wires": [
-            []
+            [
+                "68531779796741a5"
+            ]
         ],
         "info": "...m. What are they needs? What are they weaknesses?"
     },
@@ -3213,6 +3243,7 @@
         "id": "68531779796741a5",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "Allies",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3220,10 +3251,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
-        "y": 120,
+        "x": 510,
+        "y": 140,
         "wires": [
-            []
+            [
+                "3edc5a908bee516c"
+            ]
         ],
         "info": "Do the have a side story you need to refer to?"
     },
@@ -3231,6 +3264,7 @@
         "id": "3edc5a908bee516c",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "Enemies",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3238,10 +3272,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 120,
+        "x": 680,
+        "y": 140,
         "wires": [
-            []
+            [
+                "b4cdc2c98b547f95"
+            ]
         ],
         "info": "...? Do the have a side story you need to refer to?"
     },
@@ -3249,6 +3285,7 @@
         "id": "e106990e59bdd880",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "function 6",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3256,10 +3293,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 120,
+        "x": 120,
+        "y": 140,
         "wires": [
-            []
+            [
+                "25741aebae9499a1"
+            ]
         ],
         "info": "Place the Asset cards wherever you want."
     },
@@ -3267,6 +3306,7 @@
         "id": "b4cdc2c98b547f95",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "Narrator",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3274,10 +3314,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 350,
-        "y": 240,
+        "x": 130,
+        "y": 260,
         "wires": [
-            []
+            [
+                "64bace815e13bcac"
+            ]
         ],
         "info": "Who is the Narrator? Does he have his own story?"
     },
@@ -3285,6 +3327,7 @@
         "id": "64bace815e13bcac",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "SubPlot #1",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3292,10 +3335,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 240,
+        "x": 300,
+        "y": 260,
         "wires": [
-            []
+            [
+                "958fa39261f90af4"
+            ]
         ],
         "info": "Is there a side story you need to refer to?"
     },
@@ -3303,6 +3348,7 @@
         "id": "958fa39261f90af4",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "SubPlot #2",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3310,10 +3356,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 700,
-        "y": 240,
+        "x": 480,
+        "y": 260,
         "wires": [
-            []
+            [
+                "6cf696a89b208cd9"
+            ]
         ],
         "info": "Is there a side story you need to refer to?"
     },
@@ -3321,6 +3369,7 @@
         "id": "6cf696a89b208cd9",
         "type": "function",
         "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
         "name": "Concept and Theme",
         "func": "\nreturn msg;",
         "outputs": 1,
@@ -3328,11 +3377,95 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 910,
-        "y": 240,
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "f3010bb0dc0867cf"
+            ]
+        ],
+        "info": "What is the general idea of your story?"
+    },
+    {
+        "id": "f3010bb0dc0867cf",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Form",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 100,
+        "y": 360,
+        "wires": [
+            [
+                "3e46630bcdad778f"
+            ]
+        ],
+        "info": "Which techniques/styles are you using?"
+    },
+    {
+        "id": "3e46630bcdad778f",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "MoodBoard",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 360,
+        "wires": [
+            [
+                "54e631b8713f7276"
+            ]
+        ],
+        "info": "..a some inspirational pictures around this card."
+    },
+    {
+        "id": "54e631b8713f7276",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "Space",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 360,
+        "wires": [
+            [
+                "7c4e3bdfb934f2b1"
+            ]
+        ],
+        "info": "...d of the story like? Add drawings, pics, maps!"
+    },
+    {
+        "id": "7c4e3bdfb934f2b1",
+        "type": "function",
+        "z": "35a4f5ffd108afaa",
+        "g": "33fb1e68903c32d8",
+        "name": "\"Magical\" Objects",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 360,
         "wires": [
             []
         ],
-        "info": "What is the general idea of your story?"
+        "info": "... important objects? How do the propel the story?"
     }
 ]
