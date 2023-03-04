@@ -3551,7 +3551,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Do you know what your story needs to do?",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Function_machine2.svg/1200px-Function_machine2.svg.png'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3562,7 +3562,7 @@
         "wires": [
             [
                 "4ecee58dcc75b3dd",
-                "333febe3a382aa29"
+                "6a8667d08c39de68"
             ]
         ]
     },
@@ -3571,7 +3571,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Do you know how to plan your story?",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://www.shutterstock.com/image-vector/hierarchy-icon-isolated-structure-line-260nw-776432704.jpg';\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3582,7 +3582,7 @@
         "wires": [
             [
                 "b7b4cc80c8e04e98",
-                "a13424b00c991cc0"
+                "5381079e5ec44a5b"
             ]
         ]
     },
@@ -3591,7 +3591,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Do you know how to tell your story?",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/creative-fashion-style-logo-design-vector-sign-lettering-hanger-symbol-logotype-calligraphy-creative-fashion-style-logo-148836793.jpg'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3602,7 +3602,7 @@
         "wires": [
             [
                 "6b79b7565b6f052a",
-                "83eefd02c80c085c"
+                "8bd57055a53e7f11"
             ]
         ]
     },
@@ -3626,66 +3626,6 @@
         ]
     },
     {
-        "id": "333febe3a382aa29",
-        "type": "function",
-        "z": "1d45200c9172f37f",
-        "name": "Function",
-        "func": "msg.payload = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Function_machine2.svg/1200px-Function_machine2.svg.png'\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 340,
-        "wires": [
-            [
-                "6a8667d08c39de68"
-            ]
-        ],
-        "info": "Stories are more effective than facts or opinions by themselves. Put your stories to work."
-    },
-    {
-        "id": "a13424b00c991cc0",
-        "type": "function",
-        "z": "1d45200c9172f37f",
-        "name": "Structure",
-        "func": "msg.payload = 'https://www.shutterstock.com/image-vector/hierarchy-icon-isolated-structure-line-260nw-776432704.jpg';\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 400,
-        "wires": [
-            [
-                "5381079e5ec44a5b"
-            ]
-        ],
-        "info": "Stories carry us along thanks to a fiew basic patterns. Make your ideas flaw in a story-ish way."
-    },
-    {
-        "id": "83eefd02c80c085c",
-        "type": "function",
-        "z": "1d45200c9172f37f",
-        "name": "Style",
-        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/creative-fashion-style-logo-design-vector-sign-lettering-hanger-symbol-logotype-calligraphy-creative-fashion-style-logo-148836793.jpg'\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 770,
-        "y": 460,
-        "wires": [
-            [
-                "8bd57055a53e7f11"
-            ]
-        ],
-        "info": "Storries carry useful information. Make sure people remember yours."
-    },
-    {
         "id": "102e60c3252b0899",
         "type": "function",
         "z": "1d45200c9172f37f",
@@ -3696,8 +3636,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 520,
+        "x": 580,
+        "y": 580,
         "wires": [
             [
                 "34aad3df3238250c",
@@ -3717,8 +3657,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 600,
+        "x": 600,
+        "y": 720,
         "wires": [
             [
                 "1a20954030d41d00"
