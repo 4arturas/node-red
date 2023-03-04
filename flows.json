@@ -3511,7 +3511,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Do you know where to find your story?",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9iii7x-Nl4Lr2vhKMAIuU_7Ihvufz7IpHkTQHF8JjIDgQ24s7DYixP5U-2U-nbhnbm5U&usqp=CAU'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3522,7 +3522,7 @@
         "wires": [
             [
                 "6805cc5038232aba",
-                "64268dfe1010109f"
+                "f10ac68bb098d0b6"
             ]
         ]
     },
@@ -3531,7 +3531,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Do you know your role in the story?",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://www.shutterstock.com/shutterstock/photos/1468802948/display_1500/stock-vector-superhero-line-icon-hero-symbol-color-superman-mockup-super-dad-template-vector-illustration-1468802948.jpg'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3542,7 +3542,7 @@
         "wires": [
             [
                 "dc49740613b266c8",
-                "c664de0d5396511c"
+                "04778b9e1033e275"
             ]
         ]
     },
@@ -3624,46 +3624,6 @@
                 "102e60c3252b0899"
             ]
         ]
-    },
-    {
-        "id": "64268dfe1010109f",
-        "type": "function",
-        "z": "1d45200c9172f37f",
-        "name": "Explore",
-        "func": "msg.payload = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9iii7x-Nl4Lr2vhKMAIuU_7Ihvufz7IpHkTQHF8JjIDgQ24s7DYixP5U-2U-nbhnbm5U&usqp=CAU'\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 220,
-        "wires": [
-            [
-                "f10ac68bb098d0b6"
-            ]
-        ],
-        "info": "Stories help us navigate confusing, unknown and changing situations. Make a map for you way ahead."
-    },
-    {
-        "id": "c664de0d5396511c",
-        "type": "function",
-        "z": "1d45200c9172f37f",
-        "name": "Character",
-        "func": "msg.payload = 'https://www.shutterstock.com/shutterstock/photos/1468802948/display_1500/stock-vector-superhero-line-icon-hero-symbol-color-superman-mockup-super-dad-template-vector-illustration-1468802948.jpg'\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 280,
-        "wires": [
-            [
-                "04778b9e1033e275"
-            ]
-        ],
-        "info": "Stories connect us to other people. Show us why we can trust you."
     },
     {
         "id": "333febe3a382aa29",
