@@ -3658,7 +3658,8 @@
         "y": 220,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories help us navigate confusing, unknown and changing situations. Make a map for you way ahead."
     },
     {
         "id": "c664de0d5396511c",
