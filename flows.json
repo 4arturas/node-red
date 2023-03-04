@@ -3641,7 +3641,8 @@
         "y": 700,
         "wires": [
             [
-                "1a20954030d41d00"
+                "1a20954030d41d00",
+                "92491118ebda8ba7"
             ]
         ],
         "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
@@ -3802,5 +3803,27 @@
             []
         ],
         "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
+    },
+    {
+        "id": "92491118ebda8ba7",
+        "type": "ui_media",
+        "z": "1d45200c9172f37f",
+        "name": "",
+        "width": 0,
+        "height": 0,
+        "order": 0,
+        "category": "",
+        "file": "",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 550,
+        "y": 880,
+        "wires": [
+            []
+        ]
     }
 ]
