@@ -3676,7 +3676,8 @@
         "y": 280,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories connect us to other people. Show us why we can trust you."
     },
     {
         "id": "333febe3a382aa29",
@@ -3693,7 +3694,8 @@
         "y": 340,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories are more effective than facts or opinions by themselves. Put your stories to work."
     },
     {
         "id": "a13424b00c991cc0",
