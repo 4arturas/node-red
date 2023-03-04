@@ -3630,7 +3630,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Concept",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/knowledge-icon-vector-sign-symbol-isolated-white-backgrou-background-your-web-mobile-app-design-logo-concept-133746781.jpg'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3639,7 +3639,9 @@
         "x": 780,
         "y": 160,
         "wires": [
-            []
+            [
+                "17eb20feaa270a42"
+            ]
         ],
         "info": "Stories shape how we see ourselves and the wold around us. Frame your work as an epic adventure."
     },
@@ -3813,6 +3815,21 @@
             [
                 "10ecc36acd18b528"
             ]
+        ]
+    },
+    {
+        "id": "17eb20feaa270a42",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1030,
+        "y": 100,
+        "wires": [
+            []
         ]
     }
 ]
