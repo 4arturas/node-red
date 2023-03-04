@@ -3690,7 +3690,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Function",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Function_machine2.svg/1200px-Function_machine2.svg.png'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3699,7 +3699,9 @@
         "x": 780,
         "y": 340,
         "wires": [
-            []
+            [
+                "6a8667d08c39de68"
+            ]
         ],
         "info": "Stories are more effective than facts or opinions by themselves. Put your stories to work."
     },
@@ -3779,12 +3781,12 @@
         "id": "f10ac68bb098d0b6",
         "type": "image viewer",
         "z": "1d45200c9172f37f",
-        "name": "",
+        "name": "Explore",
         "width": "60",
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 970,
+        "x": 1040,
         "y": 220,
         "wires": [
             []
@@ -3823,12 +3825,12 @@
         "id": "17eb20feaa270a42",
         "type": "image viewer",
         "z": "1d45200c9172f37f",
-        "name": "",
+        "name": "Concept",
         "width": "60",
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1110,
+        "x": 1040,
         "y": 100,
         "wires": [
             []
@@ -3838,13 +3840,28 @@
         "id": "04778b9e1033e275",
         "type": "image viewer",
         "z": "1d45200c9172f37f",
-        "name": "",
+        "name": "Character",
         "width": "60",
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1130,
-        "y": 300,
+        "x": 1040,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a8667d08c39de68",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Character",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1040,
+        "y": 460,
         "wires": [
             []
         ]
