@@ -64,6 +64,14 @@
         "env": []
     },
     {
+        "id": "1d45200c9172f37f",
+        "type": "tab",
+        "label": "Story Building System",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "4a9935b75e76a65a",
         "type": "subflow",
         "name": "Suite",
@@ -251,7 +259,7 @@
             "2e2873a7e8944fdb",
             "bb01eee731d3a898"
         ],
-        "x": 14,
+        "x": 34,
         "y": 439,
         "w": 1412,
         "h": 562
@@ -277,7 +285,7 @@
             "bc861751a1b19d27"
         ],
         "x": 34,
-        "y": 1219,
+        "y": 1259,
         "w": 1262,
         "h": 402
     },
@@ -293,8 +301,8 @@
             "4d3e0d5042a1385f",
             "624534cad709b4a2"
         ],
-        "x": 314,
-        "y": 1259,
+        "x": 454,
+        "y": 1519,
         "w": 522,
         "h": 82
     },
@@ -312,8 +320,8 @@
             "1e0a9ff4a3ef4b56",
             "3381474b63847bed"
         ],
-        "x": 304,
-        "y": 1019,
+        "x": 14,
+        "y": 1039,
         "w": 592,
         "h": 142
     },
@@ -2613,7 +2621,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 120,
+        "x": 140,
         "y": 960,
         "wires": [
             [
@@ -2634,7 +2642,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 190,
+        "x": 210,
         "y": 880,
         "wires": [
             [
@@ -2655,7 +2663,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 290,
+        "x": 310,
         "y": 800,
         "wires": [
             [
@@ -2676,7 +2684,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
+        "x": 390,
         "y": 740,
         "wires": [
             [
@@ -2697,7 +2705,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
+        "x": 500,
         "y": 660,
         "wires": [
             [
@@ -2718,7 +2726,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 510,
+        "x": 530,
         "y": 600,
         "wires": [
             [
@@ -2739,7 +2747,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
+        "x": 630,
         "y": 540,
         "wires": [
             [
@@ -2760,7 +2768,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
+        "x": 740,
         "y": 480,
         "wires": [
             [
@@ -2781,7 +2789,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 870,
+        "x": 890,
         "y": 500,
         "wires": [
             [
@@ -2802,7 +2810,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1010,
+        "x": 1030,
         "y": 540,
         "wires": [
             [
@@ -2823,7 +2831,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1070,
+        "x": 1090,
         "y": 600,
         "wires": [
             [
@@ -2844,7 +2852,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1160,
+        "x": 1180,
         "y": 660,
         "wires": [
             [
@@ -2865,7 +2873,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1240,
+        "x": 1260,
         "y": 720,
         "wires": [
             [
@@ -2886,7 +2894,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1290,
+        "x": 1310,
         "y": 780,
         "wires": [
             [
@@ -2907,7 +2915,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1330,
+        "x": 1350,
         "y": 860,
         "wires": [
             []
@@ -2927,7 +2935,7 @@
         "finalize": "",
         "libs": [],
         "x": 120,
-        "y": 1580,
+        "y": 1620,
         "wires": [
             [
                 "347d2ac42e821b50"
@@ -2948,7 +2956,7 @@
         "finalize": "",
         "libs": [],
         "x": 230,
-        "y": 1500,
+        "y": 1540,
         "wires": [
             [
                 "eb5b0fd191b9821a"
@@ -2969,7 +2977,7 @@
         "finalize": "",
         "libs": [],
         "x": 370,
-        "y": 1440,
+        "y": 1480,
         "wires": [
             [
                 "f529fc5432ae8155"
@@ -2990,7 +2998,7 @@
         "finalize": "",
         "libs": [],
         "x": 530,
-        "y": 1380,
+        "y": 1420,
         "wires": [
             [
                 "ab29fb87ea4c06f9"
@@ -3011,7 +3019,7 @@
         "finalize": "",
         "libs": [],
         "x": 720,
-        "y": 1320,
+        "y": 1360,
         "wires": [
             [
                 "7ad1a0c99ee13c67"
@@ -3032,7 +3040,7 @@
         "finalize": "",
         "libs": [],
         "x": 860,
-        "y": 1260,
+        "y": 1300,
         "wires": [
             [
                 "2661ded7866de731"
@@ -3053,7 +3061,7 @@
         "finalize": "",
         "libs": [],
         "x": 970,
-        "y": 1340,
+        "y": 1380,
         "wires": [
             [
                 "7824525e71dd688d"
@@ -3074,7 +3082,7 @@
         "finalize": "",
         "libs": [],
         "x": 1110,
-        "y": 1500,
+        "y": 1540,
         "wires": [
             [
                 "f3182786fe1f2a17"
@@ -3095,7 +3103,7 @@
         "finalize": "",
         "libs": [],
         "x": 1210,
-        "y": 1560,
+        "y": 1600,
         "wires": [
             []
         ],
@@ -3113,8 +3121,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 430,
-        "y": 1300,
+        "x": 570,
+        "y": 1560,
         "wires": [
             []
         ],
@@ -3132,8 +3140,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
-        "y": 1300,
+        "x": 860,
+        "y": 1560,
         "wires": [
             []
         ],
@@ -3147,7 +3155,7 @@
         "name": "",
         "info": " - Which part of the story should I tell at the beginning?\n - Which part of which character is the event that catalyses the whole plot?\n - When do I want the audience to reach its most emotional moment?",
         "x": 210,
-        "y": 1320,
+        "y": 1360,
         "wires": []
     },
     {
@@ -3162,8 +3170,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 390,
-        "y": 1120,
+        "x": 100,
+        "y": 1140,
         "wires": [
             []
         ],
@@ -3181,8 +3189,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
-        "y": 1120,
+        "x": 320,
+        "y": 1140,
         "wires": [
             []
         ],
@@ -3200,8 +3208,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 810,
-        "y": 1120,
+        "x": 520,
+        "y": 1140,
         "wires": [
             []
         ],
@@ -3214,8 +3222,8 @@
         "g": "9b29753bae23ff6b",
         "name": "",
         "info": "Although most stories have just one hero, you will have three **CHARACTERS** cards. By placing them on the left of your **HERO’S** STEPS cards, you will be able to manage the development of three different characters.",
-        "x": 560,
-        "y": 1060,
+        "x": 270,
+        "y": 1080,
         "wires": []
     },
     {
@@ -3467,5 +3475,332 @@
             []
         ],
         "info": "... important objects? How do the propel the story?"
+    },
+    {
+        "id": "aa8901bd31893658",
+        "type": "comment",
+        "z": "35a4f5ffd108afaa",
+        "name": "https://www.fabuladeck.com/",
+        "info": "[Fabuladec](https://www.fabuladeck.com/)",
+        "x": 160,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "10ecc36acd18b528",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you  know why you need a story?",
+        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/knowledge-icon-vector-sign-symbol-isolated-white-backgrou-background-your-web-mobile-app-design-logo-concept-133746781.jpg'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "18ad6b73a137a3e9",
+                "17eb20feaa270a42"
+            ]
+        ]
+    },
+    {
+        "id": "18ad6b73a137a3e9",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know where to find your story?",
+        "func": "msg.payload = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9iii7x-Nl4Lr2vhKMAIuU_7Ihvufz7IpHkTQHF8JjIDgQ24s7DYixP5U-2U-nbhnbm5U&usqp=CAU'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "6805cc5038232aba",
+                "f10ac68bb098d0b6"
+            ]
+        ]
+    },
+    {
+        "id": "6805cc5038232aba",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know your role in the story?",
+        "func": "msg.payload = 'https://www.shutterstock.com/shutterstock/photos/1468802948/display_1500/stock-vector-superhero-line-icon-hero-symbol-color-superman-mockup-super-dad-template-vector-illustration-1468802948.jpg'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 360,
+        "wires": [
+            [
+                "dc49740613b266c8",
+                "04778b9e1033e275"
+            ]
+        ]
+    },
+    {
+        "id": "dc49740613b266c8",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know what your story needs to do?",
+        "func": "msg.payload = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Function_machine2.svg/1200px-Function_machine2.svg.png'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 420,
+        "wires": [
+            [
+                "4ecee58dcc75b3dd",
+                "6a8667d08c39de68"
+            ]
+        ]
+    },
+    {
+        "id": "4ecee58dcc75b3dd",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know how to plan your story?",
+        "func": "msg.payload = 'https://www.shutterstock.com/image-vector/hierarchy-icon-isolated-structure-line-260nw-776432704.jpg';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 480,
+        "wires": [
+            [
+                "b7b4cc80c8e04e98",
+                "5381079e5ec44a5b"
+            ]
+        ]
+    },
+    {
+        "id": "b7b4cc80c8e04e98",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know how to tell your story?",
+        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/creative-fashion-style-logo-design-vector-sign-lettering-hanger-symbol-logotype-calligraphy-creative-fashion-style-logo-148836793.jpg'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 540,
+        "wires": [
+            [
+                "6b79b7565b6f052a",
+                "8bd57055a53e7f11"
+            ]
+        ]
+    },
+    {
+        "id": "6b79b7565b6f052a",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know how to share your story?",
+        "func": "msg.payload = 'https://cdn-icons-png.flaticon.com/128/1693/1693056.png';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 600,
+        "wires": [
+            [
+                "34aad3df3238250c",
+                "30cccb3dc02a54d3"
+            ]
+        ]
+    },
+    {
+        "id": "30cccb3dc02a54d3",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Recipe",
+        "func": "msg.payload = 'https://cdn-icons-png.flaticon.com/512/2388/2388956.png';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 700,
+        "wires": [
+            [
+                "1a20954030d41d00"
+            ]
+        ],
+        "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
+    },
+    {
+        "id": "f10ac68bb098d0b6",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Explore",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 780,
+        "y": 140,
+        "wires": [
+            []
+        ],
+        "info": "Stories help us navigate confusing, unknown and changing situations. Make a map for you way ahead."
+    },
+    {
+        "id": "cde43a7535dcf280",
+        "type": "inject",
+        "z": "1d45200c9172f37f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 70,
+        "y": 220,
+        "wires": [
+            [
+                "10ecc36acd18b528"
+            ]
+        ]
+    },
+    {
+        "id": "17eb20feaa270a42",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Concept",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 680,
+        "y": 60,
+        "wires": [
+            []
+        ],
+        "info": "Stories shape how we see ourselves and the wold around us. Frame your work as an epic adventure."
+    },
+    {
+        "id": "04778b9e1033e275",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Character",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 860,
+        "y": 220,
+        "wires": [
+            []
+        ],
+        "info": "Stories connect us to other people. Show us why we can trust you."
+    },
+    {
+        "id": "6a8667d08c39de68",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Function",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 940,
+        "y": 300,
+        "wires": [
+            []
+        ],
+        "info": "Stories are more effective than facts or opinions by themselves. Put your stories to work."
+    },
+    {
+        "id": "5381079e5ec44a5b",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Structure",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1020,
+        "y": 400,
+        "wires": [
+            []
+        ],
+        "info": "Stories carry us along thanks to a fiew basic patterns. Make your ideas flaw in a story-ish way."
+    },
+    {
+        "id": "8bd57055a53e7f11",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Style",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1090,
+        "y": 500,
+        "wires": [
+            []
+        ],
+        "info": "Storries carry useful information. Make sure people remember yours."
+    },
+    {
+        "id": "34aad3df3238250c",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Organise",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1180,
+        "y": 580,
+        "wires": [
+            []
+        ],
+        "info": "Stories work, so long as you use them well. Plan how you should tell yours."
+    },
+    {
+        "id": "1a20954030d41d00",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Receipe",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1260,
+        "y": 680,
+        "wires": [
+            []
+        ],
+        "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
     }
 ]
