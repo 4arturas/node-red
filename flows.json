@@ -3630,7 +3630,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Concept",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9iii7x-Nl4Lr2vhKMAIuU_7Ihvufz7IpHkTQHF8JjIDgQ24s7DYixP5U-2U-nbhnbm5U&usqp=CAU'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3639,7 +3639,9 @@
         "x": 780,
         "y": 160,
         "wires": [
-            []
+            [
+                "a93b22f9854df9d5"
+            ]
         ],
         "info": "Stories shape how we see ourselves and the wold around us. Frame your work as an epic adventure."
     },
@@ -3768,5 +3770,89 @@
             []
         ],
         "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
+    },
+    {
+        "id": "a93b22f9854df9d5",
+        "type": "jimp-image",
+        "z": "1d45200c9172f37f",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 990,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f10ac68bb098d0b6",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1010,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cde43a7535dcf280",
+        "type": "inject",
+        "z": "1d45200c9172f37f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "10ecc36acd18b528"
+            ]
+        ]
     }
 ]
