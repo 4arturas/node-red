@@ -3710,7 +3710,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Structure",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://www.shutterstock.com/image-vector/hierarchy-icon-isolated-structure-line-260nw-776432704.jpg';\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3719,7 +3719,9 @@
         "x": 780,
         "y": 400,
         "wires": [
-            []
+            [
+                "5381079e5ec44a5b"
+            ]
         ],
         "info": "Stories carry us along thanks to a fiew basic patterns. Make your ideas flaw in a story-ish way."
     },
@@ -3786,8 +3788,8 @@
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1040,
-        "y": 220,
+        "x": 1020,
+        "y": 160,
         "wires": [
             []
         ]
@@ -3830,8 +3832,8 @@
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1040,
-        "y": 100,
+        "x": 1020,
+        "y": 40,
         "wires": [
             []
         ]
@@ -3845,8 +3847,8 @@
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1040,
-        "y": 340,
+        "x": 1020,
+        "y": 280,
         "wires": [
             []
         ]
@@ -3860,8 +3862,23 @@
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1040,
-        "y": 460,
+        "x": 1020,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5381079e5ec44a5b",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Structure",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1020,
+        "y": 520,
         "wires": [
             []
         ]
