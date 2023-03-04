@@ -3670,7 +3670,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Character",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://www.shutterstock.com/shutterstock/photos/1468802948/display_1500/stock-vector-superhero-line-icon-hero-symbol-color-superman-mockup-super-dad-template-vector-illustration-1468802948.jpg'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3679,7 +3679,9 @@
         "x": 780,
         "y": 280,
         "wires": [
-            []
+            [
+                "04778b9e1033e275"
+            ]
         ],
         "info": "Stories connect us to other people. Show us why we can trust you."
     },
@@ -3782,7 +3784,7 @@
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1050,
+        "x": 970,
         "y": 220,
         "wires": [
             []
@@ -3822,12 +3824,27 @@
         "type": "image viewer",
         "z": "1d45200c9172f37f",
         "name": "",
-        "width": 160,
+        "width": "60",
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1030,
+        "x": 1110,
         "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "04778b9e1033e275",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1130,
+        "y": 300,
         "wires": [
             []
         ]
