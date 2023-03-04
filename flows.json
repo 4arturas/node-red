@@ -3855,7 +3855,7 @@
         "id": "6a8667d08c39de68",
         "type": "image viewer",
         "z": "1d45200c9172f37f",
-        "name": "Character",
+        "name": "Function",
         "width": "60",
         "data": "payload",
         "dataType": "msg",
