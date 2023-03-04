@@ -64,6 +64,14 @@
         "env": []
     },
     {
+        "id": "1d45200c9172f37f",
+        "type": "tab",
+        "label": "Story Building System",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "4a9935b75e76a65a",
         "type": "subflow",
         "name": "Suite",
@@ -3477,5 +3485,281 @@
         "x": 160,
         "y": 40,
         "wires": []
+    },
+    {
+        "id": "10ecc36acd18b528",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you  know why you need a story?",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "18ad6b73a137a3e9",
+                "65699faf83942531"
+            ]
+        ]
+    },
+    {
+        "id": "18ad6b73a137a3e9",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know where to find your story?",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "6805cc5038232aba",
+                "64268dfe1010109f"
+            ]
+        ]
+    },
+    {
+        "id": "6805cc5038232aba",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know your role in the story?",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 280,
+        "wires": [
+            [
+                "dc49740613b266c8",
+                "c664de0d5396511c"
+            ]
+        ]
+    },
+    {
+        "id": "dc49740613b266c8",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know what your story needs to do?",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 340,
+        "wires": [
+            [
+                "4ecee58dcc75b3dd",
+                "333febe3a382aa29"
+            ]
+        ]
+    },
+    {
+        "id": "4ecee58dcc75b3dd",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know how to plan your story?",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "b7b4cc80c8e04e98",
+                "a13424b00c991cc0"
+            ]
+        ]
+    },
+    {
+        "id": "b7b4cc80c8e04e98",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know how to tell your story?",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 460,
+        "wires": [
+            [
+                "6b79b7565b6f052a",
+                "83eefd02c80c085c"
+            ]
+        ]
+    },
+    {
+        "id": "6b79b7565b6f052a",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Do you know how to share your story?",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 520,
+        "wires": [
+            [
+                "102e60c3252b0899"
+            ]
+        ]
+    },
+    {
+        "id": "65699faf83942531",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Concept",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 160,
+        "wires": [
+            []
+        ],
+        "info": "Stories shape how we see ourselves and the wold around us. Frame your work as an epic adventure."
+    },
+    {
+        "id": "64268dfe1010109f",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Explore",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c664de0d5396511c",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Character",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "333febe3a382aa29",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Function",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a13424b00c991cc0",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Structure",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83eefd02c80c085c",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Style",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "102e60c3252b0899",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Organise",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30cccb3dc02a54d3",
+        "type": "function",
+        "z": "1d45200c9172f37f",
+        "name": "Recipe",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 600,
+        "wires": [
+            []
+        ]
     }
 ]
