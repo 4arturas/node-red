@@ -3491,7 +3491,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Do you  know why you need a story?",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/knowledge-icon-vector-sign-symbol-isolated-white-backgrou-background-your-web-mobile-app-design-logo-concept-133746781.jpg'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3502,7 +3502,7 @@
         "wires": [
             [
                 "18ad6b73a137a3e9",
-                "65699faf83942531"
+                "17eb20feaa270a42"
             ]
         ]
     },
@@ -3624,26 +3624,6 @@
                 "102e60c3252b0899"
             ]
         ]
-    },
-    {
-        "id": "65699faf83942531",
-        "type": "function",
-        "z": "1d45200c9172f37f",
-        "name": "Concept",
-        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/knowledge-icon-vector-sign-symbol-isolated-white-backgrou-background-your-web-mobile-app-design-logo-concept-133746781.jpg'\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 160,
-        "wires": [
-            [
-                "17eb20feaa270a42"
-            ]
-        ],
-        "info": "Stories shape how we see ourselves and the wold around us. Frame your work as an epic adventure."
     },
     {
         "id": "64268dfe1010109f",
@@ -3799,7 +3779,8 @@
         "y": 160,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories help us navigate confusing, unknown and changing situations. Make a map for you way ahead."
     },
     {
         "id": "cde43a7535dcf280",
@@ -3843,7 +3824,8 @@
         "y": 40,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories shape how we see ourselves and the wold around us. Frame your work as an epic adventure."
     },
     {
         "id": "04778b9e1033e275",
@@ -3858,7 +3840,8 @@
         "y": 280,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories connect us to other people. Show us why we can trust you."
     },
     {
         "id": "6a8667d08c39de68",
@@ -3873,7 +3856,8 @@
         "y": 400,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories are more effective than facts or opinions by themselves. Put your stories to work."
     },
     {
         "id": "5381079e5ec44a5b",
@@ -3888,7 +3872,8 @@
         "y": 520,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories carry us along thanks to a fiew basic patterns. Make your ideas flaw in a story-ish way."
     },
     {
         "id": "8bd57055a53e7f11",
@@ -3899,11 +3884,12 @@
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1010,
-        "y": 660,
+        "x": 1090,
+        "y": 620,
         "wires": [
             []
-        ]
+        ],
+        "info": "Storries carry useful information. Make sure people remember yours."
     },
     {
         "id": "34aad3df3238250c",
@@ -3918,21 +3904,23 @@
         "y": 780,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories work, so long as you use them well. Plan how you should tell yours."
     },
     {
         "id": "1a20954030d41d00",
         "type": "image viewer",
         "z": "1d45200c9172f37f",
-        "name": "Organise",
+        "name": "Receipe",
         "width": "60",
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 940,
-        "y": 880,
+        "x": 920,
+        "y": 760,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
     }
 ]
