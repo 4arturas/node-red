@@ -3730,7 +3730,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Style",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://thumbs.dreamstime.com/b/creative-fashion-style-logo-design-vector-sign-lettering-hanger-symbol-logotype-calligraphy-creative-fashion-style-logo-148836793.jpg'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3739,7 +3739,9 @@
         "x": 770,
         "y": 460,
         "wires": [
-            []
+            [
+                "8bd57055a53e7f11"
+            ]
         ],
         "info": "Storries carry useful information. Make sure people remember yours."
     },
@@ -3879,6 +3881,21 @@
         "active": true,
         "x": 1020,
         "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8bd57055a53e7f11",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Style",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1010,
+        "y": 660,
         "wires": [
             []
         ]
