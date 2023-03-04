@@ -3760,7 +3760,8 @@
         "y": 520,
         "wires": [
             [
-                "34aad3df3238250c"
+                "34aad3df3238250c",
+                "30cccb3dc02a54d3"
             ]
         ],
         "info": "Stories work, so long as you use them well. Plan how you should tell yours."
@@ -3770,7 +3771,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Recipe",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://cdn-icons-png.flaticon.com/512/2388/2388956.png';\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3779,7 +3780,9 @@
         "x": 780,
         "y": 600,
         "wires": [
-            []
+            [
+                "1a20954030d41d00"
+            ]
         ],
         "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
     },
@@ -3913,6 +3916,21 @@
         "active": true,
         "x": 1180,
         "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1a20954030d41d00",
+        "type": "image viewer",
+        "z": "1d45200c9172f37f",
+        "name": "Organise",
+        "width": "60",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 940,
+        "y": 880,
         "wires": [
             []
         ]
