@@ -3712,7 +3712,8 @@
         "y": 400,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories carry us along thanks to a fiew basic patterns. Make your ideas flaw in a story-ish way."
     },
     {
         "id": "83eefd02c80c085c",
@@ -3729,7 +3730,8 @@
         "y": 460,
         "wires": [
             []
-        ]
+        ],
+        "info": "Storries carry useful information. Make sure people remember yours."
     },
     {
         "id": "102e60c3252b0899",
@@ -3746,7 +3748,8 @@
         "y": 520,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories work, so long as you use them well. Plan how you should tell yours."
     },
     {
         "id": "30cccb3dc02a54d3",
@@ -3763,6 +3766,7 @@
         "y": 600,
         "wires": [
             []
-        ]
+        ],
+        "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
     }
 ]
