@@ -3611,7 +3611,7 @@
         "type": "function",
         "z": "1d45200c9172f37f",
         "name": "Do you know how to share your story?",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = 'https://cdn-icons-png.flaticon.com/128/1693/1693056.png';\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3621,30 +3621,10 @@
         "y": 520,
         "wires": [
             [
-                "102e60c3252b0899"
-            ]
-        ]
-    },
-    {
-        "id": "102e60c3252b0899",
-        "type": "function",
-        "z": "1d45200c9172f37f",
-        "name": "Organise",
-        "func": "msg.payload = 'https://cdn-icons-png.flaticon.com/128/1693/1693056.png';\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 580,
-        "y": 580,
-        "wires": [
-            [
                 "34aad3df3238250c",
                 "30cccb3dc02a54d3"
             ]
-        ],
-        "info": "Stories work, so long as you use them well. Plan how you should tell yours."
+        ]
     },
     {
         "id": "30cccb3dc02a54d3",
