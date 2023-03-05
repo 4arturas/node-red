@@ -74,7 +74,7 @@
     {
         "id": "5451c5648a7ae7eb",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Sycn-Async",
         "disabled": false,
         "info": "",
         "env": []
@@ -3952,5 +3952,15 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "a662866adf899949",
+        "type": "comment",
+        "z": "5451c5648a7ae7eb",
+        "name": "https://nodered.org/blog/2019/08/16/going-async",
+        "info": "",
+        "x": 500,
+        "y": 100,
+        "wires": []
     }
 ]
