@@ -3962,5 +3962,15 @@
         "x": 500,
         "y": 100,
         "wires": []
+    },
+    {
+        "id": "04e996ecc22bfb1b",
+        "type": "comment",
+        "z": "5451c5648a7ae7eb",
+        "name": "https://nodered.org/docs/user-guide/writing-functions",
+        "info": "",
+        "x": 610,
+        "y": 520,
+        "wires": []
     }
 ]
