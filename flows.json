@@ -3941,7 +3941,7 @@
         "type": "function",
         "z": "5451c5648a7ae7eb",
         "name": "Wait for all Threads",
-        "func": "node.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nreturn msg;",
+        "func": "//node.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
