@@ -3884,7 +3884,7 @@
         "type": "function",
         "z": "5451c5648a7ae7eb",
         "name": "Thread 1",
-        "func": "this.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nreturn msg;",
+        "func": "//this.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nnode.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
