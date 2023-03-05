@@ -3922,7 +3922,7 @@
         "type": "function",
         "z": "5451c5648a7ae7eb",
         "name": "Thread 3",
-        "func": "node.status({ fill: \"red\", shape: \"ring\", text: \"disconnected\" });\nnode.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nnode.status({ text: \"Just text status\" });\nnode.status({});   // to clear the status\nreturn msg;",
+        "func": "node.status({ fill: \"red\", shape: \"ring\", text: \"disconnected\" });\nnode.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nnode.status({ text: \"Just text status\" });\n//node.status({});   // to clear the status\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
