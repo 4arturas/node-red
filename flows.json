@@ -3968,7 +3968,10 @@
         "type": "status",
         "z": "5451c5648a7ae7eb",
         "name": "",
-        "scope": null,
+        "scope": [
+            "7a9dcc421561c59b",
+            "2cfca6c0f1e77435"
+        ],
         "x": 380,
         "y": 180,
         "wires": [
