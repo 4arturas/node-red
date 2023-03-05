@@ -3903,7 +3903,7 @@
         "type": "function",
         "z": "5451c5648a7ae7eb",
         "name": "Thread 2",
-        "func": "\nreturn msg;",
+        "func": "node.status({ fill: \"red\", shape: \"ring\", text: \"busy\" });\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
