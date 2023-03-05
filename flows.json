@@ -3922,7 +3922,7 @@
         "type": "function",
         "z": "5451c5648a7ae7eb",
         "name": "Thread 3",
-        "func": "function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n}\n\nnode.status({ fill: \"red\", shape: \"ring\", text: \"disconnected\" });\nawait sleep(1000);\nnode.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nnode.status({ text: \"Just text status\" });\n//node.status({});   // to clear the status\nreturn msg;",
+        "func": "function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n}\n\nnode.status({ fill: \"red\", shape: \"ring\", text: \"disconnected\" });\nawait sleep(1000);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nawait sleep(1000);\n\nnode.status({ text: \"Just text status\" });\nawait sleep(1000);\n//node.status({});   // to clear the status\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
