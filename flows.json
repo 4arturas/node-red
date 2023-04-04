@@ -1152,14 +1152,14 @@
         "id": "65d3bdb48885b420",
         "type": "function",
         "z": "b70b82bf8d00eb8a",
-        "name": "function 7",
+        "name": "Pop item from the array",
         "func": "const val = msg.payload.array.pop();\n//console.log(val);\nmsg.payload = {\n    ...msg.payload,\n    'val': val\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
+        "x": 670,
         "y": 520,
         "wires": [
             [
@@ -1218,14 +1218,14 @@
         "id": "48a2f59561eb8d74",
         "type": "function",
         "z": "b70b82bf8d00eb8a",
-        "name": "function 8",
+        "name": "Print value",
         "func": "console.log( 'val', msg.payload.val );\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 880,
+        "x": 930,
         "y": 520,
         "wires": [
             [
