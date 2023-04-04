@@ -1187,8 +1187,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 790,
-        "y": 700,
+        "x": 830,
+        "y": 620,
         "wires": [
             [
                 "65d3bdb48885b420"
