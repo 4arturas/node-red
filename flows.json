@@ -1144,8 +1144,8 @@
         "topic": "",
         "payload": "[1,2,3,4,5,6]",
         "payloadType": "json",
-        "x": 460,
-        "y": 600,
+        "x": 470,
+        "y": 520,
         "wires": [
             [
                 "65d3bdb48885b420"
@@ -1157,7 +1157,7 @@
         "type": "function",
         "z": "b70b82bf8d00eb8a",
         "name": "function 7",
-        "func": "const val = msg.payload.pop();\nconsole.log(val);\nreturn msg;",
+        "func": "const val = msg.payload.pop();\n//console.log(val);\nreturn {...msg.payload, val: val};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1167,7 +1167,7 @@
         "y": 520,
         "wires": [
             [
-                "8da682fac1a35894"
+                "48a2f59561eb8d74"
             ]
         ]
     },
@@ -1191,8 +1191,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 730,
-        "y": 720,
+        "x": 790,
+        "y": 700,
         "wires": [
             [
                 "65d3bdb48885b420"
@@ -1214,9 +1214,28 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 920,
+        "x": 1020,
         "y": 740,
         "wires": []
+    },
+    {
+        "id": "48a2f59561eb8d74",
+        "type": "function",
+        "z": "b70b82bf8d00eb8a",
+        "name": "function 8",
+        "func": "console.log( 'val', msg.payload.val );\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 520,
+        "wires": [
+            [
+                "8da682fac1a35894"
+            ]
+        ]
     },
     {
         "id": "3d8bfb0be9994c4d",
