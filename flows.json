@@ -1153,7 +1153,7 @@
         "type": "function",
         "z": "b70b82bf8d00eb8a",
         "name": "function 7",
-        "func": "const val = msg.payload.array.pop();\n//console.log(val);\nmsg.payload = {\n    ...msg.payload,\n    'value': val\n}\n\nreturn msg;",
+        "func": "const val = msg.payload.array.pop();\n//console.log(val);\nmsg.payload = {\n    ...msg.payload,\n    val: val\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
