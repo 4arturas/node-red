@@ -1223,7 +1223,7 @@
         "type": "function",
         "z": "b70b82bf8d00eb8a",
         "name": "function 8",
-        "func": "console.log( 'val', msg.payload.val );\nreturn msg;",
+        "func": "console.log( 'val', msg );\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
