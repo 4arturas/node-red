@@ -1124,6 +1124,101 @@
         ]
     },
     {
+        "id": "db0c792680c91dc6",
+        "type": "inject",
+        "z": "b70b82bf8d00eb8a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[1,2,3,4,5,6]",
+        "payloadType": "json",
+        "x": 460,
+        "y": 600,
+        "wires": [
+            [
+                "65d3bdb48885b420"
+            ]
+        ]
+    },
+    {
+        "id": "65d3bdb48885b420",
+        "type": "function",
+        "z": "b70b82bf8d00eb8a",
+        "name": "function 7",
+        "func": "const val = msg.payload.pop();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 520,
+        "wires": [
+            [
+                "8da682fac1a35894"
+            ]
+        ]
+    },
+    {
+        "id": "8da682fac1a35894",
+        "type": "switch",
+        "z": "b70b82bf8d00eb8a",
+        "name": "",
+        "property": "payload.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 730,
+        "y": 720,
+        "wires": [
+            [
+                "65d3bdb48885b420"
+            ],
+            [
+                "23fd320f9c895f4c"
+            ]
+        ]
+    },
+    {
+        "id": "23fd320f9c895f4c",
+        "type": "debug",
+        "z": "b70b82bf8d00eb8a",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 740,
+        "wires": []
+    },
+    {
         "id": "3d8bfb0be9994c4d",
         "type": "inject",
         "z": "5067ad5bc159023f",
