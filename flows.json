@@ -1128,27 +1128,17 @@
         "type": "inject",
         "z": "b70b82bf8d00eb8a",
         "name": "",
-        "props": [
-            {
-                "p": "payload.array",
-                "v": "[1,2,3,4,5,6]",
-                "vt": "json"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
+        "props": [],
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 450,
+        "x": 350,
         "y": 520,
         "wires": [
             [
-                "65d3bdb48885b420"
+                "018033cdd8d59c6f"
             ]
         ]
     },
@@ -1157,7 +1147,7 @@
         "type": "function",
         "z": "b70b82bf8d00eb8a",
         "name": "function 7",
-        "func": "const val = msg.payload.array.pop();\n//console.log(val);\nmsg.payload = {\n    ...msg.payload,\n    'value': val\n}\n\n//return msg;",
+        "func": "const val = msg.payload.array.pop();\n//console.log(val);\nmsg.payload = {\n    'array': msg.payload.array,\n    'value': val\n}\n\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1234,6 +1224,25 @@
         "wires": [
             [
                 "8da682fac1a35894"
+            ]
+        ]
+    },
+    {
+        "id": "018033cdd8d59c6f",
+        "type": "function",
+        "z": "b70b82bf8d00eb8a",
+        "name": "function 9",
+        "func": "msg.payload = {\n    ...msg.payload,\n    array: [1, 2, 3, 4, 5, 6]\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 520,
+        "wires": [
+            [
+                "65d3bdb48885b420"
             ]
         ]
     },
