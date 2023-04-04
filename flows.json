@@ -1130,7 +1130,9 @@
         "name": "",
         "props": [
             {
-                "p": "payload"
+                "p": "payload.array",
+                "v": "[1,2,3,4,5,6]",
+                "vt": "json"
             },
             {
                 "p": "topic",
@@ -1142,9 +1144,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "[1,2,3,4,5,6]",
-        "payloadType": "json",
-        "x": 470,
+        "x": 450,
         "y": 520,
         "wires": [
             [
@@ -1157,7 +1157,7 @@
         "type": "function",
         "z": "b70b82bf8d00eb8a",
         "name": "function 7",
-        "func": "const val = msg.payload.pop();\n//console.log(val);\nmsg.payload = {\n    ...msg.payload,\n    'value': val\n}\n\n//return msg;",
+        "func": "const val = msg.payload.array.pop();\n//console.log(val);\nmsg.payload = {\n    ...msg.payload,\n    'value': val\n}\n\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1176,7 +1176,7 @@
         "type": "switch",
         "z": "b70b82bf8d00eb8a",
         "name": "",
-        "property": "payload.length",
+        "property": "payload.array.length",
         "propertyType": "msg",
         "rules": [
             {
