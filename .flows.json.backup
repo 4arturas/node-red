@@ -398,6 +398,11 @@
         "wholemsg": "false"
     },
     {
+        "id": "cc2050a953749795",
+        "type": "openaiApiKey",
+        "name": ""
+    },
+    {
         "id": "f59321b99d54e840",
         "type": "ttsultimate-config",
         "name": "TTS Service",
@@ -406,11 +411,6 @@
         "purgediratrestart": "leave",
         "ttsservice": "googletranslate",
         "TTSRootFolderPath": ""
-    },
-    {
-        "id": "cc2050a953749795",
-        "type": "openaiApiKey",
-        "name": ""
     },
     {
         "id": "8e227f858e741893",
@@ -1229,9 +1229,27 @@
         "y": 520,
         "wires": [
             [
-                "8da682fac1a35894"
+                "8da682fac1a35894",
+                "a467bbb1688a0f53"
             ]
         ]
+    },
+    {
+        "id": "a467bbb1688a0f53",
+        "type": "debug",
+        "z": "b70b82bf8d00eb8a",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.val",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 460,
+        "wires": []
     },
     {
         "id": "3d8bfb0be9994c4d",

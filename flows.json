@@ -48,14 +48,6 @@
         "env": []
     },
     {
-        "id": "533a2b371d46e27a",
-        "type": "tab",
-        "label": "Examples",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "35a4f5ffd108afaa",
         "type": "tab",
         "label": "Herro",
@@ -268,7 +260,9 @@
             "bb01eee731d3a898"
         ],
         "x": 34,
-        "y": 439
+        "y": 439,
+        "w": 1412,
+        "h": 562
     },
     {
         "id": "00862118b435a1a7",
@@ -291,7 +285,9 @@
             "bc861751a1b19d27"
         ],
         "x": 34,
-        "y": 1259
+        "y": 1259,
+        "w": 1262,
+        "h": 402
     },
     {
         "id": "87285eca5226e916",
@@ -306,7 +302,9 @@
             "624534cad709b4a2"
         ],
         "x": 454,
-        "y": 1519
+        "y": 1519,
+        "w": 522,
+        "h": 82
     },
     {
         "id": "9b29753bae23ff6b",
@@ -323,7 +321,9 @@
             "3381474b63847bed"
         ],
         "x": 14,
-        "y": 1039
+        "y": 1039,
+        "w": 592,
+        "h": 142
     },
     {
         "id": "33fb1e68903c32d8",
@@ -348,7 +348,9 @@
             "7c4e3bdfb934f2b1"
         ],
         "x": 24,
-        "y": 99
+        "y": 99,
+        "w": 792,
+        "h": 302
     },
     {
         "id": "d3bab26f8ac33880",
@@ -398,6 +400,11 @@
         "wholemsg": "false"
     },
     {
+        "id": "cc2050a953749795",
+        "type": "openaiApiKey",
+        "name": ""
+    },
+    {
         "id": "f59321b99d54e840",
         "type": "ttsultimate-config",
         "name": "TTS Service",
@@ -406,11 +413,6 @@
         "purgediratrestart": "leave",
         "ttsservice": "googletranslate",
         "TTSRootFolderPath": ""
-    },
-    {
-        "id": "cc2050a953749795",
-        "type": "openaiApiKey",
-        "name": ""
     },
     {
         "id": "8e227f858e741893",
@@ -2719,47 +2721,6 @@
                 "1b165353165d655c"
             ]
         ]
-    },
-    {
-        "id": "faa550264d8902f3",
-        "type": "inject",
-        "z": "533a2b371d46e27a",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "$now()",
-        "payloadType": "jsonata",
-        "x": 400,
-        "y": 380,
-        "wires": [
-            [
-                "b7372db29b08a43f"
-            ]
-        ]
-    },
-    {
-        "id": "b7372db29b08a43f",
-        "type": "debug",
-        "z": "533a2b371d46e27a",
-        "name": "debug 14",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 700,
-        "y": 380,
-        "wires": []
     },
     {
         "id": "6232921449696c56",

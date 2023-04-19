@@ -2,7 +2,11 @@
     "name": "node-red-github",
     "description": "A Node-RED Project",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-image-tools": "2.0.4",
+        "node-red-contrib-openai": "1.0.0",
+        "node-red-contrib-ui-media": "1.2.0"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
