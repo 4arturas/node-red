@@ -22,14 +22,33 @@
 
 module.exports = {
 
-/*******************************************************************************
- * Flow File and User Directory Settings
- *  - flowFile
- *  - credentialSecret
- *  - flowFilePretty
- *  - userDir
- *  - nodesDir
- ******************************************************************************/
+    "swagger": {
+        "template": {
+            "swagger": "2.0",
+            "info": {
+                "title": "My Node-RED API test",
+                "version": "0.0.1"
+            }
+        },
+        "parameters": [
+            {
+                "name": "parameterA",
+                "type": "string",
+                "in": "header",
+                "required": false,
+                "description": "This is a test parameter to show how parameters are automatically added to each path in the generated swagger doc."
+            }
+        ]
+    },
+
+    /*******************************************************************************
+     * Flow File and User Directory Settings
+     *  - flowFile
+     *  - credentialSecret
+     *  - flowFilePretty
+     *  - userDir
+     *  - nodesDir
+     ******************************************************************************/
 
     /** The file containing the flows. If not set, defaults to flows_<hostname>.json **/
     flowFile: 'flows.json',
@@ -60,15 +79,15 @@ module.exports = {
      */
     //nodesDir: '/home/nol/.node-red/nodes',
 
-/*******************************************************************************
- * Security
- *  - adminAuth
- *  - https
- *  - httpsRefreshInterval
- *  - requireHttps
- *  - httpNodeAuth
- *  - httpStaticAuth
- ******************************************************************************/
+    /*******************************************************************************
+     * Security
+     *  - adminAuth
+     *  - https
+     *  - httpsRefreshInterval
+     *  - requireHttps
+     *  - httpNodeAuth
+     *  - httpStaticAuth
+     ******************************************************************************/
 
     /** To password protect the Node-RED editor and admin API, the following
      * property can be used. See http://nodered.org/docs/security.html for details.
@@ -125,20 +144,20 @@ module.exports = {
     //httpNodeAuth: {user:"user",pass:"$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN."},
     //httpStaticAuth: {user:"user",pass:"$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN."},
 
-/*******************************************************************************
- * Server Settings
- *  - uiPort
- *  - uiHost
- *  - apiMaxLength
- *  - httpServerOptions
- *  - httpAdminRoot
- *  - httpAdminMiddleware
- *  - httpNodeRoot
- *  - httpNodeCors
- *  - httpNodeMiddleware
- *  - httpStatic
- *  - httpStaticRoot
- ******************************************************************************/
+    /*******************************************************************************
+     * Server Settings
+     *  - uiPort
+     *  - uiHost
+     *  - apiMaxLength
+     *  - httpServerOptions
+     *  - httpAdminRoot
+     *  - httpAdminMiddleware
+     *  - httpNodeRoot
+     *  - httpNodeCors
+     *  - httpNodeMiddleware
+     *  - httpStatic
+     *  - httpStaticRoot
+     ******************************************************************************/
 
     /** the tcp port that the Node-RED web server is listening on */
     uiPort: process.env.PORT || 1880,
@@ -219,17 +238,17 @@ module.exports = {
     /** When httpAdminRoot is used to move the UI to a different root path, the
      * following property can be used to identify a directory of static content
      * that should be served at http://localhost:1880/.
-     * When httpStaticRoot is set differently to httpAdminRoot, there is no need 
+     * When httpStaticRoot is set differently to httpAdminRoot, there is no need
      * to move httpAdminRoot
      */
     //httpStatic: '/home/nol/node-red-static/', //single static source
     /* OR multiple static sources can be created using an array of objects... */
     //httpStatic: [
-    //    {path: '/home/nol/pics/',    root: "/img/"}, 
-    //    {path: '/home/nol/reports/', root: "/doc/"}, 
+    //    {path: '/home/nol/pics/',    root: "/img/"},
+    //    {path: '/home/nol/reports/', root: "/doc/"},
     //],
 
-    /**  
+    /**
      * All static routes will be appended to httpStaticRoot
      * e.g. if httpStatic = "/home/nol/docs" and  httpStaticRoot = "/static/"
      *      then "/home/nol/docs" will be served at "/static/"
@@ -239,16 +258,16 @@ module.exports = {
      */
     //httpStaticRoot: '/static/',
 
-/*******************************************************************************
- * Runtime Settings
- *  - lang
- *  - runtimeState
- *  - diagnostics
- *  - logging
- *  - contextStorage
- *  - exportGlobalContextKeys
- *  - externalModules
- ******************************************************************************/
+    /*******************************************************************************
+     * Runtime Settings
+     *  - lang
+     *  - runtimeState
+     *  - diagnostics
+     *  - logging
+     *  - contextStorage
+     *  - exportGlobalContextKeys
+     *  - externalModules
+     ******************************************************************************/
 
     /** Uncomment the following to run node-red in your preferred language.
      * Available languages include: en-US (default), ja, de, zh-CN, zh-TW, ru, ko
@@ -256,22 +275,22 @@ module.exports = {
      */
     // lang: "de",
 
-    /** Configure diagnostics options 
+    /** Configure diagnostics options
      * - enabled:  When `enabled` is `true` (or unset), diagnostics data will
-     *   be available at http://localhost:1880/diagnostics  
-     * - ui: When `ui` is `true` (or unset), the action `show-system-info` will 
-     *   be available to logged in users of node-red editor  
-    */
+     *   be available at http://localhost:1880/diagnostics
+     * - ui: When `ui` is `true` (or unset), the action `show-system-info` will
+     *   be available to logged in users of node-red editor
+     */
     diagnostics: {
         /** enable or disable diagnostics endpoint. Must be set to `false` to disable */
         enabled: true,
         /** enable or disable diagnostics display in the node-red editor. Must be set to `false` to disable */
         ui: true,
     },
-    /** Configure runtimeState options 
-     * - enabled:  When `enabled` is `true` flows runtime can be Started/Stoped 
-     *   by POSTing to available at http://localhost:1880/flows/state  
-     * - ui: When `ui` is `true`, the action `core:start-flows` and 
+    /** Configure runtimeState options
+     * - enabled:  When `enabled` is `true` flows runtime can be Started/Stoped
+     *   by POSTing to available at http://localhost:1880/flows/state
+     * - ui: When `ui` is `true`, the action `core:start-flows` and
      *   `core:stop-flows` will be available to logged in users of node-red editor
      *   Also, the deploy menu (when set to default) will show a stop or start button
      */
@@ -351,11 +370,11 @@ module.exports = {
     },
 
 
-/*******************************************************************************
- * Editor Settings
- *  - disableEditor
- *  - editorTheme
- ******************************************************************************/
+    /*******************************************************************************
+     * Editor Settings
+     *  - disableEditor
+     *  - editorTheme
+     ******************************************************************************/
 
     /** The following property can be used to disable the editor. The admin API
      * is not affected by this option. To disable both the editor and the admin
@@ -390,7 +409,7 @@ module.exports = {
 
         projects: {
             /** To enable the Projects feature, set this value to true */
-            enabled: true,
+            enabled: false,
             workflow: {
                 /** Set the default projects workflow mode.
                  *  - manual - you must manually commit changes
@@ -425,26 +444,26 @@ module.exports = {
         }
     },
 
-/*******************************************************************************
- * Node Settings
- *  - fileWorkingDirectory
- *  - functionGlobalContext
- *  - functionExternalModules
- *  - nodeMessageBufferMaxLength
- *  - ui (for use with Node-RED Dashboard)
- *  - debugUseColors
- *  - debugMaxLength
- *  - execMaxBufferSize
- *  - httpRequestTimeout
- *  - mqttReconnectTime
- *  - serialReconnectTime
- *  - socketReconnectTime
- *  - socketTimeout
- *  - tcpMsgQueueSize
- *  - inboundWebSocketTimeout
- *  - tlsConfigDisableLocalFiles
- *  - webSocketNodeVerifyClient
- ******************************************************************************/
+    /*******************************************************************************
+     * Node Settings
+     *  - fileWorkingDirectory
+     *  - functionGlobalContext
+     *  - functionExternalModules
+     *  - nodeMessageBufferMaxLength
+     *  - ui (for use with Node-RED Dashboard)
+     *  - debugUseColors
+     *  - debugMaxLength
+     *  - execMaxBufferSize
+     *  - httpRequestTimeout
+     *  - mqttReconnectTime
+     *  - serialReconnectTime
+     *  - socketReconnectTime
+     *  - socketTimeout
+     *  - tcpMsgQueueSize
+     *  - inboundWebSocketTimeout
+     *  - tlsConfigDisableLocalFiles
+     *  - webSocketNodeVerifyClient
+     ******************************************************************************/
 
     /** The working directory to handle relative file paths from within the File nodes
      * defaults to the working directory of the Node-RED process.

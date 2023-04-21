@@ -11,14 +11,56 @@ docker tag mynodered mynodered
 docker run -it -p 1880:1880 --name mynodered mynodered
 ````
 ```bash
-docker run --rm -e "NODE_RED_CREDENTIAL_SECRET=your_secret_goes_here" -p 1880:1880 -v `pwd`:/data --name a-container-name your-image-name
-````
-```bash
 docker exec -it mynodered /bin/bash
 ````
+
+```bash
+docker build -t mynodered . && docker tag mynodered mynodered && docker run -it -p 1880:1880 --name mynodered mynodered
+````
+
 ```bash
 docker rmi mynodered --force
 ````
 ```bash
 docker rm mynodered --force
 ````
+```bash
+curl http://127.0.0.1:1880/test?id=333
+````
+
+# Push image do github
+```bash
+docker build -f Dockerfile -t mynodered .
+docker tag mynodered ghcr.io/4arturas/mynodered
+export CR_PAT=token...fvkK9lhxJGOPBm...token
+echo $CR_PAT | docker login ghcr.io -u 4arturas --password-stdin
+docker push ghcr.io/4arturas/mynodered
+````
+
+# Push image do docker hub
+```bash
+docker build -f Dockerfile -t mynodered .
+docker tag mynodered arturix/mynodered
+docker push arturix/mynodered
+````
+
+# Setup
+## Get IP
+```bash
+kubectl get -n kube-system service/traefik -o jsonpath="{.status.loadBalancer.ingress[0].ip}"
+````
+```bash
+sudo bash -c 'echo -n ''172.18.0.2    mynodered.sys'' >> /etc/hosts'
+````
+
+# k8s
+```bash
+kubectl apply -f argocd/k8s.yaml
+````
+```bash
+kubectl delete -f argocd/k8s.yaml
+````
+```bash
+curl http://mynodered.sys/test?id=333
+````
+http://mynodered.sys

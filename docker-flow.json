@@ -1,0 +1,94 @@
+[
+    {
+        "id": "3ff1bf0f6de4214e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "54a40576cddd777e",
+        "type": "http in",
+        "z": "3ff1bf0f6de4214e",
+        "name": "",
+        "url": "/test",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "458e296b2c64c52e",
+        "x": 440,
+        "y": 440,
+        "wires": [
+            [
+                "361ec139ac169514",
+                "c51548bcb657444c"
+            ]
+        ]
+    },
+    {
+        "id": "361ec139ac169514",
+        "type": "function",
+        "z": "3ff1bf0f6de4214e",
+        "name": "function 1",
+        "func": "msg.payload = {'atsakymas':2222};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 500,
+        "wires": [
+            [
+                "20e84c3ed73dec34"
+            ]
+        ]
+    },
+    {
+        "id": "20e84c3ed73dec34",
+        "type": "http response",
+        "z": "3ff1bf0f6de4214e",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 830,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "c51548bcb657444c",
+        "type": "debug",
+        "z": "3ff1bf0f6de4214e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "458e296b2c64c52e",
+        "type": "swagger-doc",
+        "summary": "",
+        "description": "",
+        "tags": "",
+        "consumes": "",
+        "produces": "",
+        "parameters": [
+            {
+                "name": "id",
+                "in": "query",
+                "description": "test description",
+                "required": true,
+                "type": "string"
+            }
+        ],
+        "responses": {},
+        "deprecated": false
+    }
+]

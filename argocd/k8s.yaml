@@ -1,0 +1,70 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mynodered
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      platform: mynodered
+  template:
+    metadata:
+      labels:
+        platform: mynodered
+    spec:
+      containers:
+        - env:
+            - name: NODE_ENV
+              value: production
+            - name: RUNTIME_ENV
+              value: production
+          image: arturix/mynodered:latest
+          name: mynodered
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1880
+      imagePullSecrets:
+        - name: my-container-registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    platform: mynodered
+  name: mynodered
+spec:
+  ports:
+    - port: 1880
+      name: mynodered
+  selector:
+    platform: mynodered
+  type: NodePort
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mynodered
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - host: mynodered.sys
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mynodered
+                port:
+                  name: mynodered
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: mynodered
+                port:
+                  name: mynodered
