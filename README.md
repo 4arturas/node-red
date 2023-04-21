@@ -1,7 +1,4 @@
 ```bash
-npm install node-red-contrib-teachable-machine
-````
-```bash
 docker build -t mynodered .
 ````
 ```bash

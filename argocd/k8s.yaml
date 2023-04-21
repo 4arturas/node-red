@@ -61,10 +61,3 @@ spec:
                 name: mynodered
                 port:
                   name: mynodered
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: mynodered
-                port:
-                  name: mynodered
