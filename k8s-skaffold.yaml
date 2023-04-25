@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mynodered
+spec:
+  ports:
+    - port: 1880
+  type: LoadBalancer
+  selector:
+    app: mynodered
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mynodered
+spec:
+  selector:
+    matchLabels:
+      app: mynodered
+  template:
+    metadata:
+      labels:
+        app: mynodered
+    spec:
+      containers:
+        - name: mynodered
+          image: mynodered
+          ports:
+            - containerPort: 1880

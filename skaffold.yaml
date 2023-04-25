@@ -1,0 +1,18 @@
+apiVersion: skaffold/v4beta2
+kind: Config
+metadata:
+  name: mynodered
+build:
+  artifacts:
+    - image: mynodered
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s-skaffold.yaml
+
+portForward:
+  - resourceType: deployment
+    resourceName: mynodered
+    port: 1880
+    localPort: 8888

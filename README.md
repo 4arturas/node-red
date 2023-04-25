@@ -61,3 +61,10 @@ kubectl delete -f argocd/k8s.yaml
 curl http://mynodered.sys/test?id=333
 ````
 http://mynodered.sys
+
+
+# Skaffold
+```bash
+skaffold dev --port-forward
+````
+http://127.0.0.1:8888/
