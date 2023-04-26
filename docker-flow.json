@@ -29,7 +29,7 @@
         "id": "361ec139ac169514",
         "type": "function",
         "z": "3ff1bf0f6de4214e",
-        "name": "function 1",
+        "name": "function 2",
         "func": "msg.payload = {'atsakymas':2222};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
