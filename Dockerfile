@@ -5,6 +5,7 @@ RUN npm install -g --unsafe-perm node-red
 WORKDIR /root/.node-red
 #RUN npm install node-red-contrib-image-tools
 #RUN npm install node-red-contrib-ui-media
+RUN npm install @node-red-contrib-themes/theme-collection
 RUN npm install node-red-node-swagger
 
 # RUN which node-red
