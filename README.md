@@ -36,8 +36,8 @@ docker push ghcr.io/4arturas/mynodered
 
 # Push image do docker hub
 ```bash
-docker build -f Dockerfile -t mynodered .
-docker tag mynodered arturix/mynodered
+docker build -f Dockerfile -t mynodered . && \
+docker tag mynodered arturix/mynodered && \
 docker push arturix/mynodered
 ````
 
@@ -68,3 +68,13 @@ http://mynodered.sys
 skaffold dev --port-forward
 ````
 http://127.0.0.1:8888/
+
+# ArgoCD
+
+```sh
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+````
+
+```sh
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+````

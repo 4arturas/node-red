@@ -19,7 +19,7 @@ spec:
               value: production
             - name: RUNTIME_ENV
               value: production
-          image: arturix/mynodered:latest
+          image: arturix/mynodered
           name: mynodered
           imagePullPolicy: Always
           ports:
