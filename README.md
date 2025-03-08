@@ -78,3 +78,6 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```sh
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ````
+
+https://flows.nodered.org/node/node-red-contrib-image-tools
+npm install node-red-contrib-ui-media
