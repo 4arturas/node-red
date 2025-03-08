@@ -72,6 +72,22 @@
         "env": []
     },
     {
+        "id": "f0f04da5b5906ea0",
+        "type": "tab",
+        "label": "AI Google",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7b1434e96d2fe1c7",
+        "type": "tab",
+        "label": "AI API",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "c080735c3b2e661f",
         "type": "group",
         "z": "35a4f5ffd108afaa",
@@ -2718,5 +2734,430 @@
         "x": 610,
         "y": 520,
         "wires": []
+    },
+    {
+        "id": "3b29c01055a752cd",
+        "type": "http request",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "query",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "fe8e8770ddd4af98"
+            ]
+        ]
+    },
+    {
+        "id": "5a1a4511ab447717",
+        "type": "inject",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"contents\":[{\"parts\":[{\"text\":\"List a few popular cookie recipes using this JSON schema: Recipe = {\\\"recipe_name\\\": str} Return: list[Recipe]\"}]}],\"generationConfig\":{\"response_mime_type\":\"application/json\"}}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "f4208e1483474001"
+            ]
+        ]
+    },
+    {
+        "id": "f4208e1483474001",
+        "type": "template",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"contents\": [\n        {\n            \"parts\": [\n                {\n                    \"text\": \"List a few popular cookie recipes using this JSON schema: Recipe = {\\\"recipe_name\\\": str} Return: list[Recipe]\"\n                }\n            ]\n        }\n    ],\n    \"generationConfig\": {\n        \"response_mime_type\": \"application/json\"\n    }\n}",
+        "output": "str",
+        "x": 300,
+        "y": 160,
+        "wires": [
+            [
+                "3b29c01055a752cd"
+            ]
+        ]
+    },
+    {
+        "id": "09cc2d3f5356efeb",
+        "type": "debug",
+        "z": "f0f04da5b5906ea0",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "a7129c80d1a1b27b",
+        "type": "change",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$eval($$.payload.candidates[*].content.parts[*].text)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 340,
+        "wires": [
+            [
+                "4c49a1b552899a6a"
+            ]
+        ]
+    },
+    {
+        "id": "fe8e8770ddd4af98",
+        "type": "json",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "a7129c80d1a1b27b"
+            ]
+        ]
+    },
+    {
+        "id": "4c49a1b552899a6a",
+        "type": "json",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 630,
+        "y": 400,
+        "wires": [
+            [
+                "09cc2d3f5356efeb"
+            ]
+        ]
+    },
+    {
+        "id": "54e4fcb7df983366",
+        "type": "http request",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "query",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 410,
+        "y": 580,
+        "wires": [
+            [
+                "f20d6f753687fa86"
+            ]
+        ]
+    },
+    {
+        "id": "b3674fde120c610d",
+        "type": "inject",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload_",
+                "v": "{\"contents\":[{\"parts\":[{\"text\":\"List a few popular cookie recipes using this JSON schema: Recipe = {\\\"recipe_name\\\": str} Return: list[Recipe]\"}]}],\"generationConfig\":{\"response_mime_type\":\"application/json\"}}",
+                "vt": "json"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Explain how Religion works",
+        "payloadType": "str",
+        "x": 190,
+        "y": 400,
+        "wires": [
+            [
+                "4cd2633e3e2d3757"
+            ]
+        ]
+    },
+    {
+        "id": "f20d6f753687fa86",
+        "type": "json",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 490,
+        "y": 640,
+        "wires": [
+            [
+                "c06d549748ac301a"
+            ]
+        ]
+    },
+    {
+        "id": "c06d549748ac301a",
+        "type": "change",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$$.payload.candidates[0].content.parts[0].text",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 700,
+        "wires": [
+            [
+                "09cc2d3f5356efeb"
+            ]
+        ]
+    },
+    {
+        "id": "4cd2633e3e2d3757",
+        "type": "template",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"contents\": [\n        {\n            \"parts\": [\n                {\n                    \"text\": \"{{payload}}\"\n                }\n            ]\n        }\n    ]\n}",
+        "output": "str",
+        "x": 260,
+        "y": 460,
+        "wires": [
+            [
+                "ef0ebd1bcffb07db"
+            ]
+        ]
+    },
+    {
+        "id": "ef0ebd1bcffb07db",
+        "type": "json",
+        "z": "f0f04da5b5906ea0",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 330,
+        "y": 520,
+        "wires": [
+            [
+                "54e4fcb7df983366"
+            ]
+        ]
+    },
+    {
+        "id": "0737f9d306a31f4a",
+        "type": "inject",
+        "z": "7b1434e96d2fe1c7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"model\":\"qwen/qwen2.5-vl-72b-instruct:free\",\"messages\":[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"What is in this image?\"},{\"type\":\"image_url\",\"image_url\":{\"url\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg\"}}]}]}",
+        "payloadType": "json",
+        "x": 670,
+        "y": 260,
+        "wires": [
+            [
+                "236cd65156f1ce0d"
+            ]
+        ]
+    },
+    {
+        "id": "236cd65156f1ce0d",
+        "type": "http request",
+        "z": "7b1434e96d2fe1c7",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "query",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "other",
+                "valueValue": "Bearer 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"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "HTTP-Referer",
+                "valueType": "other",
+                "valueValue": "<YOUR_SITE_URL>"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-Title",
+                "valueType": "other",
+                "valueValue": "<YOUR_SITE_NAME>"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 930,
+        "y": 260,
+        "wires": [
+            [
+                "0e1b65d09d8c7987",
+                "e913a9c84b50f54b"
+            ]
+        ]
+    },
+    {
+        "id": "e913a9c84b50f54b",
+        "type": "debug",
+        "z": "7b1434e96d2fe1c7",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0e1b65d09d8c7987",
+        "type": "function",
+        "z": "7b1434e96d2fe1c7",
+        "name": "function 1",
+        "func": "// Parse JSON response and extract content\ntry {    \n    const response = JSON.parse(msg.payload);\n    msg.payload = response.choices?.[0]?.message?.content;\n    } catch (e) {\n    msg.payload = 'Error parsing response: ' + e.message;\n    }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1160,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "589d6eee317874e8",
+        "type": "change",
+        "z": "7b1434e96d2fe1c7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$.choices[0].message.content",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1240,
+        "y": 440,
+        "wires": [
+            [
+                "e913a9c84b50f54b"
+            ]
+        ]
     }
 ]
