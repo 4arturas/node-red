@@ -80,6 +80,22 @@
         "env": []
     },
     {
+        "id": "542558815308218e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "050b98cdec0fb136",
+        "type": "tab",
+        "label": "Wait for all Threads",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "c080735c3b2e661f",
         "type": "group",
         "z": "35a4f5ffd108afaa",
@@ -220,6 +236,32 @@
         "wires": [
             [
                 "7879dc596cf24518"
+            ]
+        ]
+    },
+    {
+        "id": "3bac0584b8df8ef3",
+        "type": "junction",
+        "z": "050b98cdec0fb136",
+        "x": 680,
+        "y": 500,
+        "wires": [
+            [
+                "1d2c0e0ad8db2121",
+                "4fea8efc486e60b5",
+                "dbb12a0d022402c1"
+            ]
+        ]
+    },
+    {
+        "id": "f0b48f4542db6b9b",
+        "type": "junction",
+        "z": "050b98cdec0fb136",
+        "x": 920,
+        "y": 500,
+        "wires": [
+            [
+                "606e8561e6607d49"
             ]
         ]
     },
@@ -2636,7 +2678,7 @@
         "type": "function",
         "z": "5451c5648a7ae7eb",
         "name": "Thread 1",
-        "func": "this.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\n//node.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nreturn msg;",
+        "func": "this.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\n//node.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nreturn {\"t1\": \"t1\"};",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -2678,6 +2720,7 @@
         "name": "Thread 3",
         "func": "function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n}\n\nnode.status({ fill: \"red\", shape: \"ring\", text: \"disconnected\" });\nawait sleep(1000);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nawait sleep(1000);\n\nnode.status({ text: \"Just text status\" });\nawait sleep(1000);\n//node.status({});   // to clear the status\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -2695,8 +2738,9 @@
         "type": "function",
         "z": "5451c5648a7ae7eb",
         "name": "Wait for all Threads",
-        "func": "//node.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nreturn msg;",
+        "func": "node.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -3015,5 +3059,372 @@
                 "54e4fcb7df983366"
             ]
         ]
+    },
+    {
+        "id": "112828238f036d5f",
+        "type": "comment",
+        "z": "a48639831b79bc53",
+        "name": "https://academy.langchain.com/courses/take/quickstart-langgraph-essentials-typescript/lessons/69449740-lesson-6-application",
+        "info": "",
+        "x": 920,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "bae2b8a1603dab71",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "read_email",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 320,
+        "wires": [
+            [
+                "3b7e89258a80ab5c",
+                "f16a90e2c44789ad"
+            ]
+        ]
+    },
+    {
+        "id": "f16a90e2c44789ad",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "classify_intent",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 500,
+        "wires": [
+            [
+                "01b16b8e8a59c0b6",
+                "56c2435fc17835ea"
+            ]
+        ]
+    },
+    {
+        "id": "01b16b8e8a59c0b6",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "bug_tracking",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 360,
+        "wires": [
+            [
+                "0df6b0d3c69dd750"
+            ]
+        ]
+    },
+    {
+        "id": "56c2435fc17835ea",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "search_documentation",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 480,
+        "wires": [
+            [
+                "0df6b0d3c69dd750"
+            ]
+        ]
+    },
+    {
+        "id": "28375a8155876aba",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "write_response",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1420,
+        "y": 420,
+        "wires": [
+            [
+                "2f99fb132f4021a7"
+            ]
+        ]
+    },
+    {
+        "id": "2f99fb132f4021a7",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "human_review",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1640,
+        "y": 420,
+        "wires": [
+            [
+                "931052be5ea1577f"
+            ]
+        ]
+    },
+    {
+        "id": "d6dd3073687cb554",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "send_reply",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1810,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0df6b0d3c69dd750",
+        "type": "join",
+        "z": "a48639831b79bc53",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": "false",
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "x": 1230,
+        "y": 420,
+        "wires": [
+            [
+                "28375a8155876aba"
+            ]
+        ]
+    },
+    {
+        "id": "931052be5ea1577f",
+        "type": "debug",
+        "z": "a48639831b79bc53",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1880,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "61d7afaeb5576771",
+        "type": "inject",
+        "z": "a48639831b79bc53",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "My car has blown up!",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "bae2b8a1603dab71"
+            ]
+        ]
+    },
+    {
+        "id": "3b7e89258a80ab5c",
+        "type": "debug",
+        "z": "a48639831b79bc53",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "fbce8910d509b1f3",
+        "type": "inject",
+        "z": "050b98cdec0fb136",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 500,
+        "wires": [
+            [
+                "3bac0584b8df8ef3"
+            ]
+        ]
+    },
+    {
+        "id": "1d2c0e0ad8db2121",
+        "type": "function",
+        "z": "050b98cdec0fb136",
+        "name": "Thread 1",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nmsg.topic = \"thread1\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 400,
+        "wires": [
+            [
+                "f0b48f4542db6b9b"
+            ]
+        ]
+    },
+    {
+        "id": "4fea8efc486e60b5",
+        "type": "function",
+        "z": "050b98cdec0fb136",
+        "name": "Thread 2",
+        "func": "node.status({ fill: \"green\", shape: \"ring\", text: \"done\" });\nmsg.topic = \"thread2\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 500,
+        "wires": [
+            [
+                "f0b48f4542db6b9b"
+            ]
+        ]
+    },
+    {
+        "id": "dbb12a0d022402c1",
+        "type": "function",
+        "z": "050b98cdec0fb136",
+        "name": "Thread 3",
+        "func": "function sleep(ms) {\n    return new Promise(resolve => setTimeout(resolve, ms));\n}\n\nnode.status({ fill: \"red\", shape: \"ring\", text: \"disconnected\" });\nawait sleep(1000);\n\nnode.status({ fill: \"green\", shape: \"dot\", text: \"connected\" });\nawait sleep(1000);\n\nnode.status({ text: \"Just text status\" });\nawait sleep(1000);\n\nmsg.topic = \"thread3\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 600,
+        "wires": [
+            [
+                "f0b48f4542db6b9b"
+            ]
+        ]
+    },
+    {
+        "id": "606e8561e6607d49",
+        "type": "join",
+        "z": "050b98cdec0fb136",
+        "name": "Wait for all Threads",
+        "mode": "manual",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "useparts": true,
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1050,
+        "y": 500,
+        "wires": [
+            [
+                "27442d39302431a5"
+            ]
+        ]
+    },
+    {
+        "id": "27442d39302431a5",
+        "type": "debug",
+        "z": "050b98cdec0fb136",
+        "name": "Combined Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 500,
+        "wires": []
     }
 ]
