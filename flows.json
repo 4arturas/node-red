@@ -27,7 +27,7 @@
         "id": "7184d5a8972f1fe0",
         "type": "tab",
         "label": "websocket",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -2778,10 +2778,10 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 130,
-        "y": 100,
+        "y": 60,
         "wires": [
             [
-                "10a4bba622cb4db6"
+                "c507538da8d97a30"
             ]
         ]
     },
@@ -2808,81 +2808,81 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 150,
-        "y": 280,
+        "y": 240,
         "wires": [
             [
-                "10a4bba622cb4db6"
+                "c507538da8d97a30"
             ]
         ]
     },
     {
-        "id": "10a4bba622cb4db6",
+        "id": "c507538da8d97a30",
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "read_email",
         "func": "return msg;",
         "outputs": 1,
-        "x": 350,
-        "y": 160,
+        "x": 330,
+        "y": 140,
         "wires": [
             [
-                "ba54892f1936886d"
+                "8cf88a5015b19e40"
             ]
         ]
     },
     {
-        "id": "ba54892f1936886d",
+        "id": "8cf88a5015b19e40",
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "classify_intent",
-        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const emailContent = msg.emailContent || msg.payload || \"\";\n        const senderEmail = msg.senderEmail || \"unknown@test.com\";\n        const classification = await structuredLlm.invoke(`Classify this email: ${emailContent}`);\n\n        msg.state = {\n            emailContent,\n            senderEmail,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const state = {\n            emailContent: msg.emailContent || \"\",\n            senderEmail: msg.senderEmail || \"unknown@test.com\"\n        };\n\n        const classificationPrompt = `\n        Analyze this customer email and classify it:\n        \n        Email: ${state.emailContent}\n        From: ${state.senderEmail}\n        Provide classification, including intent, urgency, topic, and summary.\n        `;\n\n        const classification = await structuredLlm.invoke(classificationPrompt);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 240,
+        "x": 460,
+        "y": 220,
         "wires": [
             [
-                "17f4900e64fa253f",
-                "99e3cf021fb11cce"
+                "21398b7313621f89",
+                "cfc24a0584b11bd2"
             ]
         ]
     },
     {
-        "id": "17f4900e64fa253f",
+        "id": "21398b7313621f89",
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "bug_tracking",
         "func": "msg.topic = \"ticket_state\";\nconst ticketId = `BUG_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;\nmsg.payload = { ticketId: ticketId };\nreturn msg;",
         "outputs": 1,
-        "x": 630,
-        "y": 180,
+        "x": 650,
+        "y": 160,
         "wires": [
             [
-                "07a75c0e508796ef"
+                "d7c5f88515f704cb"
             ]
         ]
     },
     {
-        "id": "99e3cf021fb11cce",
+        "id": "cfc24a0584b11bd2",
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "search_documentation",
-        "func": "msg.topic = \"search_state\";\nconst classification = msg.state.classification || { intent: 'question', topic: 'general' };\n\nmsg.payload = {\n    searchResults: [\n      `Doc for ${classification.intent}: Info about ${classification.topic}`,\n      `FAQ: Common ${classification.topic} questions`\n    ]\n};\nreturn msg;",
+        "func": "msg.topic = \"search_state\";\nconst classification = msg.state.classification;\n\nmsg.payload = {\n    searchResults: [\n      `Documentation on ${classification.topic}`,\n      `Standard procedure for ${classification.intent} requests`\n    ]\n};\nreturn msg;",
         "outputs": 1,
-        "x": 660,
-        "y": 300,
+        "x": 680,
+        "y": 280,
         "wires": [
             [
-                "07a75c0e508796ef"
+                "d7c5f88515f704cb"
             ]
         ]
     },
     {
-        "id": "07a75c0e508796ef",
+        "id": "d7c5f88515f704cb",
         "type": "join",
         "z": "a48639831b79bc53",
         "name": "Join State",
@@ -2893,35 +2893,35 @@
         "key": "topic",
         "count": "2",
         "x": 900,
-        "y": 240,
+        "y": 220,
         "wires": [
             [
-                "bf3efefc6205dcd2"
+                "992806acddcfb95d"
             ]
         ]
     },
     {
-        "id": "bf3efefc6205dcd2",
+        "id": "992806acddcfb95d",
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "write_response",
-        "func": "const { ChatOllama } = global.get('lcOllama');\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0.7 });\n\n(async () => {\n    const state = msg.state;\n    const searchResults = msg.payload.search_state.searchResults;\n    const formattedDocs = searchResults.map(doc => `- ${doc}`).join('\\n');\n\n    const draftPrompt = `Draft a response to: ${state.emailContent}\\nDocs:\\n${formattedDocs}`;\n\n    try {\n        const response = await llm.invoke(draftPrompt);\n        const needsReview = ['high', 'critical'].includes(state.classification.urgency) || state.classification.intent === 'complex';\n        \n        msg.payload = {\n            draftResponse: response.content,\n            needsReview: needsReview,\n            target: needsReview ? \"human_review\" : \"send_reply\"\n        };\n        \n        node.send(msg);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0.7 });\n\n(async () => {\n    const state = msg.state;\n    const classification = state.classification;\n    const contextSections = msg.payload.search_state.searchResults;\n    const ticketInfo = msg.payload.ticket_state.ticketId;\n    \n    const draftPrompt = `\n    Draft a response to this customer email:\n    ${state.emailContent}\n    \n    Email intent: ${classification.intent}\n    Urgency level: ${classification.urgency}\n    \n    ${contextSections.join('\\n\\n')}\n    \n    Guidelines:\n    - Be professional and helpful\\\n    - Address their specific concern\n    - Use the provided documentation when relevant\n    - Be brief\n    `;\n\n    try {\n        const response = await llm.invoke(draftPrompt);\n        const needsReview = ['high', 'critical'].includes(classification.urgency) || classification.intent === 'complex';\n        \n        msg.payload = {\n            draftResponse: response.content,\n            target: needsReview ? \"human_review\" : \"send_reply\"\n        };\n        \n        node.send(msg);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 980,
-        "y": 360,
+        "x": 1020,
+        "y": 340,
         "wires": [
             [
-                "009c6da052ea0052"
+                "615f61abecd0d81d"
             ]
         ]
     },
     {
-        "id": "009c6da052ea0052",
+        "id": "615f61abecd0d81d",
         "type": "switch",
         "z": "a48639831b79bc53",
         "name": "Review Switch",
@@ -2941,39 +2941,34 @@
         ],
         "checkall": "true",
         "outputs": 2,
-        "x": 1050,
-        "y": 460,
+        "x": 1110,
+        "y": 440,
         "wires": [
             [
-                "39fae40e4f91d76f"
+                "09449c27557bff4d"
             ],
             [
-                "dc38dd8e98e9fa8c"
+                "a08f172bf3358ffd"
             ]
         ]
     },
     {
-        "id": "39fae40e4f91d76f",
+        "id": "09449c27557bff4d",
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "human_review",
-        "func": "// Implementation of TODO logic\nconst approved = Math.random() > 0.5 ? \"approved\" : \"not_approved\";\nmsg.payload.humanDecision = approved;\n\nif (approved === \"approved\") {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Mock: Approved\"});\n} else {\n    node.status({fill:\"red\", shape:\"ring\", text:\"Mock: Rejected\"});\n}\n\nreturn msg;",
+        "func": "const approved = Math.random() > 0.5 ? \"approved\" : \"not_approved\";\nmsg.payload.humanDecision = approved;\n\nif (approved === \"approved\") {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Mock: Approved\"});\n} else {\n    node.status({fill:\"red\", shape:\"ring\", text:\"Mock: Rejected\"});\n}\n\nreturn msg;",
         "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1280,
-        "y": 380,
+        "x": 1320,
+        "y": 360,
         "wires": [
             [
-                "8a381b4101464883"
+                "09162c4a84b4aacc"
             ]
         ]
     },
     {
-        "id": "8a381b4101464883",
+        "id": "09162c4a84b4aacc",
         "type": "switch",
         "z": "a48639831b79bc53",
         "name": "Decision Switch",
@@ -2992,43 +2987,42 @@
             }
         ],
         "checkall": "true",
-        "repair": false,
         "outputs": 2,
-        "x": 1500,
-        "y": 440,
+        "x": 1520,
+        "y": 420,
         "wires": [
             [
-                "dc38dd8e98e9fa8c"
+                "a08f172bf3358ffd"
             ],
             [
-                "526bf69b0a08d20e"
+                "162c744e98edacd8"
             ]
         ]
     },
     {
-        "id": "dc38dd8e98e9fa8c",
+        "id": "a08f172bf3358ffd",
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "send_reply",
-        "func": "const preview = msg.payload.draftResponse.substring(0, 60) + \"...\";\nnode.warn(\"Sending: \" + preview);\nreturn msg;",
+        "func": "const preview = (msg.payload.draftResponse || \"\").substring(0, 60) + \"...\";\nnode.warn(\"Sending Email Reply: \" + preview);\nreturn msg;",
         "outputs": 1,
-        "x": 1710,
-        "y": 580,
+        "x": 1730,
+        "y": 560,
         "wires": [
             [
-                "526bf69b0a08d20e"
+                "162c744e98edacd8"
             ]
         ]
     },
     {
-        "id": "526bf69b0a08d20e",
+        "id": "162c744e98edacd8",
         "type": "debug",
         "z": "a48639831b79bc53",
         "name": "Final Draft",
         "active": true,
         "complete": "payload",
-        "x": 1910,
-        "y": 440,
+        "x": 1930,
+        "y": 420,
         "wires": []
     },
     {
