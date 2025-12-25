@@ -24,6 +24,14 @@
         "env": []
     },
     {
+        "id": "7184d5a8972f1fe0",
+        "type": "tab",
+        "label": "websocket",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "a6828adb58c9e145",
         "type": "tab",
         "label": "Function from file example",
@@ -56,25 +64,9 @@
         "env": []
     },
     {
-        "id": "f0f04da5b5906ea0",
-        "type": "tab",
-        "label": "AI Google",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "a48639831b79bc53",
         "type": "tab",
         "label": "AI email",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "542558815308218e",
-        "type": "tab",
-        "label": "Flow 1",
         "disabled": false,
         "info": "",
         "env": []
@@ -1139,6 +1131,143 @@
         "wires": [
             [
                 "ce6adba5081d840f"
+            ]
+        ]
+    },
+    {
+        "id": "83e0257de19abd28",
+        "type": "http in",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "url": "/web",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "da7d2b952a3c8df0"
+            ]
+        ]
+    },
+    {
+        "id": "8cf3deb298512f66",
+        "type": "http response",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1030,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6248cd7fd679aa6e",
+        "type": "template",
+        "z": "7184d5a8972f1fe0",
+        "name": "HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Title</title>\n    <script>\n        {{{payload.websocket}}}\n    </script>\n</head>\n<body>\nHello\n</body>\n</html>",
+        "output": "str",
+        "x": 850,
+        "y": 360,
+        "wires": [
+            [
+                "8cf3deb298512f66"
+            ]
+        ]
+    },
+    {
+        "id": "d42f9d0712bcedbb",
+        "type": "websocket in",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "server": "b79df368d7aaac79",
+        "client": "",
+        "x": 420,
+        "y": 520,
+        "wires": [
+            [
+                "dbf524f28cfd16cf"
+            ]
+        ]
+    },
+    {
+        "id": "dbf524f28cfd16cf",
+        "type": "debug",
+        "z": "7184d5a8972f1fe0",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "aaf7e06cd66dfdea",
+        "type": "websocket out",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "server": "b79df368d7aaac79",
+        "client": "",
+        "x": 650,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "58f3d52ede958831",
+        "type": "inject",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 450,
+        "y": 580,
+        "wires": [
+            [
+                "aaf7e06cd66dfdea"
+            ]
+        ]
+    },
+    {
+        "id": "da7d2b952a3c8df0",
+        "type": "template",
+        "z": "7184d5a8972f1fe0",
+        "name": "",
+        "field": "payload.websocket",
+        "fieldType": "msg",
+        "format": "javascript",
+        "syntax": "mustache",
+        "template": "const ws = new WebSocket('ws://127.0.0.1:1880/ws/machine');\nws.onmessage = function (e) {\n    console.log(e);\n}\nws.onopen = function () {\n    console.log('A client connected!');\n    ws.send('A client connected');\n}",
+        "output": "str",
+        "x": 640,
+        "y": 360,
+        "wires": [
+            [
+                "6248cd7fd679aa6e"
             ]
         ]
     },
@@ -2627,496 +2756,19 @@
         "wires": []
     },
     {
-        "id": "3b29c01055a752cd",
-        "type": "http request",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "query",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "Content-Type",
-                "valueType": "other",
-                "valueValue": "application/json"
-            }
-        ],
-        "x": 370,
-        "y": 220,
-        "wires": [
-            [
-                "fe8e8770ddd4af98"
-            ]
-        ]
-    },
-    {
-        "id": "5a1a4511ab447717",
+        "id": "054df86263375fbb",
         "type": "inject",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
+        "z": "a48639831b79bc53",
+        "name": "Inject: Car Blown Up",
         "props": [
             {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"contents\":[{\"parts\":[{\"text\":\"List a few popular cookie recipes using this JSON schema: Recipe = {\\\"recipe_name\\\": str} Return: list[Recipe]\"}]}],\"generationConfig\":{\"response_mime_type\":\"application/json\"}}",
-        "payloadType": "json",
-        "x": 210,
-        "y": 100,
-        "wires": [
-            [
-                "f4208e1483474001"
-            ]
-        ]
-    },
-    {
-        "id": "f4208e1483474001",
-        "type": "template",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "json",
-        "syntax": "mustache",
-        "template": "{\n    \"contents\": [\n        {\n            \"parts\": [\n                {\n                    \"text\": \"List a few popular cookie recipes using this JSON schema: Recipe = {\\\"recipe_name\\\": str} Return: list[Recipe]\"\n                }\n            ]\n        }\n    ],\n    \"generationConfig\": {\n        \"response_mime_type\": \"application/json\"\n    }\n}",
-        "output": "str",
-        "x": 300,
-        "y": 160,
-        "wires": [
-            [
-                "3b29c01055a752cd"
-            ]
-        ]
-    },
-    {
-        "id": "09cc2d3f5356efeb",
-        "type": "debug",
-        "z": "f0f04da5b5906ea0",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 720,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "a7129c80d1a1b27b",
-        "type": "change",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$eval($$.payload.candidates[*].content.parts[*].text)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 540,
-        "y": 340,
-        "wires": [
-            [
-                "4c49a1b552899a6a"
-            ]
-        ]
-    },
-    {
-        "id": "fe8e8770ddd4af98",
-        "type": "json",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 450,
-        "y": 280,
-        "wires": [
-            [
-                "a7129c80d1a1b27b"
-            ]
-        ]
-    },
-    {
-        "id": "4c49a1b552899a6a",
-        "type": "json",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": true,
-        "x": 630,
-        "y": 400,
-        "wires": [
-            [
-                "09cc2d3f5356efeb"
-            ]
-        ]
-    },
-    {
-        "id": "54e4fcb7df983366",
-        "type": "http request",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "query",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "Content-Type",
-                "valueType": "other",
-                "valueValue": "application/json"
-            }
-        ],
-        "x": 410,
-        "y": 580,
-        "wires": [
-            [
-                "f20d6f753687fa86"
-            ]
-        ]
-    },
-    {
-        "id": "b3674fde120c610d",
-        "type": "inject",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "props": [
-            {
-                "p": "payload_",
-                "v": "{\"contents\":[{\"parts\":[{\"text\":\"List a few popular cookie recipes using this JSON schema: Recipe = {\\\"recipe_name\\\": str} Return: list[Recipe]\"}]}],\"generationConfig\":{\"response_mime_type\":\"application/json\"}}",
-                "vt": "json"
+                "p": "emailContent",
+                "v": "My car has blown up!",
+                "vt": "str"
             },
             {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "Explain how Religion works",
-        "payloadType": "str",
-        "x": 190,
-        "y": 400,
-        "wires": [
-            [
-                "4cd2633e3e2d3757"
-            ]
-        ]
-    },
-    {
-        "id": "f20d6f753687fa86",
-        "type": "json",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 490,
-        "y": 640,
-        "wires": [
-            [
-                "c06d549748ac301a"
-            ]
-        ]
-    },
-    {
-        "id": "c06d549748ac301a",
-        "type": "change",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$$.payload.candidates[0].content.parts[0].text",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 580,
-        "y": 700,
-        "wires": [
-            [
-                "09cc2d3f5356efeb"
-            ]
-        ]
-    },
-    {
-        "id": "4cd2633e3e2d3757",
-        "type": "template",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "json",
-        "syntax": "mustache",
-        "template": "{\n    \"contents\": [\n        {\n            \"parts\": [\n                {\n                    \"text\": \"{{payload}}\"\n                }\n            ]\n        }\n    ]\n}",
-        "output": "str",
-        "x": 260,
-        "y": 460,
-        "wires": [
-            [
-                "ef0ebd1bcffb07db"
-            ]
-        ]
-    },
-    {
-        "id": "ef0ebd1bcffb07db",
-        "type": "json",
-        "z": "f0f04da5b5906ea0",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 330,
-        "y": 520,
-        "wires": [
-            [
-                "54e4fcb7df983366"
-            ]
-        ]
-    },
-    {
-        "id": "112828238f036d5f",
-        "type": "comment",
-        "z": "a48639831b79bc53",
-        "name": "https://academy.langchain.com/courses/take/quickstart-langgraph-essentials-typescript/lessons/69449740-lesson-6-application",
-        "info": "",
-        "x": 920,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "bae2b8a1603dab71",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "read_email",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 320,
-        "wires": [
-            [
-                "3b7e89258a80ab5c",
-                "f16a90e2c44789ad"
-            ]
-        ]
-    },
-    {
-        "id": "f16a90e2c44789ad",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "classify_intent",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 500,
-        "y": 500,
-        "wires": [
-            [
-                "01b16b8e8a59c0b6",
-                "56c2435fc17835ea"
-            ]
-        ]
-    },
-    {
-        "id": "01b16b8e8a59c0b6",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "bug_tracking",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 990,
-        "y": 360,
-        "wires": [
-            [
-                "0df6b0d3c69dd750"
-            ]
-        ]
-    },
-    {
-        "id": "56c2435fc17835ea",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "search_documentation",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1020,
-        "y": 480,
-        "wires": [
-            [
-                "0df6b0d3c69dd750"
-            ]
-        ]
-    },
-    {
-        "id": "28375a8155876aba",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "write_response",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1420,
-        "y": 420,
-        "wires": [
-            [
-                "2f99fb132f4021a7"
-            ]
-        ]
-    },
-    {
-        "id": "2f99fb132f4021a7",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "human_review",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1640,
-        "y": 420,
-        "wires": [
-            [
-                "931052be5ea1577f"
-            ]
-        ]
-    },
-    {
-        "id": "d6dd3073687cb554",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "send_reply",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1810,
-        "y": 580,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "0df6b0d3c69dd750",
-        "type": "join",
-        "z": "a48639831b79bc53",
-        "name": "",
-        "mode": "auto",
-        "build": "object",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "useparts": false,
-        "accumulate": "false",
-        "timeout": "",
-        "count": "",
-        "reduceRight": false,
-        "x": 1230,
-        "y": 420,
-        "wires": [
-            [
-                "28375a8155876aba"
-            ]
-        ]
-    },
-    {
-        "id": "931052be5ea1577f",
-        "type": "debug",
-        "z": "a48639831b79bc53",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1880,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "61d7afaeb5576771",
-        "type": "inject",
-        "z": "a48639831b79bc53",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
+                "p": "senderEmail",
+                "v": "test@test.com",
                 "vt": "str"
             }
         ],
@@ -3124,31 +2776,259 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "My car has blown up!",
-        "payload": "",
-        "payloadType": "date",
-        "x": 100,
-        "y": 200,
+        "topic": "",
+        "x": 130,
+        "y": 100,
         "wires": [
             [
-                "bae2b8a1603dab71"
+                "10a4bba622cb4db6"
             ]
         ]
     },
     {
-        "id": "3b7e89258a80ab5c",
+        "id": "ca5545580823485f",
+        "type": "inject",
+        "z": "a48639831b79bc53",
+        "name": "Inject: Hello",
+        "props": [
+            {
+                "p": "emailContent",
+                "v": "Hello! How are you?",
+                "vt": "str"
+            },
+            {
+                "p": "senderEmail",
+                "v": "test1@test.com",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 280,
+        "wires": [
+            [
+                "10a4bba622cb4db6"
+            ]
+        ]
+    },
+    {
+        "id": "10a4bba622cb4db6",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "read_email",
+        "func": "return msg;",
+        "outputs": 1,
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "ba54892f1936886d"
+            ]
+        ]
+    },
+    {
+        "id": "ba54892f1936886d",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "classify_intent",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const emailContent = msg.emailContent || msg.payload || \"\";\n        const senderEmail = msg.senderEmail || \"unknown@test.com\";\n        const classification = await structuredLlm.invoke(`Classify this email: ${emailContent}`);\n\n        msg.state = {\n            emailContent,\n            senderEmail,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 240,
+        "wires": [
+            [
+                "17f4900e64fa253f",
+                "99e3cf021fb11cce"
+            ]
+        ]
+    },
+    {
+        "id": "17f4900e64fa253f",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "bug_tracking",
+        "func": "msg.topic = \"ticket_state\";\nconst ticketId = `BUG_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;\nmsg.payload = { ticketId: ticketId };\nreturn msg;",
+        "outputs": 1,
+        "x": 630,
+        "y": 180,
+        "wires": [
+            [
+                "07a75c0e508796ef"
+            ]
+        ]
+    },
+    {
+        "id": "99e3cf021fb11cce",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "search_documentation",
+        "func": "msg.topic = \"search_state\";\nconst classification = msg.state.classification || { intent: 'question', topic: 'general' };\n\nmsg.payload = {\n    searchResults: [\n      `Doc for ${classification.intent}: Info about ${classification.topic}`,\n      `FAQ: Common ${classification.topic} questions`\n    ]\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 660,
+        "y": 300,
+        "wires": [
+            [
+                "07a75c0e508796ef"
+            ]
+        ]
+    },
+    {
+        "id": "07a75c0e508796ef",
+        "type": "join",
+        "z": "a48639831b79bc53",
+        "name": "Join State",
+        "mode": "manual",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "count": "2",
+        "x": 900,
+        "y": 240,
+        "wires": [
+            [
+                "bf3efefc6205dcd2"
+            ]
+        ]
+    },
+    {
+        "id": "bf3efefc6205dcd2",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "write_response",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0.7 });\n\n(async () => {\n    const state = msg.state;\n    const searchResults = msg.payload.search_state.searchResults;\n    const formattedDocs = searchResults.map(doc => `- ${doc}`).join('\\n');\n\n    const draftPrompt = `Draft a response to: ${state.emailContent}\\nDocs:\\n${formattedDocs}`;\n\n    try {\n        const response = await llm.invoke(draftPrompt);\n        const needsReview = ['high', 'critical'].includes(state.classification.urgency) || state.classification.intent === 'complex';\n        \n        msg.payload = {\n            draftResponse: response.content,\n            needsReview: needsReview,\n            target: needsReview ? \"human_review\" : \"send_reply\"\n        };\n        \n        node.send(msg);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 360,
+        "wires": [
+            [
+                "009c6da052ea0052"
+            ]
+        ]
+    },
+    {
+        "id": "009c6da052ea0052",
+        "type": "switch",
+        "z": "a48639831b79bc53",
+        "name": "Review Switch",
+        "property": "payload.target",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "human_review",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "send_reply",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1050,
+        "y": 460,
+        "wires": [
+            [
+                "39fae40e4f91d76f"
+            ],
+            [
+                "dc38dd8e98e9fa8c"
+            ]
+        ]
+    },
+    {
+        "id": "39fae40e4f91d76f",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "human_review",
+        "func": "// Implementation of TODO logic\nconst approved = Math.random() > 0.5 ? \"approved\" : \"not_approved\";\nmsg.payload.humanDecision = approved;\n\nif (approved === \"approved\") {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Mock: Approved\"});\n} else {\n    node.status({fill:\"red\", shape:\"ring\", text:\"Mock: Rejected\"});\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 380,
+        "wires": [
+            [
+                "8a381b4101464883"
+            ]
+        ]
+    },
+    {
+        "id": "8a381b4101464883",
+        "type": "switch",
+        "z": "a48639831b79bc53",
+        "name": "Decision Switch",
+        "property": "payload.humanDecision",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "not_approved",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "approved",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1500,
+        "y": 440,
+        "wires": [
+            [
+                "dc38dd8e98e9fa8c"
+            ],
+            [
+                "526bf69b0a08d20e"
+            ]
+        ]
+    },
+    {
+        "id": "dc38dd8e98e9fa8c",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "send_reply",
+        "func": "const preview = msg.payload.draftResponse.substring(0, 60) + \"...\";\nnode.warn(\"Sending: \" + preview);\nreturn msg;",
+        "outputs": 1,
+        "x": 1710,
+        "y": 580,
+        "wires": [
+            [
+                "526bf69b0a08d20e"
+            ]
+        ]
+    },
+    {
+        "id": "526bf69b0a08d20e",
         "type": "debug",
         "z": "a48639831b79bc53",
-        "name": "debug 4",
+        "name": "Final Draft",
         "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 540,
-        "y": 240,
+        "complete": "payload",
+        "x": 1910,
+        "y": 440,
         "wires": []
     },
     {
