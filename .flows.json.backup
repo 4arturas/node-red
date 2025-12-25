@@ -16,14 +16,6 @@
         "env": []
     },
     {
-        "id": "5067ad5bc159023f",
-        "type": "tab",
-        "label": "OpenAI",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "f03d232b4fcc4b3e",
         "type": "tab",
         "label": "HttpServer React",
@@ -83,6 +75,14 @@
         "id": "7b1434e96d2fe1c7",
         "type": "tab",
         "label": "AI API",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a48639831b79bc53",
+        "type": "tab",
+        "label": "AI email",
         "disabled": false,
         "info": "",
         "env": []
@@ -2743,7 +2743,7 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "query",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyA-ZgL6UgqqWnzm5ZMTNqAPWFTQsmLQ1es",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -2893,7 +2893,7 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "query",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyA-ZgL6UgqqWnzm5ZMTNqAPWFTQsmLQ1es",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=",
         "tls": "",
         "persist": false,
         "proxy": "",

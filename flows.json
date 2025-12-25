@@ -16,14 +16,6 @@
         "env": []
     },
     {
-        "id": "5067ad5bc159023f",
-        "type": "tab",
-        "label": "OpenAI",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "f03d232b4fcc4b3e",
         "type": "tab",
         "label": "HttpServer React",
@@ -80,9 +72,9 @@
         "env": []
     },
     {
-        "id": "7b1434e96d2fe1c7",
+        "id": "a48639831b79bc53",
         "type": "tab",
-        "label": "AI API",
+        "label": "AI email",
         "disabled": false,
         "info": "",
         "env": []
@@ -3021,142 +3013,6 @@
         "wires": [
             [
                 "54e4fcb7df983366"
-            ]
-        ]
-    },
-    {
-        "id": "0737f9d306a31f4a",
-        "type": "inject",
-        "z": "7b1434e96d2fe1c7",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"model\":\"qwen/qwen2.5-vl-72b-instruct:free\",\"messages\":[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"What is in this image?\"},{\"type\":\"image_url\",\"image_url\":{\"url\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg\"}}]}]}",
-        "payloadType": "json",
-        "x": 670,
-        "y": 260,
-        "wires": [
-            [
-                "236cd65156f1ce0d"
-            ]
-        ]
-    },
-    {
-        "id": "236cd65156f1ce0d",
-        "type": "http request",
-        "z": "7b1434e96d2fe1c7",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "query",
-        "url": "https://openrouter.ai/api/v1/chat/completions",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "Authorization",
-                "valueType": "other",
-                "valueValue": "Bearer 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"
-            },
-            {
-                "keyType": "other",
-                "keyValue": "HTTP-Referer",
-                "valueType": "other",
-                "valueValue": "<YOUR_SITE_URL>"
-            },
-            {
-                "keyType": "other",
-                "keyValue": "X-Title",
-                "valueType": "other",
-                "valueValue": "<YOUR_SITE_NAME>"
-            },
-            {
-                "keyType": "other",
-                "keyValue": "Content-Type",
-                "valueType": "other",
-                "valueValue": "application/json"
-            }
-        ],
-        "x": 930,
-        "y": 260,
-        "wires": [
-            [
-                "0e1b65d09d8c7987",
-                "e913a9c84b50f54b"
-            ]
-        ]
-    },
-    {
-        "id": "e913a9c84b50f54b",
-        "type": "debug",
-        "z": "7b1434e96d2fe1c7",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1340,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "0e1b65d09d8c7987",
-        "type": "function",
-        "z": "7b1434e96d2fe1c7",
-        "name": "function 1",
-        "func": "// Parse JSON response and extract content\ntry {    \n    const response = JSON.parse(msg.payload);\n    msg.payload = response.choices?.[0]?.message?.content;\n    } catch (e) {\n    msg.payload = 'Error parsing response: ' + e.message;\n    }\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1160,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "589d6eee317874e8",
-        "type": "change",
-        "z": "7b1434e96d2fe1c7",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$.choices[0].message.content",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1240,
-        "y": 440,
-        "wires": [
-            [
-                "e913a9c84b50f54b"
             ]
         ]
     }
