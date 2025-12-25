@@ -66,7 +66,7 @@
     {
         "id": "a48639831b79bc53",
         "type": "tab",
-        "label": "AI email",
+        "label": "Langchain email workflow",
         "disabled": false,
         "info": "",
         "env": []
@@ -2822,6 +2822,11 @@
         "name": "read_email",
         "func": "return msg;",
         "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 330,
         "y": 140,
         "wires": [
