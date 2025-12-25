@@ -2912,8 +2912,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1020,
-        "y": 340,
+        "x": 980,
+        "y": 300,
         "wires": [
             [
                 "615f61abecd0d81d"
@@ -2941,8 +2941,8 @@
         ],
         "checkall": "true",
         "outputs": 2,
-        "x": 1110,
-        "y": 440,
+        "x": 1060,
+        "y": 380,
         "wires": [
             [
                 "09449c27557bff4d"
@@ -2959,8 +2959,8 @@
         "name": "human_review",
         "func": "const approved = Math.random() > 0.5 ? \"approved\" : \"not_approved\";\nmsg.payload.humanDecision = approved;\n\nif (approved === \"approved\") {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Mock: Approved\"});\n} else {\n    node.status({fill:\"red\", shape:\"ring\", text:\"Mock: Rejected\"});\n}\n\nreturn msg;",
         "outputs": 1,
-        "x": 1320,
-        "y": 360,
+        "x": 1340,
+        "y": 400,
         "wires": [
             [
                 "09162c4a84b4aacc"
@@ -2977,25 +2977,26 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "approved",
+                "v": "not_approved",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "not_approved",
+                "v": "approved",
                 "vt": "str"
             }
         ],
         "checkall": "true",
+        "repair": false,
         "outputs": 2,
-        "x": 1520,
-        "y": 420,
+        "x": 1500,
+        "y": 460,
         "wires": [
             [
-                "a08f172bf3358ffd"
+                "162c744e98edacd8"
             ],
             [
-                "162c744e98edacd8"
+                "a08f172bf3358ffd"
             ]
         ]
     },
@@ -3007,7 +3008,7 @@
         "func": "const preview = (msg.payload.draftResponse || \"\").substring(0, 60) + \"...\";\nnode.warn(\"Sending Email Reply: \" + preview);\nreturn msg;",
         "outputs": 1,
         "x": 1730,
-        "y": 560,
+        "y": 660,
         "wires": [
             [
                 "162c744e98edacd8"
@@ -3021,8 +3022,8 @@
         "name": "Final Draft",
         "active": true,
         "complete": "payload",
-        "x": 1930,
-        "y": 420,
+        "x": 1910,
+        "y": 440,
         "wires": []
     },
     {

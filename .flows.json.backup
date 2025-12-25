@@ -2835,8 +2835,13 @@
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "classify_intent",
-        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const state = {\n            emailContent: msg.emailContent || \"\",\n            senderEmail: msg.senderEmail || \"unknown@test.com\"\n        };\n        \n        // Using your original prompt\n        const classificationPrompt = `\\nAnalyze this customer email and classify it:\\n\\nEmail: ${state.emailContent}\\nFrom: ${state.senderEmail}\\n\\nProvide classification, including intent, urgency, topic, and summary.\\n  `;\n\n        const classification = await structuredLlm.invoke(classificationPrompt);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const state = {\n            emailContent: msg.emailContent || \"\",\n            senderEmail: msg.senderEmail || \"unknown@test.com\"\n        };\n\n        const classificationPrompt = `\n        Analyze this customer email and classify it:\n        \n        Email: ${state.emailContent}\n        From: ${state.senderEmail}\n        Provide classification, including intent, urgency, topic, and summary.\n        `;\n\n        const classification = await structuredLlm.invoke(classificationPrompt);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
         "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
         "x": 460,
         "y": 220,
         "wires": [
@@ -2972,25 +2977,26 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "approved",
+                "v": "not_approved",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "not_approved",
+                "v": "approved",
                 "vt": "str"
             }
         ],
         "checkall": "true",
+        "repair": false,
         "outputs": 2,
         "x": 1520,
         "y": 420,
         "wires": [
             [
-                "a08f172bf3358ffd"
+                "162c744e98edacd8"
             ],
             [
-                "162c744e98edacd8"
+                "a08f172bf3358ffd"
             ]
         ]
     },
