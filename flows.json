@@ -1,9 +1,25 @@
 [
     {
+        "id": "a48639831b79bc53",
+        "type": "tab",
+        "label": "Langchain email workflow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a18fd0a91e07848d",
+        "type": "tab",
+        "label": "Langchain Tools",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "d9c88a0a246ec309",
         "type": "tab",
         "label": "JTBD",
-        "disabled": false,
+        "disabled": true,
         "info": "Jobs To Be Done",
         "env": []
     },
@@ -11,7 +27,7 @@
         "id": "b70b82bf8d00eb8a",
         "type": "tab",
         "label": "While Ex.",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -19,7 +35,7 @@
         "id": "f03d232b4fcc4b3e",
         "type": "tab",
         "label": "HttpServer React",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -35,7 +51,7 @@
         "id": "a6828adb58c9e145",
         "type": "tab",
         "label": "Function from file example",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -43,7 +59,7 @@
         "id": "35a4f5ffd108afaa",
         "type": "tab",
         "label": "Herro",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -59,14 +75,6 @@
         "id": "5451c5648a7ae7eb",
         "type": "tab",
         "label": "Sycn-Async",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "a48639831b79bc53",
-        "type": "tab",
-        "label": "Langchain email workflow",
         "disabled": false,
         "info": "",
         "env": []
@@ -274,6 +282,667 @@
         "id": "cc2050a953749795",
         "type": "openaiApiKey",
         "name": ""
+    },
+    {
+        "id": "054df86263375fbb",
+        "type": "inject",
+        "z": "a48639831b79bc53",
+        "name": "Inject: Car Blown Up",
+        "props": [
+            {
+                "p": "emailContent",
+                "v": "My car has blown up!",
+                "vt": "str"
+            },
+            {
+                "p": "senderEmail",
+                "v": "test@test.com",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "c507538da8d97a30"
+            ]
+        ]
+    },
+    {
+        "id": "ca5545580823485f",
+        "type": "inject",
+        "z": "a48639831b79bc53",
+        "name": "Inject: Hello",
+        "props": [
+            {
+                "p": "emailContent",
+                "v": "Hello! How are you?",
+                "vt": "str"
+            },
+            {
+                "p": "senderEmail",
+                "v": "test1@test.com",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "c507538da8d97a30"
+            ]
+        ]
+    },
+    {
+        "id": "c507538da8d97a30",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "read_email",
+        "func": "return msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "8cf88a5015b19e40"
+            ]
+        ]
+    },
+    {
+        "id": "8cf88a5015b19e40",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "classify_intent",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const state = {\n            emailContent: msg.emailContent || \"\",\n            senderEmail: msg.senderEmail || \"unknown@test.com\"\n        };\n\n        const classificationPrompt = `\n        Analyze this customer email and classify it:\n        \n        Email: ${state.emailContent}\n        From: ${state.senderEmail}\n        Provide classification, including intent, urgency, topic, and summary.\n        `;\n\n        const classification = await structuredLlm.invoke(classificationPrompt);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 220,
+        "wires": [
+            [
+                "21398b7313621f89",
+                "cfc24a0584b11bd2"
+            ]
+        ]
+    },
+    {
+        "id": "21398b7313621f89",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "bug_tracking",
+        "func": "msg.topic = \"ticket_state\";\nconst ticketId = `BUG_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;\nmsg.payload = { ticketId: ticketId };\nreturn msg;",
+        "outputs": 1,
+        "x": 650,
+        "y": 160,
+        "wires": [
+            [
+                "d7c5f88515f704cb"
+            ]
+        ]
+    },
+    {
+        "id": "cfc24a0584b11bd2",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "search_documentation",
+        "func": "msg.topic = \"search_state\";\nconst classification = msg.state.classification;\n\nmsg.payload = {\n    searchResults: [\n      `Documentation on ${classification.topic}`,\n      `Standard procedure for ${classification.intent} requests`\n    ]\n};\nreturn msg;",
+        "outputs": 1,
+        "x": 680,
+        "y": 280,
+        "wires": [
+            [
+                "d7c5f88515f704cb"
+            ]
+        ]
+    },
+    {
+        "id": "d7c5f88515f704cb",
+        "type": "join",
+        "z": "a48639831b79bc53",
+        "name": "Join State",
+        "mode": "manual",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "count": "2",
+        "x": 900,
+        "y": 220,
+        "wires": [
+            [
+                "992806acddcfb95d"
+            ]
+        ]
+    },
+    {
+        "id": "992806acddcfb95d",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "write_response",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0.7 });\n\n(async () => {\n    const state = msg.state;\n    const classification = state.classification;\n    const contextSections = msg.payload.search_state.searchResults;\n    const ticketInfo = msg.payload.ticket_state.ticketId;\n    \n    const draftPrompt = `\n    Draft a response to this customer email:\n    ${state.emailContent}\n    \n    Email intent: ${classification.intent}\n    Urgency level: ${classification.urgency}\n    \n    ${contextSections.join('\\n\\n')}\n    \n    Guidelines:\n    - Be professional and helpful\\\n    - Address their specific concern\n    - Use the provided documentation when relevant\n    - Be brief\n    `;\n\n    try {\n        const response = await llm.invoke(draftPrompt);\n        const needsReview = ['high', 'critical'].includes(classification.urgency) || classification.intent === 'complex';\n        \n        msg.payload = {\n            draftResponse: response.content,\n            target: needsReview ? \"human_review\" : \"send_reply\"\n        };\n        \n        node.send(msg);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 300,
+        "wires": [
+            [
+                "615f61abecd0d81d"
+            ]
+        ]
+    },
+    {
+        "id": "615f61abecd0d81d",
+        "type": "switch",
+        "z": "a48639831b79bc53",
+        "name": "Review Switch",
+        "property": "payload.target",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "human_review",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "send_reply",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1060,
+        "y": 380,
+        "wires": [
+            [
+                "09449c27557bff4d"
+            ],
+            [
+                "a08f172bf3358ffd"
+            ]
+        ]
+    },
+    {
+        "id": "09449c27557bff4d",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "human_review",
+        "func": "const approved = Math.random() > 0.2 ? \"approved\" : \"not_approved\";\nmsg.payload.humanDecision = approved;\n\nif (approved === \"approved\") {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Mock: Approved\"});\n} else {\n    node.status({fill:\"red\", shape:\"ring\", text:\"Mock: Rejected\"});\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 400,
+        "wires": [
+            [
+                "09162c4a84b4aacc"
+            ]
+        ]
+    },
+    {
+        "id": "09162c4a84b4aacc",
+        "type": "switch",
+        "z": "a48639831b79bc53",
+        "name": "Decision Switch",
+        "property": "payload.humanDecision",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "not_approved",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "approved",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1500,
+        "y": 460,
+        "wires": [
+            [
+                "162c744e98edacd8"
+            ],
+            [
+                "a08f172bf3358ffd"
+            ]
+        ]
+    },
+    {
+        "id": "a08f172bf3358ffd",
+        "type": "function",
+        "z": "a48639831b79bc53",
+        "name": "send_reply",
+        "func": "const preview = (msg.payload.draftResponse || \"\").substring(0, 60) + \"...\";\nnode.warn(\"Sending Email Reply: \" + preview);\nreturn msg;",
+        "outputs": 1,
+        "x": 1730,
+        "y": 660,
+        "wires": [
+            [
+                "162c744e98edacd8"
+            ]
+        ]
+    },
+    {
+        "id": "162c744e98edacd8",
+        "type": "debug",
+        "z": "a48639831b79bc53",
+        "name": "Final Draft",
+        "active": true,
+        "complete": "payload",
+        "x": 1910,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d00af331777b95a2",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "Router Agent",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\n// Tool Constants\nconst SEARCH_WEB = \"search_web\";\nconst TELL_JOKE = \"tell_joke\";\nconst GET_WEATHER = \"get_weather\";\nconst CONVERT_CURRENCY = \"convert_currency\";\nconst DEBUG_CODE = \"debug_code\";\nconst SUMMARIZE_TEXT = \"summarize_text\";\nconst CALCULATE_MATH = \"calculate_math\";\nconst GET_STOCK = \"get_stock_price\";\nconst TRANSLATE = \"translate_text\";\n\nconst ToolSchema = z.object({\n    tool: z.enum([\n        SEARCH_WEB,\n        TELL_JOKE,\n        GET_WEATHER,\n        CONVERT_CURRENCY,\n        DEBUG_CODE,\n        SUMMARIZE_TEXT,\n        CALCULATE_MATH,\n        GET_STOCK,\n        TRANSLATE\n    ]),\n    reasoning: z.string().describe(\"Brief explanation of why this tool was chosen\")\n})\n\nconst llm = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(ToolSchema);\n\n(async () => {\n    try {\n        const state = {\n            query: msg.query || \"\",            \n        };\n\n        const classification = await structuredLlm.invoke(state.query);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        node.send(msg);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 420,
+        "wires": [
+            [
+                "7c99601a26a767a8"
+            ]
+        ]
+    },
+    {
+        "id": "7c99601a26a767a8",
+        "type": "switch",
+        "z": "a18fd0a91e07848d",
+        "name": "Route to Tool",
+        "property": "state.classification.tool",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "search_web",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "tell_joke",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "get_weather",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "convert_currency",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "summarize_text",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "calculate_math",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "get_stock_price",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "translate_text",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 8,
+        "x": 840,
+        "y": 420,
+        "wires": [
+            [
+                "cc48e66e78d92b55"
+            ],
+            [
+                "bcfe456e8a0db1e6"
+            ],
+            [
+                "d96cc42e06af1f99"
+            ],
+            [
+                "58d61aa5986d18bc"
+            ],
+            [
+                "77b34ba6d5c27199"
+            ],
+            [
+                "ab8f81b47ca31371"
+            ],
+            [
+                "4e53110b74586e39"
+            ],
+            [
+                "85f2b10ff0e6dd85"
+            ]
+        ]
+    },
+    {
+        "id": "ab8f81b47ca31371",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "calculate_math",
+        "func": "console.log(\"math\"); return msg;",
+        "outputs": 1,
+        "x": 1100,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4e53110b74586e39",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "get_stock_price",
+        "func": "console.log(\"stocks\"); return msg;",
+        "outputs": 1,
+        "x": 1100,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "85f2b10ff0e6dd85",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "translate_text",
+        "func": "console.log(\"translate\"); return msg;",
+        "outputs": 1,
+        "x": 1100,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "32bd0623cb76e261",
+        "type": "inject",
+        "z": "a18fd0a91e07848d",
+        "name": "tell_joke",
+        "props": [
+            {
+                "p": "query",
+                "v": "Tell me a joke about a programmer",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 320,
+        "y": 320,
+        "wires": [
+            [
+                "d00af331777b95a2"
+            ]
+        ]
+    },
+    {
+        "id": "1e2ce84e6d9258df",
+        "type": "inject",
+        "z": "a18fd0a91e07848d",
+        "name": "search_web",
+        "props": [
+            {
+                "p": "query",
+                "v": "Latest AI news 2025",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "d00af331777b95a2"
+            ]
+        ]
+    },
+    {
+        "id": "9d1abad15636d13b",
+        "type": "inject",
+        "z": "a18fd0a91e07848d",
+        "name": "get_weather",
+        "props": [
+            {
+                "p": "query",
+                "v": "Weather in London",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 310,
+        "y": 420,
+        "wires": [
+            [
+                "d00af331777b95a2"
+            ]
+        ]
+    },
+    {
+        "id": "1548cc54bb8c2f22",
+        "type": "inject",
+        "z": "a18fd0a91e07848d",
+        "name": "convert_currency",
+        "props": [
+            {
+                "p": "query",
+                "v": "50 USD to EUR",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 300,
+        "y": 500,
+        "wires": [
+            [
+                "d00af331777b95a2"
+            ]
+        ]
+    },
+    {
+        "id": "7bb944ca4d0e4ce4",
+        "type": "inject",
+        "z": "a18fd0a91e07848d",
+        "name": "summarize_text",
+        "props": [
+            {
+                "p": "query",
+                "v": "Summarize the history of the moon",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 300,
+        "y": 580,
+        "wires": [
+            [
+                "d00af331777b95a2"
+            ]
+        ]
+    },
+    {
+        "id": "c202cb3ad0f5a367",
+        "type": "inject",
+        "z": "a18fd0a91e07848d",
+        "name": "calculate_math",
+        "props": [
+            {
+                "p": "query",
+                "v": "What is 256 times 12?",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 300,
+        "y": 660,
+        "wires": [
+            [
+                "d00af331777b95a2"
+            ]
+        ]
+    },
+    {
+        "id": "d48cec575e0e4f44",
+        "type": "inject",
+        "z": "a18fd0a91e07848d",
+        "name": "get_stock_price",
+        "props": [
+            {
+                "p": "query",
+                "v": "What is the price of Tesla?",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 300,
+        "y": 720,
+        "wires": [
+            [
+                "d00af331777b95a2"
+            ]
+        ]
+    },
+    {
+        "id": "cc48e66e78d92b55",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "search_web",
+        "func": "console.log(\"search_web\"); return msg;",
+        "outputs": 1,
+        "x": 1090,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bcfe456e8a0db1e6",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "tell_joke",
+        "func": "console.log(\"tell_joke\"); return msg;",
+        "outputs": 1,
+        "x": 1080,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d96cc42e06af1f99",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "get_weather",
+        "func": "console.log(\"get_weather\"); return msg;",
+        "outputs": 1,
+        "x": 1090,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "58d61aa5986d18bc",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "convert_currency",
+        "func": "console.log(\"convert_currency\"); return msg;",
+        "outputs": 1,
+        "x": 1110,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "77b34ba6d5c27199",
+        "type": "function",
+        "z": "a18fd0a91e07848d",
+        "name": "summarize_text",
+        "func": "console.log(\"summarize_text\"); return msg;",
+        "outputs": 1,
+        "x": 1100,
+        "y": 600,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "5e0ddaade57f14fe",
@@ -2443,8 +3112,7 @@
         "y": 700,
         "wires": [
             [
-                "1a20954030d41d00",
-                "92491118ebda8ba7"
+                "1a20954030d41d00"
             ]
         ],
         "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
@@ -2607,28 +3275,6 @@
         "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
     },
     {
-        "id": "92491118ebda8ba7",
-        "type": "ui_media",
-        "z": "1d45200c9172f37f",
-        "name": "",
-        "width": 0,
-        "height": 0,
-        "order": 0,
-        "category": "",
-        "file": "",
-        "layout": "adjust",
-        "showcontrols": true,
-        "loop": true,
-        "onstart": false,
-        "scope": "local",
-        "tooltip": "",
-        "x": 550,
-        "y": 880,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "2cfca6c0f1e77435",
         "type": "inject",
         "z": "5451c5648a7ae7eb",
@@ -2753,287 +3399,6 @@
         "info": "",
         "x": 610,
         "y": 520,
-        "wires": []
-    },
-    {
-        "id": "054df86263375fbb",
-        "type": "inject",
-        "z": "a48639831b79bc53",
-        "name": "Inject: Car Blown Up",
-        "props": [
-            {
-                "p": "emailContent",
-                "v": "My car has blown up!",
-                "vt": "str"
-            },
-            {
-                "p": "senderEmail",
-                "v": "test@test.com",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 130,
-        "y": 60,
-        "wires": [
-            [
-                "c507538da8d97a30"
-            ]
-        ]
-    },
-    {
-        "id": "ca5545580823485f",
-        "type": "inject",
-        "z": "a48639831b79bc53",
-        "name": "Inject: Hello",
-        "props": [
-            {
-                "p": "emailContent",
-                "v": "Hello! How are you?",
-                "vt": "str"
-            },
-            {
-                "p": "senderEmail",
-                "v": "test1@test.com",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 150,
-        "y": 240,
-        "wires": [
-            [
-                "c507538da8d97a30"
-            ]
-        ]
-    },
-    {
-        "id": "c507538da8d97a30",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "read_email",
-        "func": "return msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 140,
-        "wires": [
-            [
-                "8cf88a5015b19e40"
-            ]
-        ]
-    },
-    {
-        "id": "8cf88a5015b19e40",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "classify_intent",
-        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const state = {\n            emailContent: msg.emailContent || \"\",\n            senderEmail: msg.senderEmail || \"unknown@test.com\"\n        };\n\n        const classificationPrompt = `\n        Analyze this customer email and classify it:\n        \n        Email: ${state.emailContent}\n        From: ${state.senderEmail}\n        Provide classification, including intent, urgency, topic, and summary.\n        `;\n\n        const classification = await structuredLlm.invoke(classificationPrompt);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 460,
-        "y": 220,
-        "wires": [
-            [
-                "21398b7313621f89",
-                "cfc24a0584b11bd2"
-            ]
-        ]
-    },
-    {
-        "id": "21398b7313621f89",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "bug_tracking",
-        "func": "msg.topic = \"ticket_state\";\nconst ticketId = `BUG_${Math.random().toString(36).substr(2, 9).toUpperCase()}`;\nmsg.payload = { ticketId: ticketId };\nreturn msg;",
-        "outputs": 1,
-        "x": 650,
-        "y": 160,
-        "wires": [
-            [
-                "d7c5f88515f704cb"
-            ]
-        ]
-    },
-    {
-        "id": "cfc24a0584b11bd2",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "search_documentation",
-        "func": "msg.topic = \"search_state\";\nconst classification = msg.state.classification;\n\nmsg.payload = {\n    searchResults: [\n      `Documentation on ${classification.topic}`,\n      `Standard procedure for ${classification.intent} requests`\n    ]\n};\nreturn msg;",
-        "outputs": 1,
-        "x": 680,
-        "y": 280,
-        "wires": [
-            [
-                "d7c5f88515f704cb"
-            ]
-        ]
-    },
-    {
-        "id": "d7c5f88515f704cb",
-        "type": "join",
-        "z": "a48639831b79bc53",
-        "name": "Join State",
-        "mode": "manual",
-        "build": "object",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "count": "2",
-        "x": 900,
-        "y": 220,
-        "wires": [
-            [
-                "992806acddcfb95d"
-            ]
-        ]
-    },
-    {
-        "id": "992806acddcfb95d",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "write_response",
-        "func": "const { ChatOllama } = global.get('lcOllama');\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0.7 });\n\n(async () => {\n    const state = msg.state;\n    const classification = state.classification;\n    const contextSections = msg.payload.search_state.searchResults;\n    const ticketInfo = msg.payload.ticket_state.ticketId;\n    \n    const draftPrompt = `\n    Draft a response to this customer email:\n    ${state.emailContent}\n    \n    Email intent: ${classification.intent}\n    Urgency level: ${classification.urgency}\n    \n    ${contextSections.join('\\n\\n')}\n    \n    Guidelines:\n    - Be professional and helpful\\\n    - Address their specific concern\n    - Use the provided documentation when relevant\n    - Be brief\n    `;\n\n    try {\n        const response = await llm.invoke(draftPrompt);\n        const needsReview = ['high', 'critical'].includes(classification.urgency) || classification.intent === 'complex';\n        \n        msg.payload = {\n            draftResponse: response.content,\n            target: needsReview ? \"human_review\" : \"send_reply\"\n        };\n        \n        node.send(msg);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 980,
-        "y": 300,
-        "wires": [
-            [
-                "615f61abecd0d81d"
-            ]
-        ]
-    },
-    {
-        "id": "615f61abecd0d81d",
-        "type": "switch",
-        "z": "a48639831b79bc53",
-        "name": "Review Switch",
-        "property": "payload.target",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "human_review",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "send_reply",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "outputs": 2,
-        "x": 1060,
-        "y": 380,
-        "wires": [
-            [
-                "09449c27557bff4d"
-            ],
-            [
-                "a08f172bf3358ffd"
-            ]
-        ]
-    },
-    {
-        "id": "09449c27557bff4d",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "human_review",
-        "func": "const approved = Math.random() > 0.2 ? \"approved\" : \"not_approved\";\nmsg.payload.humanDecision = approved;\n\nif (approved === \"approved\") {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Mock: Approved\"});\n} else {\n    node.status({fill:\"red\", shape:\"ring\", text:\"Mock: Rejected\"});\n}\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1340,
-        "y": 400,
-        "wires": [
-            [
-                "09162c4a84b4aacc"
-            ]
-        ]
-    },
-    {
-        "id": "09162c4a84b4aacc",
-        "type": "switch",
-        "z": "a48639831b79bc53",
-        "name": "Decision Switch",
-        "property": "payload.humanDecision",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "not_approved",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "approved",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1500,
-        "y": 460,
-        "wires": [
-            [
-                "162c744e98edacd8"
-            ],
-            [
-                "a08f172bf3358ffd"
-            ]
-        ]
-    },
-    {
-        "id": "a08f172bf3358ffd",
-        "type": "function",
-        "z": "a48639831b79bc53",
-        "name": "send_reply",
-        "func": "const preview = (msg.payload.draftResponse || \"\").substring(0, 60) + \"...\";\nnode.warn(\"Sending Email Reply: \" + preview);\nreturn msg;",
-        "outputs": 1,
-        "x": 1730,
-        "y": 660,
-        "wires": [
-            [
-                "162c744e98edacd8"
-            ]
-        ]
-    },
-    {
-        "id": "162c744e98edacd8",
-        "type": "debug",
-        "z": "a48639831b79bc53",
-        "name": "Final Draft",
-        "active": true,
-        "complete": "payload",
-        "x": 1910,
-        "y": 440,
         "wires": []
     },
     {
