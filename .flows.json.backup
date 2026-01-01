@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "0885b58486b6cfde",
+        "type": "tab",
+        "label": "Langchain shallow agent",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "a18fd0a91e07848d",
         "type": "tab",
         "label": "Langchain Tools",
@@ -563,6 +571,223 @@
         "x": 1910,
         "y": 440,
         "wires": []
+    },
+    {
+        "id": "ca762e39ca2c621e",
+        "type": "websocket in",
+        "z": "0885b58486b6cfde",
+        "name": "WebSocket Input",
+        "server": "b79df368d7aaac79",
+        "client": "",
+        "x": 180,
+        "y": 600,
+        "wires": [
+            [
+                "73362bc576621f14"
+            ]
+        ]
+    },
+    {
+        "id": "73362bc576621f14",
+        "type": "function",
+        "z": "0885b58486b6cfde",
+        "name": "🤖 Router Agent",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"🤖 Analyzing...\"});\n\nconst { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\n// Tool Constants\nconst SEARCH_WEB = \"search_web\";\nconst CALCULATE = \"calculate\";\nconst GET_WEATHER = \"get_weather\";\n\nconst ToolSchema = z.object({\n    tool: z.enum([SEARCH_WEB, CALCULATE, GET_WEATHER]),\n    reasoning: z.string().describe(\"Brief explanation of why this tool was chosen\"),\n    parameters: z.union([\n        z.object({ query: z.string().describe(\"Search query for web search\") }),\n        z.object({ expression: z.string().describe(\"Mathematical expression to calculate\") }),\n        z.object({ city: z.string().describe(\"City name for weather information\") })\n    ]).describe(\"Parameters for the tool call\")\n});\n\nconst llm = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(ToolSchema);\n\n(async () => {\n    try {\n        const query = msg.payload || msg.query || \"\";\n        \n        // Create a message array for the LLM\n        const messages = [\n            {\n                role: \"user\",\n                content: `Based on the user's input, choose the most appropriate tool to help them.\\n\\nUser input: ${query}\\n\\nChoose a tool and provide the necessary parameters.`\n            }\n        ];\n\n        const classification = await structuredLlm.invoke(messages);\n\n        msg.state = {\n            query: query,\n            classification\n        };\n        \n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ Tool selected: \" + classification.tool});\n        node.send(msg);\n    } catch (e) {\n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Error\"});\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "144af09d1239686e"
+            ]
+        ]
+    },
+    {
+        "id": "144af09d1239686e",
+        "type": "switch",
+        "z": "0885b58486b6cfde",
+        "name": "🔀 Route to Tool",
+        "property": "state.classification.tool",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "search_web",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "calculate",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "get_weather",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 830,
+        "y": 520,
+        "wires": [
+            [
+                "379a3a2e867f8c92"
+            ],
+            [
+                "e3cdb0909c06b5de"
+            ],
+            [
+                "087a8ab64caea085"
+            ]
+        ]
+    },
+    {
+        "id": "379a3a2e867f8c92",
+        "type": "function",
+        "z": "0885b58486b6cfde",
+        "name": "🔍 search_web",
+        "func": "node.status({fill:\"yellow\", shape:\"dot\", text:\"🔍 Searching...\"});\n\nconst { TavilySearch } = global.get('lcTavily');\nconst TAVILY_API_KEY = global.get('TAVILY_API_KEY');\n\nconst searchTool = new TavilySearch({\n    maxResults: 5,\n    tavilyApiKey: TAVILY_API_KEY,\n    includeRawContent: false,\n    topic: \"general\"\n});\n\n(async () => {\n    try {\n        const query = msg.state.classification.parameters.query || msg.state.query;\n        const results = await searchTool.invoke({ query: query });\n        \n        msg.payload = results;\n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ Search complete\"});\n        node.send(msg);\n    } catch (error) {\n        msg.payload = { error: `Search failed: ${error.message}` };\n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Search failed\"});\n        node.error(error);\n        node.send(msg);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 440,
+        "wires": [
+            [
+                "d02f689140a24fcc"
+            ]
+        ]
+    },
+    {
+        "id": "e3cdb0909c06b5de",
+        "type": "function",
+        "z": "0885b58486b6cfde",
+        "name": "🧮 calculate",
+        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"🧮 Calculating...\"});\n\n(async () => {\n    try {\n        const expression = msg.state.classification.parameters.expression || msg.state.query;\n        // Simple calculator - only basic operations\n        const sanitized = expression.replace(/[^0-9+\\-*/().\\s]/g, '');\n        // Using Function constructor for safe evaluation (in a real app, use a proper expression parser)\n        const result = Function('\"use strict\"; return (' + sanitized + ')')();\n        \n        msg.payload = { result: result };\n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ Calculation done\"});\n        node.send(msg);\n    } catch (error) {\n        msg.payload = { error: `Calculation failed: ${error.message}` };\n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Calc failed\"});\n        node.error(error);\n        node.send(msg);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 520,
+        "wires": [
+            [
+                "d02f689140a24fcc"
+            ]
+        ]
+    },
+    {
+        "id": "087a8ab64caea085",
+        "type": "function",
+        "z": "0885b58486b6cfde",
+        "name": "🌤️ get_weather",
+        "func": "node.status({fill:\"lightblue\", shape:\"dot\", text:\"🌤️ Checking weather...\"});\n\n(async () => {\n    try {\n        const city = msg.state.classification.parameters.city || msg.state.query;\n        \n        // Simulated weather tool (in a real implementation, connect to a weather API)\n        const weatherData = {\n            \"new york\": { temperature: \"18°C\", condition: \"Cloudy\" },\n            \"london\": { temperature: \"12°C\", condition: \"Rainy\" },\n            \"tokyo\": { temperature: \"22°C\", condition: \"Sunny\" },\n            \"paris\": { temperature: \"15°C\", condition: \"Partly cloudy\" }\n        };\n\n        const lowerCity = city.toLowerCase();\n        if (weatherData[lowerCity]) {\n            msg.payload = weatherData[lowerCity];\n        } else {\n            msg.payload = {\n                temperature: \"Unknown\",\n                condition: \"Weather data not available for \" + city\n            };\n        }\n        \n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ Weather data ready\"});\n        node.send(msg);\n    } catch (error) {\n        msg.payload = { error: `Weather lookup failed: ${error.message}` };\n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Weather failed\"});\n        node.error(error);\n        node.send(msg);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 600,
+        "wires": [
+            [
+                "d02f689140a24fcc"
+            ]
+        ]
+    },
+    {
+        "id": "d02f689140a24fcc",
+        "type": "function",
+        "z": "0885b58486b6cfde",
+        "name": "💬 format_response",
+        "func": "node.status({fill:\"purple\", shape:\"dot\", text:\"💬 Formatting response...\"});\n\nconst { ChatOllama } = global.get('lcOllama');\nconst llm = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0.7 });\n\n(async () => {\n    const input = msg.state.query;\n    const toolUsed = msg.state.classification.tool;\n    const toolResult = msg.payload;\n    \n    if (toolResult.error) {\n        msg.payload = `I encountered an error while processing your request: ${toolResult.error}`;\n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Error in response\"});\n        node.send(msg);\n        return null;\n    }\n\n    // Generate a human-readable response based on the tool result\n    let response;\n    switch (toolUsed) {\n        case \"search_web\":\n            if (toolResult.results && toolResult.results.length > 0) {\n                const topResult = toolResult.results[0];\n                response = `I found this information: ${topResult.content.substring(0, 200)}... [from ${topResult.url}]`;\n            } else {\n                response = \"I couldn't find relevant information for your query.\";\n            }\n            break;\n        case \"calculate\":\n            response = `The result of the calculation is: ${toolResult.result}`;\n            break;\n        case \"get_weather\":\n            response = `The weather in ${msg.state.classification.parameters.city || input} is ${toolResult.temperature}, ${toolResult.condition.toLowerCase()}.`;\n            break;\n        default:\n            response = `Processed your request with ${toolUsed}. Result: ${JSON.stringify(toolResult)}`;\n    }\n    \n    // Use the LLM to refine the response\n    try {\n        const messages = [\n            {\n                role: \"user\",\n                content: `Format this response in a friendly way: ${response}`\n            }\n        ];\n        \n        const refinedResponse = await llm.invoke(messages);\n        // Check if refinedResponse is an object with content property (AIMessage)\n        if (refinedResponse && typeof refinedResponse === 'object' && refinedResponse.content) {\n            msg.payload = refinedResponse.content;\n        } else {\n            msg.payload = refinedResponse;\n        }\n        \n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ Response formatted\"});\n    } catch (e) {\n        // If LLM formatting fails, use the original response\n        msg.payload = response;\n        node.status({fill:\"yellow\", shape:\"dot\", text:\"⚠️ Response formatted (no LLM)\"});\n    }\n    \n    node.send(msg);\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1420,
+        "y": 520,
+        "wires": [
+            [
+                "d36b3644c54e39d9"
+            ]
+        ]
+    },
+    {
+        "id": "d36b3644c54e39d9",
+        "type": "websocket out",
+        "z": "0885b58486b6cfde",
+        "name": "WebSocket Output",
+        "server": "b79df368d7aaac79",
+        "client": "",
+        "x": 1700,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "9b603392c6cb103f",
+        "type": "inject",
+        "z": "0885b58486b6cfde",
+        "name": "Search Query: search_web",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Search for the latest news about artificial intelligence",
+        "payloadType": "str",
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "73362bc576621f14"
+            ]
+        ]
+    },
+    {
+        "id": "f1e74e3a79052c11",
+        "type": "inject",
+        "z": "0885b58486b6cfde",
+        "name": "Search Query: calculate",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "five times five equals?",
+        "payloadType": "str",
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "73362bc576621f14"
+            ]
+        ]
     },
     {
         "id": "d00af331777b95a2",
