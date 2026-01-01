@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "5f6eebf04085ab9f",
+        "type": "tab",
+        "label": "Langchain research-agent",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "0885b58486b6cfde",
         "type": "tab",
         "label": "Langchain shallow agent",
@@ -292,6 +300,12 @@
         "name": ""
     },
     {
+        "id": "8a9b6c5d4e3f2a10",
+        "type": "websocket-listener",
+        "path": "/ws/shallow-agent",
+        "wholemsg": "false"
+    },
+    {
         "id": "054df86263375fbb",
         "type": "inject",
         "z": "a48639831b79bc53",
@@ -573,22 +587,638 @@
         "wires": []
     },
     {
-        "id": "ca762e39ca2c621e",
-        "type": "websocket in",
-        "z": "0885b58486b6cfde",
-        "name": "WebSocket Input",
-        "server": "b79df368d7aaac79",
-        "client": "",
-        "x": 180,
-        "y": 600,
+        "id": "research-agent-trigger",
+        "type": "inject",
+        "z": "5f6eebf04085ab9f",
+        "name": "Start Research",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 120,
+        "y": 200,
         "wires": [
             [
-                "73362bc576621f14"
+                "initialize-state"
             ]
         ]
     },
     {
-        "id": "73362bc576621f14",
+        "id": "initialize-state",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Initialize State",
+        "func": "// Initialize the state similar to createInitialState() in JS\nmsg.state = {\n    messages: [{\n        type: \"human\",\n        content: msg.payload,\n        timestamp: new Date().toISOString()\n    }],\n    todos: [],\n    files: {},\n    searchHistory: [],\n    iteration: 0,\n    maxIterations: 10\n};\n\n// Add the original question to files\nmsg.state.files[\"question.txt\"] = {\n    content: msg.payload,\n    createdAt: new Date().toISOString(),\n    modifiedAt: new Date().toISOString()\n};\n\n// Prepare question.txt for file output\nmsg.payload = msg.payload;\n\n// Add initial todo for the main research task\nmsg.state.todos.push({\n    id: Date.now().toString(),\n    content: `Research the question: ${msg.payload}`,\n    status: \"in_progress\",\n    createdAt: new Date().toISOString()\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 260,
+        "wires": [
+            [
+                "question-file-out",
+                "build-prompt-and-select-tool"
+            ]
+        ]
+    },
+    {
+        "id": "question-file-out",
+        "type": "file",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save question.txt",
+        "filename": "question.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 390,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "build-prompt-and-select-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Build Prompt & Select Tool",
+        "func": "// Build prompt similar to buildPrompt() in JS\nconst state = msg.state;\n\nconst messages = state.messages.map(m =>\n    `${m.type}: ${m.content}`\n).join(\"\\n\");\n\nconst todos = state.todos.map(t =>\n    `- ${t.content} (${t.status})`\n).join(\"\\n\");\n\nconst availableFiles = Object.keys(state.files).join(\", \");\n\nmsg.payload = `You are an expert researcher. Your job is to conduct thorough research, and then write a polished report.\n\nThe first thing you should do is to write the original user question to \\`question.txt\\` so you have a record of it.\n\nUse the research-agent to conduct deep research. It will respond to your questions/topics with a detailed answer.\n\nWhen you think you enough information to write a final report, write it to \\`final_report.md\\`\n\nYou can call the critique-agent to get a critique of the final report. After that (if needed) you can do more research and edit the \\`final_report.md\\`\nYou can do this however many times you want until are you satisfied with the result.\n\nOnly edit the file once at a time (if you call this tool in parallel, there may be conflicts).\n\nHere are instructions for writing the final report:\n\n<report_instructions>\n\nCRITICAL: Make sure the answer is written in the same language as the human messages! If you make a todo plan - you should note in the plan what language the report should be in so you dont forget!\nNote: the language the report should be in is the language the QUESTION is in, not the language/country that the question is ABOUT.\n\nPlease create a detailed answer to the overall research brief that:\n1. Is well-organized with proper headings (# for title, ## for sections, ### for subsections)\n2. Includes specific facts and insights from the research\n3. References relevant sources using [Title](URL) format\n4. Provides a balanced, thorough analysis. Be as comprehensive as possible, and include all information that is relevant to the overall research question. People are using you for deep research and will expect detailed answers.\n5. Includes a \"Sources\" section at the end with all referenced links\n\nYou can structure your report in a number of different ways. Here are some examples:\n\nTo answer a question that asks you to compare two things, you might structure your report like this:\n1/ intro\n2/ overview of topic A\n3/ overview of topic B\n4/ comparison between A and B\n5/ conclusion\n\nTo answer a question that asks you to return a list of things, you might only need a single section which is the entire list.\n1/ list of things or table of things\nOr, you could choose to make each item in the list a separate section in the report. When asked for lists, you don't need an introduction or conclusion.\n1/ item 1\n2/ item 2\n3/ item 3\n\nTo answer a question that asks you to summarize a topic, give a report, or give an overview, you might structure your report like this:\n1/ overview of topic\n2/ concept 1\n3/ concept 2\n4/ concept 3\n5/ conclusion\n\nIf you think you can answer the question with a single section, you can do that too!\n1/ answer\n\nREMEMBER: Section is a VERY fluid and loose concept. You can structure your report however you think is best, including in ways that are not listed above!\nMake sure that your sections are cohesive, and make sense for the reader.\n\nFor each section of the report, do the following:\n- Use simple, clear language\n- Use ## for section title (Markdown format) for each section of the report\n- Do NOT ever refer to yourself as the writer of the report. This should be a professional report without any self-referential language.\n- Do not say what you are doing in the report. Just write the report without any commentary from yourself.\n- Each section should be as long as necessary to deeply answer the question with the information you have gathered. It is expected that sections will be fairly long and verbose. You are writing a deep research report, and users will expect a thorough answer.\n- Use bullet points to list out information when appropriate, but by default, write in paragraph form.\n\nREMEMBER:\nThe brief and research may be in English, but you need to translate this information to the right language when writing the final answer.\nMake sure the final answer report is in the SAME language as the human messages in the message history.\n\nFormat the report in clear markdown with proper structure and include source references where appropriate.\n\n<Citation Rules>\n- Assign each unique URL a single citation number in your text\n- End with ### Sources that lists each source with corresponding numbers\n- IMPORTANT: Number sources sequentially without gaps (1,2,3,4...) in the final list regardless of which sources you choose\n- Each source should be a separate line item in a list, so that in markdown it is rendered as a list.\n- Example format:\n  [1] Source Title: URL\n  [2] Source Title: URL\n- Citations are extremely important. Make sure to include these, and pay a lot of attention to getting these right. Users will often use these citations to look into more information.\n</Citation Rules>\n\nYou have access to a few tools.\n\n## \\`internet_search\\`\n\nUse this to run an internet search for a given query. You can specify the number of results, the topic, and whether raw content should be included.\n\nCurrent conversation:\n${messages}\n\nCurrent todos:\n${todos || \"No todos yet\"}\n\nAvailable files: ${availableFiles || \"No files yet\"}\n\nBased on the user's research request, choose the most appropriate tool to advance the research.\nThe user wants to research: ${state.messages[0]?.content || 'unknown topic'}\n\nSelect a tool and provide the necessary parameters.`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 320,
+        "wires": [
+            [
+                "llm-tool-selector"
+            ]
+        ]
+    },
+    {
+        "id": "llm-tool-selector",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "LLM Tool Selector",
+        "func": "// Simulate LLM tool selection with structured output\n// In a real implementation, this would use an LLM with structured output\n\n// For now, we'll simulate the tool selection based on the prompt\nconst prompt = msg.payload;\nconst state = msg.state;\n\n// Simple logic to determine which tool to use based on the prompt\nlet tool = \"search_web\"; // Default\nlet parameters = {};\nlet reasoning = \"Default tool selection\";\n\n// If we have enough search results and need to write a report\nif (state.searchHistory.length > 2 && state.todos.some(t => t.status === \"completed\")) {\n    tool = \"write_file\";\n    parameters = { filePath: \"final_report.md\", content: \"\" };\n    reasoning = \"Creating final report based on research\";\n} else if (prompt.toLowerCase().includes(\"search\") || prompt.toLowerCase().includes(\"research\")) {\n    // Extract query from prompt\n    const queryMatch = prompt.match(/research:\\s*(.+)/i);\n    const query = queryMatch ? queryMatch[1] : state.messages[0]?.content || \"general research\";\n    \n    tool = \"search_web\";\n    parameters = { query: query };\n    reasoning = \"Searching the web for research information\";\n} else if (prompt.toLowerCase().includes(\"todo\")) {\n    tool = \"create_todo\";\n    parameters = { content: \"Research task\" };\n    reasoning = \"Creating a research todo\";\n} else {\n    tool = \"search_web\";\n    parameters = { query: state.messages[0]?.content || \"general research\" };\n    reasoning = \"Default search for research information\";\n}\n\nmsg.toolAction = {\n    tool: tool,\n    reasoning: reasoning,\n    parameters: parameters\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 500,
+        "wires": [
+            [
+                "tool-router"
+            ]
+        ]
+    },
+    {
+        "id": "tool-router",
+        "type": "switch",
+        "z": "5f6eebf04085ab9f",
+        "name": "Route to Tool",
+        "property": "toolAction.tool",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "search_web",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "write_file",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "read_file",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "edit_file",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "create_todo",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "update_todo",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "research_topic",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 8,
+        "x": 550,
+        "y": 380,
+        "wires": [
+            [
+                "search-web-tool"
+            ],
+            [
+                "write-file-tool"
+            ],
+            [
+                "read-file-tool"
+            ],
+            [
+                "edit-file-tool"
+            ],
+            [
+                "create-todo-tool"
+            ],
+            [
+                "update-todo-tool"
+            ],
+            [
+                "research-topic-tool"
+            ],
+            [
+                "default-tool-handler"
+            ]
+        ]
+    },
+    {
+        "id": "search-web-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Search Web Tool",
+        "func": "const { TavilySearch } = global.get('lcTavily');\nconst TAVILY_API_KEY = global.get('TAVILY_API_KEY');\n\n// Create search tool instance\nconst searchTool = new TavilySearch({\n    maxResults: 5,\n    tavilyApiKey: TAVILY_API_KEY,\n    includeRawContent: false,\n    topic: \"general\"\n});\n\nnode.status({fill:\"yellow\", shape:\"dot\", text:\"🔍 Searching...\"});\n\n(async () => {\n    try {\n        const query = msg.toolAction.parameters.query || msg.state.messages[0]?.content || \"general research\";\n        \n        // Perform the search\n        const results = await searchTool.invoke({ query: query });\n        \n        // Update state with search results\n        msg.state.searchHistory = msg.state.searchHistory || [];\n        msg.state.searchHistory.push({\n            query: query,\n            results: results,\n            timestamp: new Date().toISOString()\n        });\n        \n        // Add result to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Search results for '${query}': ${JSON.stringify(results, null, 2)}`,\n            timestamp: new Date().toISOString()\n        });\n        \n        msg.payload = results;\n        \n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ Search complete\"});\n        node.send(msg);\n    } catch (error) {\n        msg.payload = { error: `Search failed: ${error.message}` };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Search error: ${error.message}`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Search failed\"});\n        node.error(error);\n        node.send(msg);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 120,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "write-file-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Write File Tool",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"📝 Writing file...\"});\n\ntry {\n    const { filePath, content } = msg.toolAction.parameters;\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: content,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Special handling for todo.json\n    if (filePath === 'todo.json') {\n        try {\n            msg.state.todos = JSON.parse(content);\n        } catch (parseError) {\n            console.error('Failed to parse todo.json:', parseError);\n        }\n    }\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Successfully wrote to file: ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = { success: true, path: filePath };\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ File written\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Write file failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write file error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 200,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "read-file-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Read File Tool",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"📖 Reading file...\"});\n\ntry {\n    const { filePath } = msg.toolAction.parameters;\n    \n    let content;\n    let error;\n    \n    // Try to get from state first\n    if (msg.state.files[filePath]) {\n        content = msg.state.files[filePath].content;\n    } else {\n        error = `File ${filePath} not found in memory`;\n    }\n    \n    if (error) {\n        msg.payload = { error: error };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Read file error: ${error}`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Read failed\"});\n    } else {\n        msg.payload = { content: content };\n        \n        // Add result to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `File content: ${content.substring(0, 200)}...`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ File read\"});\n    }\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Read file failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Read file error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Read failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 280,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "edit-file-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Edit File Tool",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"✏️ Editing file...\"});\n\ntry {\n    const { filePath, oldContent, newContent } = msg.toolAction.parameters;\n    \n    // Get current file content\n    let currentContent;\n    if (msg.state.files[filePath]) {\n        currentContent = msg.state.files[filePath].content;\n    } else {\n        msg.payload = { error: `File ${filePath} not found` };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Edit file error: File ${filePath} not found`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ File not found\"});\n        return msg;\n    }\n    \n    // Replace old content with new content\n    const updatedContent = currentContent.replace(oldContent, newContent);\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: updatedContent,\n        createdAt: msg.state.files[filePath].createdAt,\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Successfully edited file: ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = { success: true, path: filePath };\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ File edited\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Edit file failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Edit file error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Edit failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 360,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "create-todo-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Create Todo Tool",
+        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Creating todo...\"});\n\ntry {\n    const { content, status = \"pending\" } = msg.toolAction.parameters;\n    \n    const todo = {\n        id: Date.now().toString(),\n        content: content,\n        status: status,\n        createdAt: new Date().toISOString()\n    };\n    \n    // Add to state\n    msg.state.todos.push(todo);\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Created todo: ${content}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = todo;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo created\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Create todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Create todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Create failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 440,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "update-todo-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Update Todo Tool",
+        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Updating todo...\"});\n\ntry {\n    const { id, status } = msg.toolAction.parameters;\n    \n    // Find and update the todo\n    const todoIndex = msg.state.todos.findIndex(t => t.id === id);\n    \n    if (todoIndex === -1) {\n        msg.payload = { error: `Todo with id ${id} not found` };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Update todo error: Todo with id ${id} not found`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Todo not found\"});\n        return msg;\n    }\n    \n    // Update the todo\n    msg.state.todos[todoIndex].status = status;\n    msg.state.todos[todoIndex].updatedAt = new Date().toISOString();\n    \n    const updatedTodo = msg.state.todos[todoIndex];\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Updated todo: ${updatedTodo.content} to status: ${status}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = updatedTodo;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo updated\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Update todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Update todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Update failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 520,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "research-topic-tool",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Research Topic Tool",
+        "func": "node.status({fill:\"purple\", shape:\"dot\", text:\"🔬 Researching topic...\"});\n\ntry {\n    const { topic, depth = \"general\" } = msg.toolAction.parameters;\n    \n    // For now, just do a search on the topic\n    // In a full implementation, this might involve more complex research\n    \n    msg.toolAction = {\n        tool: \"search_web\",\n        reasoning: `Researching topic: ${topic}`,\n        parameters: { query: topic }\n    };\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Starting research on topic: ${topic}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = `Beginning research on: ${topic}`;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Research started\"});\n    \n    // Route back to search tool\n    return msg;\n} catch (error) {\n    msg.payload = { error: `Research topic failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Research topic error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Research failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 600,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "default-tool-handler",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Default Tool Handler",
+        "func": "node.status({fill:\"gray\", shape:\"dot\", text:\"❓ Unknown tool\"});\n\nmsg.payload = { error: `Unknown tool: ${msg.toolAction.tool}` };\n\n// Add error to messages\nmsg.state.messages.push({\n    type: \"ai\",\n    content: `Unknown tool error: ${msg.toolAction.tool}`,\n    timestamp: new Date().toISOString()\n});\n\nnode.status({fill:\"red\", shape:\"ring\", text:\"❌ Unknown tool\"});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 680,
+        "wires": [
+            [
+                "check-continue-condition"
+            ]
+        ]
+    },
+    {
+        "id": "check-continue-condition",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Check Continue Condition",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"🔄 Checking continuation...\"});\n\n// Increment iteration counter\nmsg.state.iteration = (msg.state.iteration || 0) + 1;\n\n// Check if we should continue or stop\nconst shouldContinue = msg.state.iteration < msg.state.maxIterations;\n\n// Check if we have enough information to create a final report\nconst completedTodos = msg.state.todos.filter(t => t.status === \"completed\").length;\nconst hasSearchResults = msg.state.searchHistory.length > 0;\nconst hasQuestionFile = !!msg.state.files[\"question.txt\"];\n\nconst shouldCreateReport = (completedTodos > 0 && hasSearchResults && hasQuestionFile) || \n                          (msg.state.searchHistory.length > 2); // If we have substantial search results\n\nmsg.shouldContinue = shouldContinue && !shouldCreateReport;\nmsg.shouldCreateReport = shouldCreateReport;\n\nif (shouldCreateReport) {\n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Ready to create report\"});\n} else if (!shouldContinue) {\n    node.status({fill:\"yellow\", shape:\"dot\", text:\"⏹️ Max iterations reached\"});\n} else {\n    node.status({fill:\"blue\", shape:\"dot\", text:\"🔄 Continuing iteration\"});\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 360,
+        "wires": [
+            [
+                "continue-decision"
+            ]
+        ]
+    },
+    {
+        "id": "continue-decision",
+        "type": "switch",
+        "z": "5f6eebf04085ab9f",
+        "name": "Continue Decision",
+        "property": "shouldCreateReport",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1290,
+        "y": 440,
+        "wires": [
+            [
+                "generate-final-report"
+            ],
+            [
+                "continue-loop-check"
+            ]
+        ]
+    },
+    {
+        "id": "continue-loop-check",
+        "type": "switch",
+        "z": "5f6eebf04085ab9f",
+        "name": "Continue Loop?",
+        "property": "shouldContinue",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1380,
+        "y": 520,
+        "wires": [
+            [
+                "77988e4ab192c193"
+            ],
+            [
+                "959777cf9e31b547"
+            ]
+        ]
+    },
+    {
+        "id": "generate-final-report",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Generate Final Report",
+        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"📝 Generating report...\"});\n\ntry {\n    const state = msg.state;\n    \n    // Get the original question\n    let question = \"Unknown question\";\n    if (state.files[\"question.txt\"]) {\n        question = state.files[\"question.txt\"].content;\n    }\n    \n    let report = `# Research Report\\n\\n`;\n    report += `## Question\\n${question}\\n\\n`;\n    report += `## Sources and Findings\\n`;\n    \n    if (state.searchHistory.length === 0) {\n        report += `No search results were obtained during the research process.\\n\\n`;\n    } else {\n        // Process search results and format with citations\n        let sourceCounter = 1;\n        const sources = [];\n        \n        for (const search of state.searchHistory) {\n            report += `### Search Query: ${search.query}\\n`;\n            \n            if (search.results && !search.results.error) {\n                if (Array.isArray(search.results.results)) {\n                    for (const result of search.results.results) {\n                        // Add to sources list\n                        sources.push({ id: sourceCounter, title: result.title, url: result.url });\n                        \n                        // Add citation in the text\n                        report += `- [${result.title}][${sourceCounter}]\\n`;\n                        if (result.content) {\n                            report += `  - ${result.content.substring(0, 200)}...\\n\\n`;\n                        }\n                        \n                        sourceCounter++;\n                    }\n                } else {\n                    // Handle case where results are in a different format\n                    report += `Results: ${JSON.stringify(search.results, null, 2)}\\n\\n`;\n                }\n            } else {\n                // Handle error case\n                report += `Search error: ${search.results?.error || 'Unknown error'}\\n\\n`;\n            }\n        }\n        \n        // Add sources section at the end\n        if (sources.length > 0) {\n            report += `\\n### Sources\\n`;\n            for (const source of sources) {\n                report += `[${source.id}] ${source.title}: ${source.url}\\n`;\n            }\n        }\n    }\n    \n    report += `\\n## Summary\\n`;\n    if (state.searchHistory.length > 0) {\n        report += `Based on the research conducted, here are the key findings...\\n`;\n    } else {\n        report += `The research process did not yield any results, possibly due to API issues or connectivity problems.\\n`;\n    }\n    \n    // Add report to state\n    state.files[\"final_report.md\"] = {\n        content: report,\n        createdAt: new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Update main todo to completed\n    const mainTodo = state.todos.find(t => t.content.includes(question));\n    if (mainTodo) {\n        mainTodo.status = \"completed\";\n        mainTodo.updatedAt = new Date().toISOString();\n    }\n    \n    // Add result to messages\n    state.messages.push({\n        type: \"ai\",\n        content: `Final report generated with ${state.searchHistory.length} search results`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = report;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report generated\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Report generation failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Report generation error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Report gen failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1520,
+        "y": 380,
+        "wires": [
+            [
+                "write-final-report"
+            ]
+        ]
+    },
+    {
+        "id": "write-final-report",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Write Final Report",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"💾 Writing final report...\"});\n\ntry {\n    const reportContent = msg.payload.content || msg.payload;\n    const filePath = \"final_report.md\";\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: reportContent,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Final report written to ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Prepare for file output (send just the content)\n    msg.payload = reportContent;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report saved\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Write report failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write report error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1750,
+        "y": 380,
+        "wires": [
+            [
+                "final-report-file-out",
+                "521bcc5df3b99439"
+            ]
+        ]
+    },
+    {
+        "id": "final-output",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Final Output",
+        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"🎉 Research complete\"});\n\n// Prepare final result\nmsg.payload = {\n    finalReport: msg.state.files[\"final_report.md\"]?.content || null,\n    todos: msg.state.todos,\n    files: Object.keys(msg.state.files),\n    searchHistory: msg.state.searchHistory,\n    iterationCount: msg.state.iteration\n};\n\n// Add completion message to state\nmsg.state.messages.push({\n    type: \"system\",\n    content: `Research completed after ${msg.state.iteration} iterations`,\n    timestamp: new Date().toISOString()\n});\n\nnode.done(null, msg);\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 920,
+        "wires": [
+            [
+                "debug-output"
+            ]
+        ]
+    },
+    {
+        "id": "debug-output",
+        "type": "debug",
+        "z": "5f6eebf04085ab9f",
+        "name": "Debug Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "77988e4ab192c193",
+        "type": "link out",
+        "z": "5f6eebf04085ab9f",
+        "name": "Build Prompt & Select Tool Link Out",
+        "mode": "link",
+        "links": [
+            "2ef20357a461d84b"
+        ],
+        "x": 1535,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "2ef20357a461d84b",
+        "type": "link in",
+        "z": "5f6eebf04085ab9f",
+        "name": "Build Prompt & Select Tool Link In",
+        "links": [
+            "77988e4ab192c193"
+        ],
+        "x": 105,
+        "y": 360,
+        "wires": [
+            [
+                "build-prompt-and-select-tool"
+            ]
+        ]
+    },
+    {
+        "id": "4246e54586a24ebf",
+        "type": "link in",
+        "z": "5f6eebf04085ab9f",
+        "name": "Final Output In",
+        "links": [
+            "959777cf9e31b547",
+            "521bcc5df3b99439"
+        ],
+        "x": 675,
+        "y": 920,
+        "wires": [
+            [
+                "final-output"
+            ]
+        ]
+    },
+    {
+        "id": "959777cf9e31b547",
+        "type": "link out",
+        "z": "5f6eebf04085ab9f",
+        "name": "Final Output Out",
+        "mode": "link",
+        "links": [
+            "4246e54586a24ebf"
+        ],
+        "x": 1535,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "final-report-file-out",
+        "type": "file",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save final_report.md",
+        "filename": "final_report.md",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1900,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "521bcc5df3b99439",
+        "type": "link out",
+        "z": "5f6eebf04085ab9f",
+        "name": "Final Output Out",
+        "mode": "link",
+        "links": [
+            "4246e54586a24ebf"
+        ],
+        "x": 1875,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "741a40fcd008f1ab",
+        "type": "websocket in",
+        "z": "0885b58486b6cfde",
+        "name": "",
+        "server": "8a9b6c5d4e3f2a10",
+        "client": "",
+        "x": 320,
+        "y": 840,
+        "wires": [
+            [
+                "9360260cefcd707c"
+            ]
+        ]
+    },
+    {
+        "id": "321390c65b95421a",
+        "type": "inject",
+        "z": "0885b58486b6cfde",
+        "name": "Search Query: get_weather",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "What is the weather like in New York?",
+        "payloadType": "str",
+        "x": 300,
+        "y": 760,
+        "wires": [
+            [
+                "9360260cefcd707c"
+            ]
+        ]
+    },
+    {
+        "id": "9360260cefcd707c",
         "type": "function",
         "z": "0885b58486b6cfde",
         "name": "🤖 Router Agent",
@@ -599,16 +1229,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
-        "y": 520,
+        "x": 690,
+        "y": 700,
         "wires": [
             [
-                "144af09d1239686e"
+                "48cda544a6b7ed33"
             ]
         ]
     },
     {
-        "id": "144af09d1239686e",
+        "id": "48cda544a6b7ed33",
         "type": "switch",
         "z": "0885b58486b6cfde",
         "name": "🔀 Route to Tool",
@@ -634,22 +1264,22 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 830,
-        "y": 520,
+        "x": 950,
+        "y": 700,
         "wires": [
             [
-                "379a3a2e867f8c92"
+                "607e2b208b80a6ea"
             ],
             [
-                "e3cdb0909c06b5de"
+                "6c4c7f0fcfb1fa52"
             ],
             [
-                "087a8ab64caea085"
+                "c01a48b447cbeecd"
             ]
         ]
     },
     {
-        "id": "379a3a2e867f8c92",
+        "id": "607e2b208b80a6ea",
         "type": "function",
         "z": "0885b58486b6cfde",
         "name": "🔍 search_web",
@@ -660,16 +1290,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1120,
-        "y": 440,
+        "x": 1240,
+        "y": 620,
         "wires": [
             [
-                "d02f689140a24fcc"
+                "df331ccf0b1c9fe1"
             ]
         ]
     },
     {
-        "id": "e3cdb0909c06b5de",
+        "id": "6c4c7f0fcfb1fa52",
         "type": "function",
         "z": "0885b58486b6cfde",
         "name": "🧮 calculate",
@@ -680,16 +1310,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1110,
-        "y": 520,
+        "x": 1230,
+        "y": 700,
         "wires": [
             [
-                "d02f689140a24fcc"
+                "df331ccf0b1c9fe1"
             ]
         ]
     },
     {
-        "id": "087a8ab64caea085",
+        "id": "c01a48b447cbeecd",
         "type": "function",
         "z": "0885b58486b6cfde",
         "name": "🌤️ get_weather",
@@ -700,16 +1330,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1120,
-        "y": 600,
+        "x": 1240,
+        "y": 780,
         "wires": [
             [
-                "d02f689140a24fcc"
+                "df331ccf0b1c9fe1"
             ]
         ]
     },
     {
-        "id": "d02f689140a24fcc",
+        "id": "df331ccf0b1c9fe1",
         "type": "function",
         "z": "0885b58486b6cfde",
         "name": "💬 format_response",
@@ -720,27 +1350,34 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1420,
-        "y": 520,
+        "x": 1540,
+        "y": 700,
         "wires": [
             [
-                "d36b3644c54e39d9"
+                "0629608d8f8b07ca",
+                "e24407ce63649b29"
             ]
         ]
     },
     {
-        "id": "d36b3644c54e39d9",
-        "type": "websocket out",
+        "id": "0629608d8f8b07ca",
+        "type": "debug",
         "z": "0885b58486b6cfde",
-        "name": "WebSocket Output",
-        "server": "b79df368d7aaac79",
-        "client": "",
-        "x": 1700,
-        "y": 520,
+        "name": "📤 Shallow Agent Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1840,
+        "y": 740,
         "wires": []
     },
     {
-        "id": "9b603392c6cb103f",
+        "id": "57de150a4f2a8dd1",
         "type": "inject",
         "z": "0885b58486b6cfde",
         "name": "Search Query: search_web",
@@ -756,16 +1393,16 @@
         "topic": "",
         "payload": "Search for the latest news about artificial intelligence",
         "payloadType": "str",
-        "x": 190,
-        "y": 440,
+        "x": 310,
+        "y": 600,
         "wires": [
             [
-                "73362bc576621f14"
+                "9360260cefcd707c"
             ]
         ]
     },
     {
-        "id": "f1e74e3a79052c11",
+        "id": "2580e2e3dc333e4d",
         "type": "inject",
         "z": "0885b58486b6cfde",
         "name": "Search Query: calculate",
@@ -781,13 +1418,71 @@
         "topic": "",
         "payload": "five times five equals?",
         "payloadType": "str",
-        "x": 200,
-        "y": 520,
+        "x": 320,
+        "y": 680,
         "wires": [
             [
-                "73362bc576621f14"
+                "9360260cefcd707c"
             ]
         ]
+    },
+    {
+        "id": "72e4a51207e3d9ac",
+        "type": "file in",
+        "z": "0885b58486b6cfde",
+        "name": "",
+        "filename": ".node-red/projects/node-red/react/shallow-agent.html",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [
+                "6b0935d950c12827"
+            ]
+        ]
+    },
+    {
+        "id": "506651486bb31a0c",
+        "type": "http in",
+        "z": "0885b58486b6cfde",
+        "name": "",
+        "url": "/show-shallow-agent",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 530,
+        "y": 360,
+        "wires": [
+            [
+                "72e4a51207e3d9ac"
+            ]
+        ]
+    },
+    {
+        "id": "6b0935d950c12827",
+        "type": "http response",
+        "z": "0885b58486b6cfde",
+        "name": "",
+        "x": 1230,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e24407ce63649b29",
+        "type": "websocket out",
+        "z": "0885b58486b6cfde",
+        "name": "",
+        "server": "8a9b6c5d4e3f2a10",
+        "client": "",
+        "x": 1790,
+        "y": 660,
+        "wires": []
     },
     {
         "id": "d00af331777b95a2",
