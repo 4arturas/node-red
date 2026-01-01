@@ -607,28 +607,87 @@
         "topic": "",
         "payload": "What is artificial intelligence?",
         "payloadType": "str",
-        "x": 100,
+        "x": 120,
         "y": 140,
         "wires": [
             [
-                "initialize-state"
+                "create-todo-json"
             ]
         ]
     },
     {
-        "id": "initialize-state",
+        "id": "create-todo-json",
         "type": "function",
         "z": "5f6eebf04085ab9f",
-        "name": "Initialize State",
-        "func": "// Initialize the state similar to createInitialState() in JS\nmsg.state = {\n    messages: [{\n        type: \"human\",\n        content: msg.payload,\n        timestamp: new Date().toISOString()\n    }],\n    todos: [],\n    files: {},\n    searchHistory: [],\n    iteration: 0,\n    maxIterations: 10\n};\n\n// Add the original question to files\nmsg.state.files[\"question.txt\"] = {\n    content: msg.payload,\n    createdAt: new Date().toISOString(),\n    modifiedAt: new Date().toISOString()\n};\n\n// Prepare question.txt for file output\nmsg.payload = msg.payload;\n\n// Add initial todo for the main research task\nmsg.state.todos.push({\n    id: Date.now().toString(),\n    content: `Research the question: ${msg.payload}`,\n    status: \"in_progress\",\n    createdAt: new Date().toISOString()\n});\n\nreturn msg;",
+        "name": "Create todo.json",
+        "func": "// Store the original payload for later use\nmsg.originalPayload = msg.payload;\n\n// Create initial todo.json structure based on the research query\nconst researchQuery = msg.payload;\n\n// Create initial tasks based on the research workflow\nconst initialTasks = {\n    tasks: [\n        {\n            id: 1,\n            title: \"Research initial question\",\n            description: `Start researching the initial question: ${researchQuery}`,\n            details: \"Initialize the research process and set up the initial state\",\n            testStrategy: \"Verify that the research process has started correctly\",\n            priority: \"high\",\n            dependencies: [],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 2,\n            title: \"Search for relevant information\",\n            description: `Perform web searches to gather relevant information on: ${researchQuery}`,\n            details: \"Use search tools to gather relevant information on the topic\",\n            testStrategy: \"Verify that search results are being collected\",\n            priority: \"high\",\n            dependencies: [1],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 3,\n            title: \"Analyze search results\",\n            description: \"Analyze the search results and extract key information\",\n            details: \"Process and analyze the collected search results\",\n            testStrategy: \"Verify that key information is extracted from search results\",\n            priority: \"medium\",\n            dependencies: [2],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 4,\n            title: \"Create initial report draft\",\n            description: \"Create an initial draft of the research report\",\n            details: \"Compile the gathered information into a draft report\",\n            testStrategy: \"Verify that the draft report contains all gathered information\",\n            priority: \"medium\",\n            dependencies: [3],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 5,\n            title: \"Review and refine report\",\n            description: \"Review the draft report and refine it based on additional research\",\n            details: \"Review the draft and make necessary improvements\",\n            testStrategy: \"Verify that the report is comprehensive and well-structured\",\n            priority: \"low\",\n            dependencies: [4],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 6,\n            title: \"Finalize research report\",\n            description: \"Finalize the research report and save it to file\",\n            details: \"Complete the report and save it to final_report.md\",\n            testStrategy: \"Verify that the final report is saved correctly\",\n            priority: \"high\",\n            dependencies: [5],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        }\n    ]\n};\n\nmsg.payload = JSON.stringify(initialTasks, null, 2);\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 160,
+        "x": 150,
         "y": 200,
+        "wires": [
+            [
+                "save-initial-todo-json"
+            ]
+        ]
+    },
+    {
+        "id": "save-initial-todo-json",
+        "type": "file",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save todo.json",
+        "filename": "todo.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 160,
+        "y": 260,
+        "wires": [
+            [
+                "load-tasks"
+            ]
+        ]
+    },
+    {
+        "id": "load-tasks",
+        "type": "file in",
+        "z": "5f6eebf04085ab9f",
+        "name": "Load Tasks from todo.json",
+        "filename": "todo.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "initialize-state-with-tasks"
+            ]
+        ]
+    },
+    {
+        "id": "initialize-state-with-tasks",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Initialize State with Tasks",
+        "func": "// Parse the tasks from todo.json\nlet tasks = [];\ntry {\n    tasks = JSON.parse(msg.payload).tasks || [];\n} catch (e) {\n    console.error('Error parsing tasks:', e);\n    tasks = [];\n}\n\n// Get the original payload that was stored\nconst originalPayload = msg.originalPayload || \"Research query\";\n\n// Initialize the state similar to createInitialState() in JS\nmsg.state = {\n    messages: [{\n        type: \"human\",\n        content: originalPayload,\n        timestamp: new Date().toISOString()\n    }],\n    todos: tasks, // Use tasks from todo.json\n    files: {},\n    searchHistory: [],\n    iteration: 0,\n    maxIterations: 10\n};\n\n// Add the original question to files\nmsg.state.files[\"question.txt\"] = {\n    content: originalPayload,\n    createdAt: new Date().toISOString(),\n    modifiedAt: new Date().toISOString()\n};\n\n// Prepare question.txt for file output\nmsg.payload = originalPayload;\n\n// Update the first task to in_progress\nif (msg.state.todos.length > 0) {\n    msg.state.todos[0].status = \"in_progress\";\n    msg.state.todos[0].updatedAt = new Date().toISOString();\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 380,
         "wires": [
             [
                 "question-file-out",
@@ -647,8 +706,8 @@
         "createDir": true,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 370,
-        "y": 140,
+        "x": 470,
+        "y": 160,
         "wires": [
             []
         ]
@@ -665,8 +724,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
-        "y": 260,
+        "x": 240,
+        "y": 560,
         "wires": [
             [
                 "llm-tool-selector"
@@ -685,7 +744,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
+        "x": 390,
         "y": 440,
         "wires": [
             [
@@ -743,7 +802,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 8,
-        "x": 530,
+        "x": 550,
         "y": 320,
         "wires": [
             [
@@ -784,7 +843,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 790,
+        "x": 810,
         "y": 60,
         "wires": [
             [
@@ -797,14 +856,14 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Write File Tool",
-        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"📝 Writing file...\"});\n\ntry {\n    const { filePath, content } = msg.toolAction.parameters;\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: content,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Special handling for todo.json\n    if (filePath === 'todo.json') {\n        try {\n            msg.state.todos = JSON.parse(content);\n        } catch (parseError) {\n            console.error('Failed to parse todo.json:', parseError);\n        }\n    }\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Successfully wrote to file: ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = { success: true, path: filePath };\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ File written\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Write file failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write file error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return msg;\n}",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"📝 Writing file...\"});\n\ntry {\n    const { filePath, content } = msg.toolAction.parameters;\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: content,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Special handling for todo.json and task.json\n    if (filePath === 'todo.json' || filePath === 'task.json') {\n        try {\n            const parsedContent = JSON.parse(content);\n            if (parsedContent.tasks) {\n                msg.state.todos = parsedContent.tasks;\n            } else {\n                msg.state.todos = parsedContent;\n            }\n        } catch (parseError) {\n            console.error('Failed to parse todo/task file:', parseError);\n        }\n    }\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Successfully wrote to file: ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = { success: true, path: filePath };\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ File written\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Write file failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write file error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return msg;\n}",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 820,
         "y": 140,
         "wires": [
             [
@@ -824,7 +883,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 820,
         "y": 220,
         "wires": [
             [
@@ -844,7 +903,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 820,
         "y": 300,
         "wires": [
             [
@@ -857,18 +916,21 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Create Todo Tool",
-        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Creating todo...\"});\n\ntry {\n    const { content, status = \"pending\" } = msg.toolAction.parameters;\n    \n    const todo = {\n        id: Date.now().toString(),\n        content: content,\n        status: status,\n        createdAt: new Date().toISOString()\n    };\n    \n    // Add to state\n    msg.state.todos.push(todo);\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Created todo: ${content}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = todo;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo created\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Create todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Create todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Create failed\"});\n    node.error(error);\n    return msg;\n}",
-        "outputs": 1,
+        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Creating todo...\"});\n\ntry {\n    const { content, status = \"pending\" } = msg.toolAction.parameters;\n    \n    const todo = {\n        id: Date.now(),\n        title: content,\n        description: content,\n        details: content,\n        testStrategy: \"Default test strategy\",\n        priority: \"medium\",\n        dependencies: [],\n        status: status,\n        subtasks: [],\n        updatedAt: new Date().toISOString()\n    };\n    \n    // Add to state\n    msg.state.todos.push(todo);\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Created todo: ${content}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Save updated tasks to task.json file\n    const tasksData = { tasks: msg.state.todos };\n    msg.payload = JSON.stringify(tasksData, null, 2);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo created\"});\n    \n    // Send to file output node to save to task.json\n    return [null, msg];\n} catch (error) {\n    msg.payload = { error: `Create todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Create todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Create failed\"});\n    node.error(error);\n    return [msg, null];\n}",
+        "outputs": 2,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 820,
         "y": 380,
         "wires": [
             [
                 "check-continue-condition"
+            ],
+            [
+                "a664f7f616f8a853"
             ]
         ]
     },
@@ -877,18 +939,21 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Update Todo Tool",
-        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Updating todo...\"});\n\ntry {\n    const { id, status } = msg.toolAction.parameters;\n    \n    // Find and update the todo\n    const todoIndex = msg.state.todos.findIndex(t => t.id === id);\n    \n    if (todoIndex === -1) {\n        msg.payload = { error: `Todo with id ${id} not found` };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Update todo error: Todo with id ${id} not found`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Todo not found\"});\n        return msg;\n    }\n    \n    // Update the todo\n    msg.state.todos[todoIndex].status = status;\n    msg.state.todos[todoIndex].updatedAt = new Date().toISOString();\n    \n    const updatedTodo = msg.state.todos[todoIndex];\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Updated todo: ${updatedTodo.content} to status: ${status}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = updatedTodo;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo updated\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Update todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Update todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Update failed\"});\n    node.error(error);\n    return msg;\n}",
-        "outputs": 1,
+        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Updating todo...\"});\n\ntry {\n    const { id, status } = msg.toolAction.parameters;\n    \n    // Find and update the todo\n    const todoIndex = msg.state.todos.findIndex(t => t.id === id);\n    \n    if (todoIndex === -1) {\n        msg.payload = { error: `Todo with id ${id} not found` };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Update todo error: Todo with id ${id} not found`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Todo not found\"});\n        return [msg, null];\n    }\n    \n    // Update the todo\n    msg.state.todos[todoIndex].status = status;\n    msg.state.todos[todoIndex].updatedAt = new Date().toISOString();\n    \n    const updatedTodo = msg.state.todos[todoIndex];\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Updated todo: ${updatedTodo.title || updatedTodo.content} to status: ${status}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Save updated tasks to task.json file\n    const tasksData = { tasks: msg.state.todos };\n    msg.payload = JSON.stringify(tasksData, null, 2);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo updated\"});\n    \n    // Send to file output node to save to task.json\n    return [null, msg];\n} catch (error) {\n    msg.payload = { error: `Update todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Update todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Update failed\"});\n    node.error(error);\n    return [msg, null];\n}",
+        "outputs": 2,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 820,
         "y": 460,
         "wires": [
             [
                 "check-continue-condition"
+            ],
+            [
+                "a664f7f616f8a853"
             ]
         ]
     },
@@ -904,7 +969,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 820,
         "y": 540,
         "wires": [
             [
@@ -924,7 +989,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 810,
+        "x": 830,
         "y": 620,
         "wires": [
             [
@@ -944,7 +1009,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1150,
+        "x": 1170,
         "y": 300,
         "wires": [
             [
@@ -970,7 +1035,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1270,
+        "x": 1290,
         "y": 380,
         "wires": [
             [
@@ -999,7 +1064,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1360,
+        "x": 1380,
         "y": 460,
         "wires": [
             [
@@ -1015,14 +1080,14 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Generate Final Report",
-        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"📝 Generating report...\"});\n\ntry {\n    const state = msg.state;\n    \n    // Get the original question\n    let question = \"Unknown question\";\n    if (state.files[\"question.txt\"]) {\n        question = state.files[\"question.txt\"].content;\n    }\n    \n    let report = `# Research Report\\n\\n`;\n    report += `## Question\\n${question}\\n\\n`;\n    report += `## Sources and Findings\\n`;\n    \n    if (state.searchHistory.length === 0) {\n        report += `No search results were obtained during the research process.\\n\\n`;\n    } else {\n        // Process search results and format with citations\n        let sourceCounter = 1;\n        const sources = [];\n        \n        for (const search of state.searchHistory) {\n            report += `### Search Query: ${search.query}\\n`;\n            \n            if (search.results && !search.results.error) {\n                if (Array.isArray(search.results.results)) {\n                    for (const result of search.results.results) {\n                        // Add to sources list\n                        sources.push({ id: sourceCounter, title: result.title, url: result.url });\n                        \n                        // Add citation in the text\n                        report += `- [${result.title}][${sourceCounter}]\\n`;\n                        if (result.content) {\n                            report += `  - ${result.content.substring(0, 200)}...\\n\\n`;\n                        }\n                        \n                        sourceCounter++;\n                    }\n                } else {\n                    // Handle case where results are in a different format\n                    report += `Results: ${JSON.stringify(search.results, null, 2)}\\n\\n`;\n                }\n            } else {\n                // Handle error case\n                report += `Search error: ${search.results?.error || 'Unknown error'}\\n\\n`;\n            }\n        }\n        \n        // Add sources section at the end\n        if (sources.length > 0) {\n            report += `\\n### Sources\\n`;\n            for (const source of sources) {\n                report += `[${source.id}] ${source.title}: ${source.url}\\n`;\n            }\n        }\n    }\n    \n    report += `\\n## Summary\\n`;\n    if (state.searchHistory.length > 0) {\n        report += `Based on the research conducted, here are the key findings...\\n`;\n    } else {\n        report += `The research process did not yield any results, possibly due to API issues or connectivity problems.\\n`;\n    }\n    \n    // Add report to state\n    state.files[\"final_report.md\"] = {\n        content: report,\n        createdAt: new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Update main todo to completed\n    const mainTodo = state.todos.find(t => t.content.includes(question));\n    if (mainTodo) {\n        mainTodo.status = \"completed\";\n        mainTodo.updatedAt = new Date().toISOString();\n    }\n    \n    // Add result to messages\n    state.messages.push({\n        type: \"ai\",\n        content: `Final report generated with ${state.searchHistory.length} search results`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = report;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report generated\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Report generation failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Report generation error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Report gen failed\"});\n    node.error(error);\n    return msg;\n}",
+        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"📝 Generating report...\"});\n\ntry {\n    const state = msg.state;\n    \n    // Get the original question\n    let question = \"Unknown question\";\n    if (state.files[\"question.txt\"]) {\n        question = state.files[\"question.txt\"].content;\n    }\n    \n    let report = `# Research Report\\n\\n`;\n    report += `## Question\\n${question}\\n\\n`;\n    report += `## Sources and Findings\\n`;\n    \n    if (state.searchHistory.length === 0) {\n        report += `No search results were obtained during the research process.\\n\\n`;\n    } else {\n        // Process search results and format with citations\n        let sourceCounter = 1;\n        const sources = [];\n        \n        for (const search of state.searchHistory) {\n            report += `### Search Query: ${search.query}\\n`;\n            \n            if (search.results && !search.results.error) {\n                if (Array.isArray(search.results.results)) {\n                    for (const result of search.results.results) {\n                        // Add to sources list\n                        sources.push({ id: sourceCounter, title: result.title, url: result.url });\n                        \n                        // Add citation in the text\n                        report += `- [${result.title}][${sourceCounter}]\\n`;\n                        if (result.content) {\n                            report += `  - ${result.content.substring(0, 200)}...\\n\\n`;\n                        }\n                        \n                        sourceCounter++;\n                    }\n                } else {\n                    // Handle case where results are in a different format\n                    report += `Results: ${JSON.stringify(search.results, null, 2)}\\n\\n`;\n                }\n            } else {\n                // Handle error case\n                report += `Search error: ${search.results?.error || 'Unknown error'}\\n\\n`;\n            }\n        }\n        \n        // Add sources section at the end\n        if (sources.length > 0) {\n            report += `\\n### Sources\\n`;\n            for (const source of sources) {\n                report += `[${source.id}] ${source.title}: ${source.url}\\n`;\n            }\n        }\n    }\n    \n    report += `\\n## Summary\\n`;\n    if (state.searchHistory.length > 0) {\n        report += `Based on the research conducted, here are the key findings...\\n`;\n    } else {\n        report += `The research process did not yield any results, possibly due to API issues or connectivity problems.\\n`;\n    }\n    \n    // Add report to state\n    state.files[\"final_report.md\"] = {\n        content: report,\n        createdAt: new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Update relevant tasks to completed\n    for (let todo of state.todos) {\n        if (todo.title && (todo.title.includes(\"Research\") || \n                          todo.title.includes(\"Search\") || \n                          todo.title.includes(\"Analyze\") || \n                          todo.title.includes(\"Create initial report\") || \n                          todo.title.includes(\"Review and refine\"))) {\n            todo.status = \"completed\";\n            todo.updatedAt = new Date().toISOString();\n        }\n    }\n    \n    // Add result to messages\n    state.messages.push({\n        type: \"ai\",\n        content: `Final report generated with ${state.searchHistory.length} search results`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = report;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report generated\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Report generation failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Report generation error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Report gen failed\"});\n    node.error(error);\n    return msg;\n}",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1500,
+        "x": 1520,
         "y": 320,
         "wires": [
             [
@@ -1035,18 +1100,21 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Write Final Report",
-        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"💾 Writing final report...\"});\n\ntry {\n    const reportContent = msg.payload.content || msg.payload;\n    const filePath = \"final_report.md\";\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: reportContent,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Final report written to ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Prepare for file output (send just the content)\n    msg.payload = reportContent;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report saved\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Write report failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write report error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return msg;\n}",
-        "outputs": 1,
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"💾 Writing final report...\"});\n\ntry {\n    const reportContent = msg.payload.content || msg.payload;\n    const filePath = \"final_report.md\";\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: reportContent,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Final report written to ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Update the final task to completed\n    if (msg.state.todos.length > 0) {\n        const finalTask = msg.state.todos.find(t => t.title && t.title.includes(\"Finalize research report\"));\n        if (finalTask) {\n            finalTask.status = \"completed\";\n            finalTask.updatedAt = new Date().toISOString();\n        }\n    }\n    \n    // Create message for saving the report file\n    const reportMsg = { payload: reportContent, state: msg.state };\n    \n    // Create message for saving tasks to task.json\n    const tasksData = { tasks: msg.state.todos };\n    const taskMsg = { payload: JSON.stringify(tasksData, null, 2), state: msg.state };\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report saved\"});\n    \n    return [reportMsg, taskMsg];\n} catch (error) {\n    msg.payload = { error: `Write report failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write report error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return [msg, null];\n}",
+        "outputs": 2,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1730,
-        "y": 320,
+        "x": 1690,
+        "y": 380,
         "wires": [
             [
-                "final-report-file-out",
+                "final-report-file-out"
+            ],
+            [
+                "3771cdcabb40d050",
                 "521bcc5df3b99439"
             ]
         ]
@@ -1056,19 +1124,39 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Final Output",
-        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"🎉 Research complete\"});\n\n// Prepare final result\nmsg.payload = {\n    finalReport: msg.state.files[\"final_report.md\"]?.content || null,\n    todos: msg.state.todos,\n    files: Object.keys(msg.state.files),\n    searchHistory: msg.state.searchHistory,\n    iterationCount: msg.state.iteration\n};\n\n// Add completion message to state\nmsg.state.messages.push({\n    type: \"system\",\n    content: `Research completed after ${msg.state.iteration} iterations`,\n    timestamp: new Date().toISOString()\n});\n\nnode.done(null, msg);\nreturn null;",
-        "outputs": 1,
+        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"🎉 Research complete\"});\n\n// Prepare final result\nmsg.payload = {\n    finalReport: msg.state.files[\"final_report.md\"]?.content || null,\n    todos: msg.state.todos,\n    files: Object.keys(msg.state.files),\n    searchHistory: msg.state.searchHistory,\n    iterationCount: msg.state.iteration\n};\n\n// Add completion message to state\nmsg.state.messages.push({\n    type: \"system\",\n    content: `Research completed after ${msg.state.iteration} iterations`,\n    timestamp: new Date().toISOString()\n});\n\n// Save final tasks to task.json file\nconst tasksData = { tasks: msg.state.todos };\nmsg.payload = JSON.stringify(tasksData, null, 2);\n\nnode.done(null, msg);\nreturn [null, msg];",
+        "outputs": 2,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 790,
+        "x": 810,
         "y": 860,
         "wires": [
             [
                 "debug-output"
+            ],
+            [
+                "save-final-tasks"
             ]
+        ]
+    },
+    {
+        "id": "save-final-tasks",
+        "type": "file",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save final tasks to task.json",
+        "filename": "task.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1060,
+        "y": 900,
+        "wires": [
+            []
         ]
     },
     {
@@ -1084,8 +1172,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1000,
-        "y": 860,
+        "x": 1020,
+        "y": 820,
         "wires": []
     },
     {
@@ -1097,7 +1185,7 @@
         "links": [
             "2ef20357a461d84b"
         ],
-        "x": 1515,
+        "x": 1535,
         "y": 440,
         "wires": []
     },
@@ -1109,8 +1197,8 @@
         "links": [
             "77988e4ab192c193"
         ],
-        "x": 85,
-        "y": 300,
+        "x": 125,
+        "y": 400,
         "wires": [
             [
                 "build-prompt-and-select-tool"
@@ -1126,7 +1214,7 @@
             "959777cf9e31b547",
             "521bcc5df3b99439"
         ],
-        "x": 655,
+        "x": 675,
         "y": 860,
         "wires": [
             [
@@ -1143,9 +1231,26 @@
         "links": [
             "4246e54586a24ebf"
         ],
-        "x": 1515,
+        "x": 1535,
         "y": 480,
         "wires": []
+    },
+    {
+        "id": "save-tasks-to-file",
+        "type": "file",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save tasks to task.json",
+        "filename": "task.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1840,
+        "y": 800,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "final-report-file-out",
@@ -1158,8 +1263,8 @@
         "createDir": true,
         "overwriteFile": "true",
         "encoding": "none",
-        "x": 1880,
-        "y": 260,
+        "x": 1940,
+        "y": 380,
         "wires": [
             []
         ]
@@ -1173,8 +1278,51 @@
         "links": [
             "4246e54586a24ebf"
         ],
-        "x": 1855,
-        "y": 380,
+        "x": 1865,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "527485438c230c8e",
+        "type": "link in",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save tasks to task.json IN",
+        "links": [
+            "a664f7f616f8a853",
+            "3771cdcabb40d050"
+        ],
+        "x": 1695,
+        "y": 800,
+        "wires": [
+            [
+                "save-tasks-to-file"
+            ]
+        ]
+    },
+    {
+        "id": "a664f7f616f8a853",
+        "type": "link out",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save tasks to task.json OUT",
+        "mode": "link",
+        "links": [
+            "527485438c230c8e"
+        ],
+        "x": 1135,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3771cdcabb40d050",
+        "type": "link out",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save tasks to task.json OUT",
+        "mode": "link",
+        "links": [
+            "527485438c230c8e"
+        ],
+        "x": 1865,
+        "y": 320,
         "wires": []
     },
     {
