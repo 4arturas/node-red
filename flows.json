@@ -8,6 +8,14 @@
         "env": []
     },
     {
+        "id": "0885b58486b6cfde",
+        "type": "tab",
+        "label": "Langchain shallow agent",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "a18fd0a91e07848d",
         "type": "tab",
         "label": "Langchain Tools",
@@ -368,7 +376,7 @@
         "type": "function",
         "z": "a48639831b79bc53",
         "name": "classify_intent",
-        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const state = {\n            emailContent: msg.emailContent || \"\",\n            senderEmail: msg.senderEmail || \"unknown@test.com\"\n        };\n\n        const classificationPrompt = `\n        Analyze this customer email and classify it:\n        \n        Email: ${state.emailContent}\n        From: ${state.senderEmail}\n        Provide classification, including intent, urgency, topic, and summary.\n        `;\n\n        const classification = await structuredLlm.invoke(classificationPrompt);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\nconst { Tavily } = global.get('lcTavily');\n\nconst EmailClassificationSchema = z.object({\n  intent: z.enum(['question', 'bug', 'billing', 'feature', 'complex']),\n  urgency: z.enum(['low', 'medium', 'high', 'critical']),\n  topic: z.string(),\n  summary: z.string(),\n});\n\nconst llm = new ChatOllama({ model: \"llama3.2:3b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(EmailClassificationSchema);\n\n(async () => {\n    try {\n        const state = {\n            emailContent: msg.emailContent || \"\",\n            senderEmail: msg.senderEmail || \"unknown@test.com\"\n        };\n\n        const classificationPrompt = `\n        Analyze this customer email and classify it:\n        \n        Email: ${state.emailContent}\n        From: ${state.senderEmail}\n        Provide classification, including intent, urgency, topic, and summary.\n        `;\n\n        const classification = await structuredLlm.invoke(classificationPrompt);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        \n        node.send([msg, msg]);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -562,6 +570,51 @@
         "complete": "payload",
         "x": 1910,
         "y": 440,
+        "wires": []
+    },
+    {
+        "id": "e2818bf2d231c986",
+        "type": "inject",
+        "z": "0885b58486b6cfde",
+        "name": "Query",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 420,
+        "y": 360,
+        "wires": [
+            [
+                "b36d23936bc3ebfd"
+            ]
+        ]
+    },
+    {
+        "id": "b36d23936bc3ebfd",
+        "type": "debug",
+        "z": "0885b58486b6cfde",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 380,
         "wires": []
     },
     {
