@@ -1,3 +1,35 @@
+# settings.js
+```js
+    functionGlobalContext: {
+        // os:require('os'),
+        // Standard LangChain & Core
+        langchain: require('langchain'),
+        lcCore: require('@langchain/core'),
+        
+        // Ollama integration
+        lcOllama: require('@langchain/ollama'),
+
+        // Tavily
+        lcTavily: require('@langchain/tavily'),
+        
+        // LangGraph SDK
+        langgraph: require('@langchain/langgraph-sdk'),
+        
+        // Utilities
+        zod: require('zod'),
+        uuid: require('uuid'),
+
+        fs: require('fs'),
+        playwright: require('playwright'),
+        path: require('path'),
+        child_process: require('child_process'),
+        process: require('process'),
+        
+        TAVILY_API_KEY: "TODO
+    }
+````
+
+# Docker
 ```bash
 docker build -t mynodered .
 ````

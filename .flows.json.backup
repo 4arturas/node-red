@@ -32,6 +32,22 @@
         "env": []
     },
     {
+        "id": "9ee40a31254c5a6a",
+        "type": "tab",
+        "label": "LLM todo",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "067e10d1acb5ae55",
+        "type": "tab",
+        "label": "LLM Research Assistant",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "d9c88a0a246ec309",
         "type": "tab",
         "label": "JTBD",
@@ -99,6 +115,14 @@
         "id": "050b98cdec0fb136",
         "type": "tab",
         "label": "Wait for all Threads",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "debd584ef029526b",
+        "type": "tab",
+        "label": "Copilot",
         "disabled": false,
         "info": "",
         "env": []
@@ -220,6 +244,33 @@
         "y": 99,
         "w": 792,
         "h": 302
+    },
+    {
+        "id": "386155bf4cb25dcc",
+        "type": "group",
+        "z": "9ee40a31254c5a6a",
+        "name": "Work on Task",
+        "style": {
+            "label": true,
+            "fill": "#ffbfbf",
+            "fill-opacity": "0.2"
+        },
+        "nodes": [
+            "af92c236426f30e1",
+            "a03243f9f4ced371",
+            "57b404056be20e97",
+            "9a53b08aff574db6",
+            "d707fbdf4168c6e9",
+            "f86d798b98c1f791",
+            "26a3990f8c090c8e",
+            "d899c9620964f91a",
+            "1a50cf2a0b424f29",
+            "699dc0641af943f1"
+        ],
+        "x": 674,
+        "y": 139,
+        "w": 722,
+        "h": 502
     },
     {
         "id": "d3bab26f8ac33880",
@@ -608,7 +659,46 @@
         "payload": "What is artificial intelligence?",
         "payloadType": "str",
         "x": 120,
-        "y": 100,
+        "y": 140,
+        "wires": [
+            [
+                "create-todo-json"
+            ]
+        ]
+    },
+    {
+        "id": "create-todo-json",
+        "type": "function",
+        "z": "5f6eebf04085ab9f",
+        "name": "Create todo.json",
+        "func": "// Store the original payload for later use\nmsg.originalPayload = msg.payload;\n\n// Create initial todo.json structure based on the research query\nconst researchQuery = msg.payload;\n\n// Create initial tasks based on the research workflow\nconst initialTasks = {\n    tasks: [\n        {\n            id: 1,\n            title: \"Research initial question\",\n            description: `Start researching the initial question: ${researchQuery}`,\n            details: \"Initialize the research process and set up the initial state\",\n            testStrategy: \"Verify that the research process has started correctly\",\n            priority: \"high\",\n            dependencies: [],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 2,\n            title: \"Search for relevant information\",\n            description: `Perform web searches to gather relevant information on: ${researchQuery}`,\n            details: \"Use search tools to gather relevant information on the topic\",\n            testStrategy: \"Verify that search results are being collected\",\n            priority: \"high\",\n            dependencies: [1],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 3,\n            title: \"Analyze search results\",\n            description: \"Analyze the search results and extract key information\",\n            details: \"Process and analyze the collected search results\",\n            testStrategy: \"Verify that key information is extracted from search results\",\n            priority: \"medium\",\n            dependencies: [2],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 4,\n            title: \"Create initial report draft\",\n            description: \"Create an initial draft of the research report\",\n            details: \"Compile the gathered information into a draft report\",\n            testStrategy: \"Verify that the draft report contains all gathered information\",\n            priority: \"medium\",\n            dependencies: [3],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 5,\n            title: \"Review and refine report\",\n            description: \"Review the draft report and refine it based on additional research\",\n            details: \"Review the draft and make necessary improvements\",\n            testStrategy: \"Verify that the report is comprehensive and well-structured\",\n            priority: \"low\",\n            dependencies: [4],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        },\n        {\n            id: 6,\n            title: \"Finalize research report\",\n            description: \"Finalize the research report and save it to file\",\n            details: \"Complete the report and save it to final_report.md\",\n            testStrategy: \"Verify that the final report is saved correctly\",\n            priority: \"high\",\n            dependencies: [5],\n            status: \"pending\",\n            subtasks: [],\n            updatedAt: new Date().toISOString()\n        }\n    ]\n};\n\nmsg.payload = JSON.stringify(initialTasks, null, 2);\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 200,
+        "wires": [
+            [
+                "save-initial-todo-json"
+            ]
+        ]
+    },
+    {
+        "id": "save-initial-todo-json",
+        "type": "file",
+        "z": "5f6eebf04085ab9f",
+        "name": "Save todo.json",
+        "filename": "todo.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 160,
+        "y": 260,
         "wires": [
             [
                 "load-tasks"
@@ -619,16 +709,16 @@
         "id": "load-tasks",
         "type": "file in",
         "z": "5f6eebf04085ab9f",
-        "name": "Load Tasks from task.json",
-        "filename": "task.json",
+        "name": "Load Tasks from todo.json",
+        "filename": "todo.json",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 170,
-        "y": 160,
+        "x": 160,
+        "y": 320,
         "wires": [
             [
                 "initialize-state-with-tasks"
@@ -640,15 +730,15 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Initialize State with Tasks",
-        "func": "// Store the original payload before processing tasks\nmsg.originalPayload = msg.payload;\n\n// Parse the tasks from task.json\nlet tasks = [];\ntry {\n    tasks = JSON.parse(msg.payload).tasks || [];\n} catch (e) {\n    console.error('Error parsing tasks:', e);\n    tasks = [];\n}\n\n// Initialize the state similar to createInitialState() in JS\nmsg.state = {\n    messages: [{\n        type: \"human\",\n        content: msg.originalPayload,\n        timestamp: new Date().toISOString()\n    }],\n    todos: tasks, // Use tasks from task.json\n    files: {},\n    searchHistory: [],\n    iteration: 0,\n    maxIterations: 10\n};\n\n// Add the original question to files\nmsg.state.files[\"question.txt\"] = {\n    content: msg.originalPayload,\n    createdAt: new Date().toISOString(),\n    modifiedAt: new Date().toISOString()\n};\n\n// Prepare question.txt for file output\nmsg.payload = msg.originalPayload;\n\n// Update the first task to in_progress\nif (msg.state.todos.length > 0) {\n    msg.state.todos[0].status = \"in_progress\";\n    msg.state.todos[0].updated_at = new Date().toISOString();\n}\n\nreturn msg;",
+        "func": "// Parse the tasks from todo.json\nlet tasks = [];\ntry {\n    tasks = JSON.parse(msg.payload).tasks || [];\n} catch (e) {\n    console.error('Error parsing tasks:', e);\n    tasks = [];\n}\n\n// Get the original payload that was stored\nconst originalPayload = msg.originalPayload || \"Research query\";\n\n// Initialize the state similar to createInitialState() in JS\nmsg.state = {\n    messages: [{\n        type: \"human\",\n        content: originalPayload,\n        timestamp: new Date().toISOString()\n    }],\n    todos: tasks, // Use tasks from todo.json\n    files: {},\n    searchHistory: [],\n    iteration: 0,\n    maxIterations: 10\n};\n\n// Add the original question to files\nmsg.state.files[\"question.txt\"] = {\n    content: originalPayload,\n    createdAt: new Date().toISOString(),\n    modifiedAt: new Date().toISOString()\n};\n\n// Prepare question.txt for file output\nmsg.payload = originalPayload;\n\n// Update the first task to in_progress\nif (msg.state.todos.length > 0) {\n    msg.state.todos[0].status = \"in_progress\";\n    msg.state.todos[0].updatedAt = new Date().toISOString();\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 220,
-        "y": 220,
+        "x": 200,
+        "y": 380,
         "wires": [
             [
                 "question-file-out",
@@ -668,7 +758,7 @@
         "overwriteFile": "true",
         "encoding": "none",
         "x": 470,
-        "y": 120,
+        "y": 160,
         "wires": [
             []
         ]
@@ -685,8 +775,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
-        "y": 320,
+        "x": 240,
+        "y": 560,
         "wires": [
             [
                 "llm-tool-selector"
@@ -706,7 +796,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 400,
+        "y": 440,
         "wires": [
             [
                 "tool-router"
@@ -764,7 +854,7 @@
         "repair": false,
         "outputs": 8,
         "x": 550,
-        "y": 280,
+        "y": 320,
         "wires": [
             [
                 "search-web-tool"
@@ -805,7 +895,7 @@
         "finalize": "",
         "libs": [],
         "x": 810,
-        "y": 20,
+        "y": 60,
         "wires": [
             [
                 "check-continue-condition"
@@ -825,7 +915,7 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 100,
+        "y": 140,
         "wires": [
             [
                 "check-continue-condition"
@@ -845,7 +935,7 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 180,
+        "y": 220,
         "wires": [
             [
                 "check-continue-condition"
@@ -865,7 +955,7 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 260,
+        "y": 300,
         "wires": [
             [
                 "check-continue-condition"
@@ -877,7 +967,7 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Create Todo Tool",
-        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Creating todo...\"});\n\ntry {\n    const { content, status = \"pending\" } = msg.toolAction.parameters;\n    \n    const todo = {\n        id: Date.now().toString(),\n        title: content,\n        description: content,\n        status: status,\n        created_at: new Date().toISOString(),\n        updated_at: new Date().toISOString()\n    };\n    \n    // Add to state\n    msg.state.todos.push(todo);\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Created todo: ${content}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Save updated tasks to task.json file\n    const tasksData = { tasks: msg.state.todos };\n    msg.payload = JSON.stringify(tasksData, null, 2);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo created\"});\n    \n    // Send to file output node to save to task.json\n    return [null, msg];\n} catch (error) {\n    msg.payload = { error: `Create todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Create todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Create failed\"});\n    node.error(error);\n    return [msg, null];\n}",
+        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Creating todo...\"});\n\ntry {\n    const { content, status = \"pending\" } = msg.toolAction.parameters;\n    \n    const todo = {\n        id: Date.now(),\n        title: content,\n        description: content,\n        details: content,\n        testStrategy: \"Default test strategy\",\n        priority: \"medium\",\n        dependencies: [],\n        status: status,\n        subtasks: [],\n        updatedAt: new Date().toISOString()\n    };\n    \n    // Add to state\n    msg.state.todos.push(todo);\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Created todo: ${content}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Save updated tasks to task.json file\n    const tasksData = { tasks: msg.state.todos };\n    msg.payload = JSON.stringify(tasksData, null, 2);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo created\"});\n    \n    // Send to file output node to save to task.json\n    return [null, msg];\n} catch (error) {\n    msg.payload = { error: `Create todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Create todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Create failed\"});\n    node.error(error);\n    return [msg, null];\n}",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -885,7 +975,7 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 340,
+        "y": 380,
         "wires": [
             [
                 "check-continue-condition"
@@ -900,7 +990,7 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Update Todo Tool",
-        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Updating todo...\"});\n\ntry {\n    const { id, status } = msg.toolAction.parameters;\n    \n    // Find and update the todo\n    const todoIndex = msg.state.todos.findIndex(t => t.id === id);\n    \n    if (todoIndex === -1) {\n        msg.payload = { error: `Todo with id ${id} not found` };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Update todo error: Todo with id ${id} not found`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Todo not found\"});\n        return [msg, null];\n    }\n    \n    // Update the todo\n    msg.state.todos[todoIndex].status = status;\n    msg.state.todos[todoIndex].updated_at = new Date().toISOString();\n    \n    const updatedTodo = msg.state.todos[todoIndex];\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Updated todo: ${updatedTodo.title || updatedTodo.content} to status: ${status}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Save updated tasks to task.json file\n    const tasksData = { tasks: msg.state.todos };\n    msg.payload = JSON.stringify(tasksData, null, 2);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo updated\"});\n    \n    // Send to file output node to save to task.json\n    return [null, msg];\n} catch (error) {\n    msg.payload = { error: `Update todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Update todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Update failed\"});\n    node.error(error);\n    return [msg, null];\n}",
+        "func": "node.status({fill:\"orange\", shape:\"dot\", text:\"📋 Updating todo...\"});\n\ntry {\n    const { id, status } = msg.toolAction.parameters;\n    \n    // Find and update the todo\n    const todoIndex = msg.state.todos.findIndex(t => t.id === id);\n    \n    if (todoIndex === -1) {\n        msg.payload = { error: `Todo with id ${id} not found` };\n        \n        // Add error to messages\n        msg.state.messages.push({\n            type: \"ai\",\n            content: `Update todo error: Todo with id ${id} not found`,\n            timestamp: new Date().toISOString()\n        });\n        \n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Todo not found\"});\n        return [msg, null];\n    }\n    \n    // Update the todo\n    msg.state.todos[todoIndex].status = status;\n    msg.state.todos[todoIndex].updatedAt = new Date().toISOString();\n    \n    const updatedTodo = msg.state.todos[todoIndex];\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Updated todo: ${updatedTodo.title || updatedTodo.content} to status: ${status}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Save updated tasks to task.json file\n    const tasksData = { tasks: msg.state.todos };\n    msg.payload = JSON.stringify(tasksData, null, 2);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Todo updated\"});\n    \n    // Send to file output node to save to task.json\n    return [null, msg];\n} catch (error) {\n    msg.payload = { error: `Update todo failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Update todo error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Update failed\"});\n    node.error(error);\n    return [msg, null];\n}",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -908,7 +998,7 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "check-continue-condition"
@@ -931,7 +1021,7 @@
         "finalize": "",
         "libs": [],
         "x": 820,
-        "y": 500,
+        "y": 540,
         "wires": [
             [
                 "check-continue-condition"
@@ -951,7 +1041,7 @@
         "finalize": "",
         "libs": [],
         "x": 830,
-        "y": 580,
+        "y": 620,
         "wires": [
             [
                 "check-continue-condition"
@@ -971,7 +1061,7 @@
         "finalize": "",
         "libs": [],
         "x": 1170,
-        "y": 260,
+        "y": 300,
         "wires": [
             [
                 "continue-decision"
@@ -997,7 +1087,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1290,
-        "y": 340,
+        "y": 380,
         "wires": [
             [
                 "generate-final-report"
@@ -1026,7 +1116,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1380,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "77988e4ab192c193"
@@ -1041,7 +1131,7 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Generate Final Report",
-        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"📝 Generating report...\"});\n\ntry {\n    const state = msg.state;\n    \n    // Get the original question\n    let question = \"Unknown question\";\n    if (state.files[\"question.txt\"]) {\n        question = state.files[\"question.txt\"].content;\n    }\n    \n    let report = `# Research Report\\n\\n`;\n    report += `## Question\\n${question}\\n\\n`;\n    report += `## Sources and Findings\\n`;\n    \n    if (state.searchHistory.length === 0) {\n        report += `No search results were obtained during the research process.\\n\\n`;\n    } else {\n        // Process search results and format with citations\n        let sourceCounter = 1;\n        const sources = [];\n        \n        for (const search of state.searchHistory) {\n            report += `### Search Query: ${search.query}\\n`;\n            \n            if (search.results && !search.results.error) {\n                if (Array.isArray(search.results.results)) {\n                    for (const result of search.results.results) {\n                        // Add to sources list\n                        sources.push({ id: sourceCounter, title: result.title, url: result.url });\n                        \n                        // Add citation in the text\n                        report += `- [${result.title}][${sourceCounter}]\\n`;\n                        if (result.content) {\n                            report += `  - ${result.content.substring(0, 200)}...\\n\\n`;\n                        }\n                        \n                        sourceCounter++;\n                    }\n                } else {\n                    // Handle case where results are in a different format\n                    report += `Results: ${JSON.stringify(search.results, null, 2)}\\n\\n`;\n                }\n            } else {\n                // Handle error case\n                report += `Search error: ${search.results?.error || 'Unknown error'}\\n\\n`;\n            }\n        }\n        \n        // Add sources section at the end\n        if (sources.length > 0) {\n            report += `\\n### Sources\\n`;\n            for (const source of sources) {\n                report += `[${source.id}] ${source.title}: ${source.url}\\n`;\n            }\n        }\n    }\n    \n    report += `\\n## Summary\\n`;\n    if (state.searchHistory.length > 0) {\n        report += `Based on the research conducted, here are the key findings...\\n`;\n    } else {\n        report += `The research process did not yield any results, possibly due to API issues or connectivity problems.\\n`;\n    }\n    \n    // Add report to state\n    state.files[\"final_report.md\"] = {\n        content: report,\n        createdAt: new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Update relevant tasks to completed\n    for (let todo of state.todos) {\n        if (todo.title && (todo.title.includes(\"Research\") || \n                          todo.title.includes(\"Search\") || \n                          todo.title.includes(\"Analyze\") || \n                          todo.title.includes(\"Create initial report\") || \n                          todo.title.includes(\"Review and refine\"))) {\n            todo.status = \"completed\";\n            todo.updated_at = new Date().toISOString();\n        }\n    }\n    \n    // Add result to messages\n    state.messages.push({\n        type: \"ai\",\n        content: `Final report generated with ${state.searchHistory.length} search results`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = report;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report generated\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Report generation failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Report generation error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Report gen failed\"});\n    node.error(error);\n    return msg;\n}",
+        "func": "node.status({fill:\"green\", shape:\"dot\", text:\"📝 Generating report...\"});\n\ntry {\n    const state = msg.state;\n    \n    // Get the original question\n    let question = \"Unknown question\";\n    if (state.files[\"question.txt\"]) {\n        question = state.files[\"question.txt\"].content;\n    }\n    \n    let report = `# Research Report\\n\\n`;\n    report += `## Question\\n${question}\\n\\n`;\n    report += `## Sources and Findings\\n`;\n    \n    if (state.searchHistory.length === 0) {\n        report += `No search results were obtained during the research process.\\n\\n`;\n    } else {\n        // Process search results and format with citations\n        let sourceCounter = 1;\n        const sources = [];\n        \n        for (const search of state.searchHistory) {\n            report += `### Search Query: ${search.query}\\n`;\n            \n            if (search.results && !search.results.error) {\n                if (Array.isArray(search.results.results)) {\n                    for (const result of search.results.results) {\n                        // Add to sources list\n                        sources.push({ id: sourceCounter, title: result.title, url: result.url });\n                        \n                        // Add citation in the text\n                        report += `- [${result.title}][${sourceCounter}]\\n`;\n                        if (result.content) {\n                            report += `  - ${result.content.substring(0, 200)}...\\n\\n`;\n                        }\n                        \n                        sourceCounter++;\n                    }\n                } else {\n                    // Handle case where results are in a different format\n                    report += `Results: ${JSON.stringify(search.results, null, 2)}\\n\\n`;\n                }\n            } else {\n                // Handle error case\n                report += `Search error: ${search.results?.error || 'Unknown error'}\\n\\n`;\n            }\n        }\n        \n        // Add sources section at the end\n        if (sources.length > 0) {\n            report += `\\n### Sources\\n`;\n            for (const source of sources) {\n                report += `[${source.id}] ${source.title}: ${source.url}\\n`;\n            }\n        }\n    }\n    \n    report += `\\n## Summary\\n`;\n    if (state.searchHistory.length > 0) {\n        report += `Based on the research conducted, here are the key findings...\\n`;\n    } else {\n        report += `The research process did not yield any results, possibly due to API issues or connectivity problems.\\n`;\n    }\n    \n    // Add report to state\n    state.files[\"final_report.md\"] = {\n        content: report,\n        createdAt: new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Update relevant tasks to completed\n    for (let todo of state.todos) {\n        if (todo.title && (todo.title.includes(\"Research\") || \n                          todo.title.includes(\"Search\") || \n                          todo.title.includes(\"Analyze\") || \n                          todo.title.includes(\"Create initial report\") || \n                          todo.title.includes(\"Review and refine\"))) {\n            todo.status = \"completed\";\n            todo.updatedAt = new Date().toISOString();\n        }\n    }\n    \n    // Add result to messages\n    state.messages.push({\n        type: \"ai\",\n        content: `Final report generated with ${state.searchHistory.length} search results`,\n        timestamp: new Date().toISOString()\n    });\n    \n    msg.payload = report;\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report generated\"});\n    \n    return msg;\n} catch (error) {\n    msg.payload = { error: `Report generation failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Report generation error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Report gen failed\"});\n    node.error(error);\n    return msg;\n}",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -1049,7 +1139,7 @@
         "finalize": "",
         "libs": [],
         "x": 1520,
-        "y": 280,
+        "y": 320,
         "wires": [
             [
                 "write-final-report"
@@ -1061,7 +1151,7 @@
         "type": "function",
         "z": "5f6eebf04085ab9f",
         "name": "Write Final Report",
-        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"💾 Writing final report...\"});\n\ntry {\n    const reportContent = msg.payload.content || msg.payload;\n    const filePath = \"final_report.md\";\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: reportContent,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Final report written to ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Update the final task to completed\n    if (msg.state.todos.length > 0) {\n        const finalTask = msg.state.todos.find(t => t.title && t.title.includes(\"Finalize research report\"));\n        if (finalTask) {\n            finalTask.status = \"completed\";\n            finalTask.updated_at = new Date().toISOString();\n        }\n    }\n    \n    // Create message for saving the report file\n    const reportMsg = { payload: reportContent, state: msg.state };\n    \n    // Create message for saving tasks to task.json\n    const tasksData = { tasks: msg.state.todos };\n    const taskMsg = { payload: JSON.stringify(tasksData, null, 2), state: msg.state };\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report saved\"});\n    \n    return [reportMsg, taskMsg];\n} catch (error) {\n    msg.payload = { error: `Write report failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write report error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return [msg, null];\n}",
+        "func": "node.status({fill:\"blue\", shape:\"dot\", text:\"💾 Writing final report...\"});\n\ntry {\n    const reportContent = msg.payload.content || msg.payload;\n    const filePath = \"final_report.md\";\n    \n    // Update state\n    msg.state.files[filePath] = {\n        content: reportContent,\n        createdAt: msg.state.files[filePath]?.createdAt || new Date().toISOString(),\n        modifiedAt: new Date().toISOString()\n    };\n    \n    // Add result to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Final report written to ${filePath}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    // Update the final task to completed\n    if (msg.state.todos.length > 0) {\n        const finalTask = msg.state.todos.find(t => t.title && t.title.includes(\"Finalize research report\"));\n        if (finalTask) {\n            finalTask.status = \"completed\";\n            finalTask.updatedAt = new Date().toISOString();\n        }\n    }\n    \n    // Create message for saving the report file\n    const reportMsg = { payload: reportContent, state: msg.state };\n    \n    // Create message for saving tasks to task.json\n    const tasksData = { tasks: msg.state.todos };\n    const taskMsg = { payload: JSON.stringify(tasksData, null, 2), state: msg.state };\n    \n    node.status({fill:\"green\", shape:\"dot\", text:\"✅ Report saved\"});\n    \n    return [reportMsg, taskMsg];\n} catch (error) {\n    msg.payload = { error: `Write report failed: ${error.message}` };\n    \n    // Add error to messages\n    msg.state.messages.push({\n        type: \"ai\",\n        content: `Write report error: ${error.message}`,\n        timestamp: new Date().toISOString()\n    });\n    \n    node.status({fill:\"red\", shape:\"ring\", text:\"❌ Write failed\"});\n    node.error(error);\n    return [msg, null];\n}",
         "outputs": 2,
         "timeout": "",
         "noerr": 0,
@@ -1069,7 +1159,7 @@
         "finalize": "",
         "libs": [],
         "x": 1690,
-        "y": 340,
+        "y": 380,
         "wires": [
             [
                 "final-report-file-out"
@@ -1093,7 +1183,7 @@
         "finalize": "",
         "libs": [],
         "x": 810,
-        "y": 820,
+        "y": 860,
         "wires": [
             [
                 "debug-output"
@@ -1115,7 +1205,7 @@
         "overwriteFile": "true",
         "encoding": "none",
         "x": 1060,
-        "y": 860,
+        "y": 900,
         "wires": [
             []
         ]
@@ -1134,7 +1224,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1020,
-        "y": 780,
+        "y": 820,
         "wires": []
     },
     {
@@ -1147,7 +1237,7 @@
             "2ef20357a461d84b"
         ],
         "x": 1535,
-        "y": 400,
+        "y": 440,
         "wires": []
     },
     {
@@ -1159,7 +1249,7 @@
             "77988e4ab192c193"
         ],
         "x": 125,
-        "y": 360,
+        "y": 400,
         "wires": [
             [
                 "build-prompt-and-select-tool"
@@ -1176,7 +1266,7 @@
             "521bcc5df3b99439"
         ],
         "x": 675,
-        "y": 820,
+        "y": 860,
         "wires": [
             [
                 "final-output"
@@ -1193,7 +1283,7 @@
             "4246e54586a24ebf"
         ],
         "x": 1535,
-        "y": 440,
+        "y": 480,
         "wires": []
     },
     {
@@ -1208,7 +1298,7 @@
         "overwriteFile": "true",
         "encoding": "none",
         "x": 1840,
-        "y": 760,
+        "y": 800,
         "wires": [
             []
         ]
@@ -1225,7 +1315,7 @@
         "overwriteFile": "true",
         "encoding": "none",
         "x": 1940,
-        "y": 340,
+        "y": 380,
         "wires": [
             []
         ]
@@ -1240,7 +1330,7 @@
             "4246e54586a24ebf"
         ],
         "x": 1865,
-        "y": 420,
+        "y": 460,
         "wires": []
     },
     {
@@ -1253,7 +1343,7 @@
             "3771cdcabb40d050"
         ],
         "x": 1695,
-        "y": 760,
+        "y": 800,
         "wires": [
             [
                 "save-tasks-to-file"
@@ -1270,7 +1360,7 @@
             "527485438c230c8e"
         ],
         "x": 1135,
-        "y": 600,
+        "y": 640,
         "wires": []
     },
     {
@@ -1283,7 +1373,7 @@
             "527485438c230c8e"
         ],
         "x": 1865,
-        "y": 280,
+        "y": 320,
         "wires": []
     },
     {
@@ -1971,6 +2061,492 @@
         "y": 600,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "9a51dd7724ef42d8",
+        "type": "inject",
+        "z": "9ee40a31254c5a6a",
+        "name": "🚀 Start PRD",
+        "props": [
+            {
+                "p": "query",
+                "v": "Project: Basic Task Tracker. Tech Stack: React, Ant Design.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "34dd365f68fc4ebf"
+            ]
+        ]
+    },
+    {
+        "id": "34dd365f68fc4ebf",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "name": "📋 Create TODO Tasks",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\n// Model constants\nconst MODEL_EMBEDDING = \"mxbai-embed-large\";\nconst MODEL_AGENT = \"llama3.2:3b\";\nconst MODEL_GENERATION = \"deepseek-r1:8b\";\nconst MODEL_GEMMA_3_4b = \"gemma3:4b\";\nconst MODEL_GEMMA_3_27b_CLOUD = \"gemma3:27b-cloud\";\nconst MODEL_MINISTRAL3 = \"ministral-3:8b\";\nconst MODEL_MINISTRAL_3_14B_CLOUD = \"ministral-3:14b-cloud\";\nconst MODEL_QWEN = \"qwen2.5:7b\";\nconst MODEL_QWEN_2_5_CODER_7b = \"qwen2.5-coder:7b\";\nconst MODEL_QWEN3_CODER_480b_CLOUD = \"qwen3-coder:480b-cloud\";\n\nconst model = MODEL_MINISTRAL3;\n\nconst TaskSchema = z.object({\n    id: z.number(),\n    title: z.string(),\n    description: z.string(),\n    details: z.string(),\n    testStrategy: z.string(),\n    priority: z.enum([\"high\", \"medium\", \"low\"]),\n    dependencies: z.array(z.number()),\n    status: z.literal(\"pending\"),\n    subtasks: z.array(z.number()).default([]),\n    updatedAt: z.string()\n});\n\nconst TaskListSchema = z.object({\n    tasks: z.array(TaskSchema)\n});\n\nconst llm = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(TaskListSchema);\n\nconst currentTimestamp = new Date().toISOString();\n\nconst systemPrompt = `\nYou are an expert Project Manager and Technical Architect. \nYour goal is to take a PRD (Product Requirements Document) and break it down into a logical sequence of development tasks.\n\nRules:\n1. Tasks must be sequential and atomic.\n2. Include dependencies (numeric IDs).\n3. Each task must include a detailed 'testStrategy' and implementation 'details'.\n4. All tasks must have the status 'pending'.\n5. Set 'updatedAt' for every task to exactly: ${currentTimestamp}\n`;\n\nconst { query } = msg;\nconst userPrompt = `\nConvert the following PRD into a JSON array of development tasks:\n\nPRD CONTENT:\n${query}\n`;\n\n(async () => {\n    try {\n        const response = await structuredLlm.invoke([\n            [\"system\", systemPrompt],\n            [\"human\", userPrompt]\n        ]);\n        msg.tasks = response.tasks;\n     \n        node.send(msg);\n    } catch (e) {\n        node.error(\"LLM Error: \" + e.message);\n    }\n})();\n\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 240,
+        "wires": [
+            [
+                "80ddcf0c9477c584"
+            ]
+        ]
+    },
+    {
+        "id": "80ddcf0c9477c584",
+        "type": "split",
+        "z": "9ee40a31254c5a6a",
+        "name": "✂️ Split tasks",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "tasks",
+        "x": 490,
+        "y": 280,
+        "wires": [
+            [
+                "af92c236426f30e1",
+                "9f1c5aa9f13a2307"
+            ]
+        ]
+    },
+    {
+        "id": "7a43c25eefee3663",
+        "type": "join",
+        "z": "9ee40a31254c5a6a",
+        "name": "🔗 Join tasks",
+        "mode": "auto",
+        "build": "string",
+        "property": "tasks",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 420,
+        "y": 420,
+        "wires": [
+            [
+                "081e58f456ef014b"
+            ]
+        ]
+    },
+    {
+        "id": "081e58f456ef014b",
+        "type": "debug",
+        "z": "9ee40a31254c5a6a",
+        "name": "✅ Final tasks List",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "tasks",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "9f1c5aa9f13a2307",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "name": "🔨 Work on task",
+        "func": "// Access individual task from msg.tasks (set by Split)\nconst task = msg.tasks;\n\nconsole.log(task);\nconsole.log(\"=========\");\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 360,
+        "wires": [
+            [
+                "7a43c25eefee3663",
+                "ac05ea23b4019a22"
+            ]
+        ]
+    },
+    {
+        "id": "ac05ea23b4019a22",
+        "type": "debug",
+        "z": "9ee40a31254c5a6a",
+        "name": "🐞 debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "tasks",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "af92c236426f30e1",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "🧠 Orchestrator Agent",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\n// Tool Constants\nconst SEARCH_WEB = \"search_web\";\nconst TELL_JOKE = \"tell_joke\";\nconst GET_WEATHER = \"get_weather\";\nconst CONVERT_CURRENCY = \"convert_currency\";\nconst DEBUG_CODE = \"debug_code\";\nconst SUMMARIZE_TEXT = \"summarize_text\";\nconst CALCULATE_MATH = \"calculate_math\";\nconst GET_STOCK = \"get_stock_price\";\nconst TRANSLATE = \"translate_text\";\n\nconst ToolSchema = z.object({\n    tool: z.enum([\n        SEARCH_WEB,\n        TELL_JOKE,\n        GET_WEATHER,\n        CONVERT_CURRENCY,\n        DEBUG_CODE,\n        SUMMARIZE_TEXT,\n        CALCULATE_MATH,\n        GET_STOCK,\n        TRANSLATE\n    ]),\n    reasoning: z.string().describe(\"Brief explanation of why this tool was chosen\")\n})\n\nconst llm = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\nconst structuredLlm = llm.withStructuredOutput(ToolSchema);\n\n(async () => {\n    try {\n        const state = {\n            query: msg.query || \"\",            \n        };\n\n        const task = msg.tasks;\n        const classification = await structuredLlm.invoke(task.description);\n\n        msg.state = {\n            ...state,\n            classification\n        };\n        node.send(msg);\n    } catch (e) {\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 360,
+        "wires": [
+            [
+                "a03243f9f4ced371"
+            ]
+        ]
+    },
+    {
+        "id": "a03243f9f4ced371",
+        "type": "switch",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "⚖️ Action Switch",
+        "property": "state.classification.tool",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "search_web",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "tell_joke",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "get_weather",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "convert_currency",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "summarize_text",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "calculate_math",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "get_stock_price",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "translate_text",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 8,
+        "x": 1010,
+        "y": 360,
+        "wires": [
+            [
+                "f86d798b98c1f791"
+            ],
+            [
+                "26a3990f8c090c8e"
+            ],
+            [
+                "d899c9620964f91a"
+            ],
+            [
+                "1a50cf2a0b424f29"
+            ],
+            [
+                "699dc0641af943f1"
+            ],
+            [
+                "57b404056be20e97"
+            ],
+            [
+                "9a53b08aff574db6"
+            ],
+            [
+                "d707fbdf4168c6e9"
+            ]
+        ]
+    },
+    {
+        "id": "57b404056be20e97",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "🔢 calculate_math",
+        "func": "console.log(\"math\"); return msg;",
+        "outputs": 1,
+        "x": 1260,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a53b08aff574db6",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "📈 get_stock_price",
+        "func": "console.log(\"stocks\"); return msg;",
+        "outputs": 1,
+        "x": 1260,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d707fbdf4168c6e9",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "🌎 translate_text",
+        "func": "console.log(\"translate\"); return msg;",
+        "outputs": 1,
+        "x": 1260,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f86d798b98c1f791",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "🔍 search_web",
+        "func": "console.log(\"search_web\"); return msg;",
+        "outputs": 1,
+        "x": 1250,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "26a3990f8c090c8e",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "🤡 tell_joke",
+        "func": "console.log(\"tell_joke\"); return msg;",
+        "outputs": 1,
+        "x": 1240,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d899c9620964f91a",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "☁️ get_weather",
+        "func": "console.log(\"get_weather\"); return msg;",
+        "outputs": 1,
+        "x": 1250,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1a50cf2a0b424f29",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "💱 convert_currency",
+        "func": "console.log(\"convert_currency\"); return msg;",
+        "outputs": 1,
+        "x": 1270,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "699dc0641af943f1",
+        "type": "function",
+        "z": "9ee40a31254c5a6a",
+        "g": "386155bf4cb25dcc",
+        "name": "📝 summarize_text",
+        "func": "console.log(\"summarize_text\"); return msg;",
+        "outputs": 1,
+        "x": 1260,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aaeb232b3fceb58e",
+        "type": "inject",
+        "z": "067e10d1acb5ae55",
+        "name": "",
+        "props": [
+            {
+                "p": "query",
+                "v": "Give me latest news from Iran",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "37c7938ad1f0c4e3",
+                "938f01f2f11a1833"
+            ]
+        ]
+    },
+    {
+        "id": "989f1d55af9197a9",
+        "type": "function",
+        "z": "067e10d1acb5ae55",
+        "name": "🧠 AI Agent",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst { z } = global.get('zod');\n\n// Model constants\nconst MODEL_EMBEDDING = \"mxbai-embed-large\";\nconst MODEL_AGENT = \"llama3.2:3b\";\nconst MODEL_GENERATION = \"deepseek-r1:8b\";\nconst MODEL_GEMMA_3_4b = \"gemma3:4b\";\nconst MODEL_GEMMA_3_27b_CLOUD = \"gemma3:27b-cloud\";\nconst MODEL_MINISTRAL3 = \"ministral-3:8b\";\nconst MODEL_MINISTRAL_3_14B_CLOUD = \"ministral-3:14b-cloud\";\nconst MODEL_QWEN = \"qwen2.5:7b\";\nconst MODEL_QWEN_2_5_CODER_7b = \"qwen2.5-coder:7b\";\nconst MODEL_QWEN3_CODER_480b_CLOUD = \"qwen3-coder:480b-cloud\";\n\nconst model = MODEL_QWEN;\n\nconst llm = new ChatOllama({ model: model, temperature: 0 });\n\nconst currentTimestamp = new Date().toISOString();\n\nconst { payload } = msg;\n\nconst systemPrompt = `\nYou are an expert report generator with extensive experience in creating well-structured, professional markdown reports from JSON data. Your primary objective is to transform the provided JSON data into a comprehensive, well-organized markdown report that follows best practices for readability and clarity.\n\nYour report should:\n1. Include a clear title based on the content\n2. Use appropriate markdown headings (##, ###) to structure the content logically\n3. Format lists, tables, and other elements properly\n4. Maintain all important information from the original JSON\n5. Present the information in a professional, easy-to-read format\n6. Ensure the report is well-organized and coherent\n`;\n\n\nconst userPrompt = `\nPlease convert the following JSON data into a well-structured markdown report. The JSON contains search results and research data that should be formatted into a professional report with appropriate headings, subheadings, and content organization.\n\nJSON Data:\n${JSON.stringify(payload)}\n\nCreate a comprehensive report that presents this information in a clear, organized manner using proper markdown formatting.\n`;\n\n(async () => {\n    try {        \n        const response = await llm.invoke([\n            [\"system\", systemPrompt],\n            [\"human\", userPrompt]\n        ]);        \n        msg.payload = response.content;\n     \n        node.send(msg);\n    } catch (e) {\n        node.error(\"LLM Error: \" + e.message);\n    }\n})();\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "f1d00f5e6f362817"
+            ]
+        ]
+    },
+    {
+        "id": "938f01f2f11a1833",
+        "type": "function",
+        "z": "067e10d1acb5ae55",
+        "d": true,
+        "name": "🔍 search_web",
+        "func": "node.status({fill:\"yellow\", shape:\"dot\", text:\"🔍 Searching...\"});\n\nconst { TavilySearch } = global.get('lcTavily');\nconst TAVILY_API_KEY = global.get('TAVILY_API_KEY');\n\nconst searchTool = new TavilySearch({\n    maxResults: 5,\n    tavilyApiKey: TAVILY_API_KEY,\n    includeRawContent: false,\n    topic: \"general\"\n});\n\n(async () => {\n    try {\n        const { query } = msg;        \n        const results = await searchTool.invoke({ query: query });\n        \n        msg.payload = results;\n        node.status({fill:\"green\", shape:\"dot\", text:\"✅ Search complete\"});\n        node.send(msg);\n    } catch (error) {\n        msg.payload = { error: `Search failed: ${error.message}` };\n        node.status({fill:\"red\", shape:\"ring\", text:\"❌ Search failed\"});\n        node.error(error);\n        node.send(msg);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39d74aa220109903",
+        "type": "debug",
+        "z": "067e10d1acb5ae55",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "37c7938ad1f0c4e3",
+        "type": "function",
+        "z": "067e10d1acb5ae55",
+        "name": "search_web_mock",
+        "func": "const payload = {\n    query: 'Give me latest news from Iran',\n    follow_up_questions: null,\n    answer: null,\n    images: [],\n    results: [\n        {\n            url: 'https://www.newsnow.com/us/World/Middle+East/Iran',\n            title: 'Iran News | Iran Latest Updates - NewsNow',\n            content: 'Latest news on Iran, providing comprehensive coverage of nuclear talks, sanctions, protests, human rights, economy, regional tensions, and political',\n            score: 0.9992792,\n            raw_content: null\n        },\n        {\n            url: 'https://apnews.com/hub/iran',\n            title: 'Iran | Latest News from Iran Today | AP News',\n            content: 'Iran · Trump and top Iranian officials exchange threats over protests roiling Iran · At least 7 reported killed during widening protests in Iran sparked by',\n            score: 0.9988121,\n            raw_content: null\n        },\n        {\n            url: 'https://www.youtube.com/watch?v=MCEg-pnJXL8',\n            title: \"Iran Shuts Down As Protesters Storm Governor's Office ... - YouTube\",\n            content: '... Latest News | Global News ... Iran: Several people killed as protest across the country escalate | DW News. DW News New 21K views.',\n            score: 0.9964064,\n            raw_content: null\n        },\n        {\n            url: 'https://www.aljazeera.com/where/iran/',\n            title: \"Iran | Today's latest from Al Jazeera\",\n            content: \"Iran urges UN to respond to Trump's 'reckless' threats over protests · Iran faces growing protests amid deepening economic crisis · Five things you need to know\",\n            score: 0.9932025,\n            raw_content: null\n        },\n        {\n            url: 'https://www.reuters.com/world/iran/',\n            title: 'Iran News | Latest Headlines & Stories - Reuters',\n            content: \"Protests over Iran's soaring cost of living spread to several universities on Tuesday, with students joining shopkeepers and bazaar merchants, semi-official\",\n            score: 0.9931496,\n            raw_content: null\n        }\n    ],\n    response_time: 0.69,\n    request_id: '8d0013f6-6ea3-441a-9425-e7442831fb75'\n};\n\nmsg = {\n    ...msg,\n    payload\n}\n\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "989f1d55af9197a9"
+            ]
+        ]
+    },
+    {
+        "id": "f1d00f5e6f362817",
+        "type": "file",
+        "z": "067e10d1acb5ae55",
+        "name": "save_report",
+        "filename": "C:\\\\Users\\\\4artu\\\\.node-red\\\\projects\\\\node-red\\\\ai\\\\agent-report.md",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "39d74aa220109903"
+            ]
         ]
     },
     {
@@ -4560,5 +5136,85 @@
         "x": 1270,
         "y": 500,
         "wires": []
+    },
+    {
+        "id": "fce178ac60258926",
+        "type": "inject",
+        "z": "debd584ef029526b",
+        "name": "Prompt",
+        "props": [
+            {
+                "p": "payload_",
+                "v": "Could you write a very short poem about coffee.",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Could you tell me a joke",
+        "payloadType": "str",
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "d4a9847836377a3c"
+            ]
+        ]
+    },
+    {
+        "id": "53acc0e3283d1e5b",
+        "type": "debug",
+        "z": "debd584ef029526b",
+        "name": "Copilot Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d4a9847836377a3c",
+        "type": "function",
+        "z": "debd584ef029526b",
+        "name": "Copilot Automation",
+        "func": "const { chromium } = global.get('playwright');\nconst { exec, execSync } = global.get('child_process');\nconst progPath = global.get('path');\nconst nodeProcess = global.get('process');\n\nconst REQUEST_COUNT = 20;\nconst port = 9222;\n\nconst request = msg.payload || \"Could you write a very short poem about coffee.\";\n\nlet requestCount = context.get('requestCount') || 0;\nrequestCount++;\ncontext.set('requestCount', requestCount);\n\nfunction stopCopilotProcess(force = false) {\n    if (force || requestCount >= REQUEST_COUNT) {\n        try {            \n            execSync('powershell -Command \"Stop-Process -Name M365Copilot -Force -ErrorAction SilentlyContinue\"');\n            context.set('requestCount', 0);\n        } catch (err) {}\n    }\n}\n\nfunction getCopilotExePath() {\n    try {\n        const command = `powershell -Command \"(Get-AppxPackage Microsoft.MicrosoftOfficeHub).InstallLocation\"`;\n        const installLocation = execSync(command).toString().trim();\n        return installLocation ? progPath.join(installLocation, 'M365Copilot.exe') : null;\n    } catch (err) { return null; }\n}\n\nasync function isCopilotRunning() {\n    try {\n        const check = execSync(`powershell -Command \"Get-Process M365Copilot -ErrorAction SilentlyContinue\"`).toString().trim();\n        return check.length > 0;\n    } catch (e) {\n        return false;\n    }\n}\n\n(async () => {\n    try {\n        const exePath = getCopilotExePath();\n        if (!exePath) {\n            node.error(\"Copilot executable not found.\");\n            return;\n        }\n        \n        nodeProcess.env.NO_PROXY = \"127.0.0.1,localhost\";\n        nodeProcess.env.no_proxy = \"127.0.0.1,localhost\";\n\n        const alreadyRunning = await isCopilotRunning();\n        \n        node.status({ fill: \"blue\", shape: \"dot\", text: `Request ${requestCount}/${REQUEST_COUNT}`});\n        \n        const launchCmd = `powershell -Command \"$env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS='--remote-debugging-port=${port}'; Start-Process -FilePath '${exePath}'\"`;\n        exec(launchCmd);\n\n        if (!alreadyRunning) {\n            await new Promise(r => setTimeout(r, 10000));\n        } else {\n            await new Promise(r => setTimeout(r, 2000));\n        }\n\n        node.status({fill:\"yellow\", shape:\"dot\", text:\"Connecting CDP...\"});\n        \n        const browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`);\n        const contextPage = browser.contexts()[0];\n        const page = contextPage.pages()[0] || await contextPage.newPage();\n\n        const inputSelector = 'textarea[placeholder*=\"Ask\"], [contenteditable=\"true\"], [role=\"textbox\"]';\n        await page.waitForSelector(inputSelector, { state: 'visible', timeout: 15000 });\n\n        const prompt = `Forget about previous conversation.\nTask: ${request}\nNo conversational filler. No markdown code blocks.\nConstraint Format:\n---START---\n{\n    \"content\": \"{response}\"\n}\n---END---`;\n\n        await page.fill(inputSelector, prompt);\n        await page.keyboard.press('Enter');\n\n        node.status({fill:\"green\", shape:\"dot\", text:\"Generating...\"});\n\n        const lastMessageLocator = page.locator('[data-testid=\"lastChatMessage\"]').last();\n        let responseContent = \"\";\n        let isFinished = false;\n        let attempts = 0;\n\n        while (!isFinished && attempts < 40) {\n            try {\n                responseContent = await lastMessageLocator.innerText();\n                if (responseContent.includes(\"---END---\")) {\n                    isFinished = true;\n                } else {\n                    node.status({fill:\"green\", shape:\"dot\", text:`Generating... (${attempts})`});\n                    await page.waitForTimeout(2000);\n                    attempts++;\n                }\n            } catch (e) {\n                await page.waitForTimeout(2000);\n                attempts++;\n            }\n        }\n\n        const regex = /---START---([\\s\\S]*?)---END---/;\n        const match = responseContent.match(regex);\n\n        if (match && match[1]) {\n            try {\n                const jsonString = match[1].replace(/```json|```/g, \"\").trim();\n                msg.payload = JSON.parse(jsonString);\n            } catch (e) {\n                msg.payload = { error: \"JSON Parse Error\", raw: match[1] };\n            }\n        } else {\n            msg.payload = { error: \"Markers not found\", raw: responseContent };\n        }\n\n        await browser.close();\n\n        node.status({fill:\"green\", shape:\"ring\", text:`Done (${requestCount}/${REQUEST_COUNT})`});\n        node.send(msg);\n\n        if (requestCount >= REQUEST_COUNT) {\n            stopCopilotProcess(true); \n        }\n\n    } catch (err) {\n        node.status({fill:\"red\", shape:\"ring\", text: err.message});\n        node.error(err.message);\n    }\n})();\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "playwright",
+                "module": "playwright"
+            },
+            {
+                "var": "node:child_process",
+                "module": "node:child_process"
+            },
+            {
+                "var": "path",
+                "module": "path"
+            }
+        ],
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "53acc0e3283d1e5b"
+            ]
+        ]
     }
 ]
