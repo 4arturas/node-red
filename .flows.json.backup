@@ -112,6 +112,14 @@
         "env": []
     },
     {
+        "id": "debd584ef029526b",
+        "type": "tab",
+        "label": "Copilot",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "050b98cdec0fb136",
         "type": "tab",
         "label": "Wait for all Threads",
@@ -120,12 +128,11 @@
         "env": []
     },
     {
-        "id": "debd584ef029526b",
+        "id": "full_research_agent",
         "type": "tab",
-        "label": "Copilot",
+        "label": "Deep Research Agent",
         "disabled": false,
-        "info": "",
-        "env": []
+        "info": ""
     },
     {
         "id": "c080735c3b2e661f",
@@ -5007,6 +5014,86 @@
         "wires": []
     },
     {
+        "id": "fce178ac60258926",
+        "type": "inject",
+        "z": "debd584ef029526b",
+        "name": "Prompt",
+        "props": [
+            {
+                "p": "payload_",
+                "v": "Could you write a very short poem about coffee.",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Could you tell me a joke",
+        "payloadType": "str",
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "d4a9847836377a3c"
+            ]
+        ]
+    },
+    {
+        "id": "53acc0e3283d1e5b",
+        "type": "debug",
+        "z": "debd584ef029526b",
+        "name": "Copilot Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d4a9847836377a3c",
+        "type": "function",
+        "z": "debd584ef029526b",
+        "name": "Copilot Automation",
+        "func": "const { chromium } = global.get('playwright');\nconst { exec, execSync } = global.get('child_process');\nconst progPath = global.get('path');\nconst nodeProcess = global.get('process');\n\nconst REQUEST_COUNT = 20;\nconst port = 9222;\n\nconst request = msg.payload || \"Could you write a very short poem about coffee.\";\n\nlet requestCount = context.get('requestCount') || 0;\nrequestCount++;\ncontext.set('requestCount', requestCount);\n\nfunction stopCopilotProcess(force = false) {\n    if (force || requestCount >= REQUEST_COUNT) {\n        try {            \n            execSync('powershell -Command \"Stop-Process -Name M365Copilot -Force -ErrorAction SilentlyContinue\"');\n            context.set('requestCount', 0);\n        } catch (err) {}\n    }\n}\n\nfunction getCopilotExePath() {\n    try {\n        const command = `powershell -Command \"(Get-AppxPackage Microsoft.MicrosoftOfficeHub).InstallLocation\"`;\n        const installLocation = execSync(command).toString().trim();\n        return installLocation ? progPath.join(installLocation, 'M365Copilot.exe') : null;\n    } catch (err) { return null; }\n}\n\nasync function isCopilotRunning() {\n    try {\n        const check = execSync(`powershell -Command \"Get-Process M365Copilot -ErrorAction SilentlyContinue\"`).toString().trim();\n        return check.length > 0;\n    } catch (e) {\n        return false;\n    }\n}\n\n(async () => {\n    try {\n        const exePath = getCopilotExePath();\n        if (!exePath) {\n            node.error(\"Copilot executable not found.\");\n            return;\n        }\n        \n        nodeProcess.env.NO_PROXY = \"127.0.0.1,localhost\";\n        nodeProcess.env.no_proxy = \"127.0.0.1,localhost\";\n\n        const alreadyRunning = await isCopilotRunning();\n        \n        node.status({ fill: \"blue\", shape: \"dot\", text: `Request ${requestCount}/${REQUEST_COUNT}`});\n        \n        const launchCmd = `powershell -Command \"$env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS='--remote-debugging-port=${port}'; Start-Process -FilePath '${exePath}'\"`;\n        exec(launchCmd);\n\n        if (!alreadyRunning) {\n            await new Promise(r => setTimeout(r, 10000));\n        } else {\n            await new Promise(r => setTimeout(r, 2000));\n        }\n\n        node.status({fill:\"yellow\", shape:\"dot\", text:\"Connecting CDP...\"});\n        \n        const browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`);\n        const contextPage = browser.contexts()[0];\n        const page = contextPage.pages()[0] || await contextPage.newPage();\n\n        const inputSelector = 'textarea[placeholder*=\"Ask\"], [contenteditable=\"true\"], [role=\"textbox\"]';\n        await page.waitForSelector(inputSelector, { state: 'visible', timeout: 15000 });\n\n        const prompt = `Forget about previous conversation.\nTask: ${request}\nNo conversational filler. No markdown code blocks.\nConstraint Format:\n---START---\n{\n    \"content\": \"{response}\"\n}\n---END---`;\n\n        await page.fill(inputSelector, prompt);\n        await page.keyboard.press('Enter');\n\n        node.status({fill:\"green\", shape:\"dot\", text:\"Generating...\"});\n\n        const lastMessageLocator = page.locator('[data-testid=\"lastChatMessage\"]').last();\n        let responseContent = \"\";\n        let isFinished = false;\n        let attempts = 0;\n\n        while (!isFinished && attempts < 40) {\n            try {\n                responseContent = await lastMessageLocator.innerText();\n                if (responseContent.includes(\"---END---\")) {\n                    isFinished = true;\n                } else {\n                    node.status({fill:\"green\", shape:\"dot\", text:`Generating... (${attempts})`});\n                    await page.waitForTimeout(2000);\n                    attempts++;\n                }\n            } catch (e) {\n                await page.waitForTimeout(2000);\n                attempts++;\n            }\n        }\n\n        const regex = /---START---([\\s\\S]*?)---END---/;\n        const match = responseContent.match(regex);\n\n        if (match && match[1]) {\n            try {\n                const jsonString = match[1].replace(/```json|```/g, \"\").trim();\n                msg.payload = JSON.parse(jsonString);\n            } catch (e) {\n                msg.payload = { error: \"JSON Parse Error\", raw: match[1] };\n            }\n        } else {\n            msg.payload = { error: \"Markers not found\", raw: responseContent };\n        }\n\n        await browser.close();\n\n        node.status({fill:\"green\", shape:\"ring\", text:`Done (${requestCount}/${REQUEST_COUNT})`});\n        node.send(msg);\n\n        if (requestCount >= REQUEST_COUNT) {\n            stopCopilotProcess(true); \n        }\n\n    } catch (err) {\n        node.status({fill:\"red\", shape:\"ring\", text: err.message});\n        node.error(err.message);\n    }\n})();\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "playwright",
+                "module": "playwright"
+            },
+            {
+                "var": "node:child_process",
+                "module": "node:child_process"
+            },
+            {
+                "var": "path",
+                "module": "path"
+            }
+        ],
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "53acc0e3283d1e5b"
+            ]
+        ]
+    },
+    {
         "id": "fbce8910d509b1f3",
         "type": "inject",
         "z": "050b98cdec0fb136",
@@ -5138,83 +5225,393 @@
         "wires": []
     },
     {
-        "id": "fce178ac60258926",
+        "id": "inject_start",
         "type": "inject",
-        "z": "debd584ef029526b",
-        "name": "Prompt",
+        "z": "full_research_agent",
+        "name": "🚀 Start Research",
         "props": [
             {
-                "p": "payload_",
-                "v": "Could you write a very short poem about coffee.",
+                "p": "initialRequest",
+                "v": "Research the current state of solid state batteries in 2024.",
                 "vt": "str"
             },
             {
-                "p": "payload"
+                "p": "iterations",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "p": "maxResearchIterations",
+                "v": "5",
+                "vt": "num"
+            },
+            {
+                "p": "researchFindings",
+                "v": "[]",
+                "vt": "json"
+            },
+            {
+                "p": "messages",
+                "v": "[]",
+                "vt": "json"
             }
         ],
         "repeat": "",
         "crontab": "",
         "once": false,
-        "onceDelay": 0.1,
+        "onceDelay": "",
         "topic": "",
-        "payload": "Could you tell me a joke",
-        "payloadType": "str",
-        "x": 350,
-        "y": 200,
+        "x": 340,
+        "y": 880,
         "wires": [
             [
-                "d4a9847836377a3c"
+                "clarification_stage"
             ]
         ]
     },
     {
-        "id": "53acc0e3283d1e5b",
+        "id": "clarification_stage",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "⚖️ 1. Clarification",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\n\n(async () => {\n    try {\n        node.status({fill:\"blue\", shape:\"dot\", text:\"Checking clarity...\"});\n        if (!msg.messages.length) msg.messages.push({ role: 'user', content: msg.initialRequest });\n\n        const schema = {\n            type: \"object\",\n            properties: {\n                need_clarification: { type: \"boolean\" },\n                question: { type: \"string\" },\n                verification: { type: \"string\" }\n            },\n            required: [\"need_clarification\"]\n        };\n\n        const structuredModel = model.withStructuredOutput(schema);\n        const response = await structuredModel.invoke([\n            { role: 'system', content: \"Determine if this request is specific enough to research. History: \" + JSON.stringify(msg.messages) }\n        ]);\n\n        if (response.need_clarification) {\n            msg.payload = response.question;\n            node.status({fill:\"yellow\", shape:\"ring\", text:\"Awaiting user input\"});\n            node.send([null, msg]);\n        } else {\n            msg.verification = response.verification;\n            node.status({fill:\"green\", shape:\"dot\", text:\"Request Verified\"});\n            node.send([msg, null]);\n        }\n    } catch (e) {\n        node.status({fill:\"red\", shape:\"dot\", text: e.message});\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 2,
+        "x": 550,
+        "y": 880,
+        "wires": [
+            [
+                "brief_generation"
+            ],
+            [
+                "debug_user_prompt"
+            ]
+        ]
+    },
+    {
+        "id": "brief_generation",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "📋 2. Briefing",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\n\n(async () => {\n    node.status({fill:\"blue\", shape:\"dot\", text:\"Generating brief...\"});\n    const response = await model.invoke([{ role: 'system', content: `Summarize this request into a formal research brief: ${msg.initialRequest}` }]);\n    msg.brief = response.content;\n    node.status({fill:\"green\", shape:\"dot\", text:\"Brief Created\"});\n    node.send(msg);\n})();\nreturn null;",
+        "outputs": 1,
+        "x": 750,
+        "y": 760,
+        "wires": [
+            [
+                "supervisor_node"
+            ]
+        ]
+    },
+    {
+        "id": "supervisor_node",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "👑 3. Supervisor",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0.2 });\n\n(async () => {\n    try {\n        if (msg.iterations >= msg.maxResearchIterations) {\n            node.status({fill:\"red\", shape:\"dot\", text:\"Hit Max Iterations\"});\n            return node.send([null, msg]);\n        }\n\n        node.status({fill:\"blue\", shape:\"dot\", text:`Planning Step ${msg.iterations + 1}...`});\n\n        const schema = {\n            type: \"object\",\n            properties: {\n                selected_tool: { type: \"string\", enum: [\"ConductResearch\", \"ResearchComplete\", \"think_tool\"] },\n                tool_args: {\n                    type: \"object\",\n                    properties: {\n                        research_topic: { type: \"string\" },\n                        reflection: { type: \"string\" }\n                    }\n                },\n                thought: { type: \"string\" }\n            },\n            required: [\"selected_tool\", \"thought\"]\n        };\n\n        const structuredModel = model.withStructuredOutput(schema);\n        \n        const response = await structuredModel.invoke([\n            { role: 'system', content: `You are the Lead Supervisor. \\nBrief: ${msg.brief} \\nFindings so far: ${msg.researchFindings.length} reports.\\n\\nCRITICAL: Do not select ResearchComplete unless you have at least 2 detailed findings in your history. If you have no findings, you MUST use ConductResearch first.` },\n            ...msg.messages\n        ]);\n\n        msg.selection = response;\n        msg.iterations++;\n        msg.messages.push({ role: 'assistant', content: `Supervisor Thought: ${response.thought}` });\n\n        node.status({fill:\"green\", shape:\"ring\", text: `Action: ${response.selected_tool}`});\n\n        if (response.selected_tool === \"ResearchComplete\") {\n            node.send([null, msg]);\n        } else {\n            node.send([msg, null]);\n        }\n    } catch (e) {\n        node.status({fill:\"red\", shape:\"dot\", text:\"Supervisor Error\"});\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 2,
+        "x": 1000,
+        "y": 760,
+        "wires": [
+            [
+                "tool_router"
+            ],
+            [
+                "report_generation"
+            ]
+        ]
+    },
+    {
+        "id": "tool_router",
+        "type": "switch",
+        "z": "full_research_agent",
+        "name": "⚖️ Router",
+        "property": "selection.selected_tool",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ConductResearch",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "think_tool",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1240,
+        "y": 720,
+        "wires": [
+            [
+                "sub_agent_conduct"
+            ],
+            [
+                "think_logic"
+            ]
+        ]
+    },
+    {
+        "id": "sub_agent_conduct",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "🔬 Researcher",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0.7 });\n\n(async () => {\n    const topic = msg.selection.tool_args.research_topic || \"key technical details\";\n    node.status({fill:\"blue\", shape:\"dot\", text:`Searching: ${topic}`});\n    \n    const result = await model.invoke([{ role: 'user', content: `Provide a detailed technical report on: ${topic}` }]);\n    \n    msg.researchFindings.push(result.content);\n    msg.messages.push({ role: 'user', content: `RESEARCHER DATA: ${result.content}` });\n\n    node.status({fill:\"green\", shape:\"dot\", text:\"Found data\"});\n    node.send(msg);\n})();\nreturn null;",
+        "outputs": 1,
+        "x": 1000,
+        "y": 660,
+        "wires": [
+            [
+                "supervisor_node"
+            ]
+        ]
+    },
+    {
+        "id": "think_logic",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "💭 Think",
+        "func": "const reflection = msg.selection.tool_args.reflection || \"Analyzing next steps\";\nnode.status({fill:\"grey\", shape:\"dot\", text:\"Reflecting...\"});\n\nmsg.messages.push({ role: 'assistant', content: `Self-Reflection: ${reflection}` });\n\nsetTimeout(() => {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Logic processed\"});\n    node.send(msg);\n}, 800);\nreturn null;",
+        "outputs": 1,
+        "x": 1000,
+        "y": 900,
+        "wires": [
+            [
+                "supervisor_node"
+            ]
+        ]
+    },
+    {
+        "id": "report_generation",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "📄 4. Final Report",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\n\n(async () => {\n    node.status({fill:\"blue\", shape:\"dot\", text:\"Compiling Final Report...\"});\n    const data = msg.researchFindings.join(\"\\n\\n---\\n\\n\");\n    const response = await model.invoke([{ role: 'user', content: `Using this data, write a final executive summary:\\n\\n${data}` }]);\n    \n    msg.payload = response.content;\n    node.status({fill:\"green\", shape:\"dot\", text:\"Report Finished\"});\n    node.send(msg);\n})();\nreturn null;",
+        "outputs": 1,
+        "x": 1330,
+        "y": 900,
+        "wires": [
+            [
+                "final_debug"
+            ]
+        ]
+    },
+    {
+        "id": "final_debug",
         "type": "debug",
-        "z": "debd584ef029526b",
-        "name": "Copilot Response",
+        "z": "full_research_agent",
+        "name": "OUTPUT",
         "active": true,
         "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 830,
-        "y": 200,
+        "x": 1520,
+        "y": 900,
         "wires": []
     },
     {
-        "id": "d4a9847836377a3c",
-        "type": "function",
-        "z": "debd584ef029526b",
-        "name": "Copilot Automation",
-        "func": "const { chromium } = global.get('playwright');\nconst { exec, execSync } = global.get('child_process');\nconst progPath = global.get('path');\nconst nodeProcess = global.get('process');\n\nconst REQUEST_COUNT = 20;\nconst port = 9222;\n\nconst request = msg.payload || \"Could you write a very short poem about coffee.\";\n\nlet requestCount = context.get('requestCount') || 0;\nrequestCount++;\ncontext.set('requestCount', requestCount);\n\nfunction stopCopilotProcess(force = false) {\n    if (force || requestCount >= REQUEST_COUNT) {\n        try {            \n            execSync('powershell -Command \"Stop-Process -Name M365Copilot -Force -ErrorAction SilentlyContinue\"');\n            context.set('requestCount', 0);\n        } catch (err) {}\n    }\n}\n\nfunction getCopilotExePath() {\n    try {\n        const command = `powershell -Command \"(Get-AppxPackage Microsoft.MicrosoftOfficeHub).InstallLocation\"`;\n        const installLocation = execSync(command).toString().trim();\n        return installLocation ? progPath.join(installLocation, 'M365Copilot.exe') : null;\n    } catch (err) { return null; }\n}\n\nasync function isCopilotRunning() {\n    try {\n        const check = execSync(`powershell -Command \"Get-Process M365Copilot -ErrorAction SilentlyContinue\"`).toString().trim();\n        return check.length > 0;\n    } catch (e) {\n        return false;\n    }\n}\n\n(async () => {\n    try {\n        const exePath = getCopilotExePath();\n        if (!exePath) {\n            node.error(\"Copilot executable not found.\");\n            return;\n        }\n        \n        nodeProcess.env.NO_PROXY = \"127.0.0.1,localhost\";\n        nodeProcess.env.no_proxy = \"127.0.0.1,localhost\";\n\n        const alreadyRunning = await isCopilotRunning();\n        \n        node.status({ fill: \"blue\", shape: \"dot\", text: `Request ${requestCount}/${REQUEST_COUNT}`});\n        \n        const launchCmd = `powershell -Command \"$env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS='--remote-debugging-port=${port}'; Start-Process -FilePath '${exePath}'\"`;\n        exec(launchCmd);\n\n        if (!alreadyRunning) {\n            await new Promise(r => setTimeout(r, 10000));\n        } else {\n            await new Promise(r => setTimeout(r, 2000));\n        }\n\n        node.status({fill:\"yellow\", shape:\"dot\", text:\"Connecting CDP...\"});\n        \n        const browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`);\n        const contextPage = browser.contexts()[0];\n        const page = contextPage.pages()[0] || await contextPage.newPage();\n\n        const inputSelector = 'textarea[placeholder*=\"Ask\"], [contenteditable=\"true\"], [role=\"textbox\"]';\n        await page.waitForSelector(inputSelector, { state: 'visible', timeout: 15000 });\n\n        const prompt = `Forget about previous conversation.\nTask: ${request}\nNo conversational filler. No markdown code blocks.\nConstraint Format:\n---START---\n{\n    \"content\": \"{response}\"\n}\n---END---`;\n\n        await page.fill(inputSelector, prompt);\n        await page.keyboard.press('Enter');\n\n        node.status({fill:\"green\", shape:\"dot\", text:\"Generating...\"});\n\n        const lastMessageLocator = page.locator('[data-testid=\"lastChatMessage\"]').last();\n        let responseContent = \"\";\n        let isFinished = false;\n        let attempts = 0;\n\n        while (!isFinished && attempts < 40) {\n            try {\n                responseContent = await lastMessageLocator.innerText();\n                if (responseContent.includes(\"---END---\")) {\n                    isFinished = true;\n                } else {\n                    node.status({fill:\"green\", shape:\"dot\", text:`Generating... (${attempts})`});\n                    await page.waitForTimeout(2000);\n                    attempts++;\n                }\n            } catch (e) {\n                await page.waitForTimeout(2000);\n                attempts++;\n            }\n        }\n\n        const regex = /---START---([\\s\\S]*?)---END---/;\n        const match = responseContent.match(regex);\n\n        if (match && match[1]) {\n            try {\n                const jsonString = match[1].replace(/```json|```/g, \"\").trim();\n                msg.payload = JSON.parse(jsonString);\n            } catch (e) {\n                msg.payload = { error: \"JSON Parse Error\", raw: match[1] };\n            }\n        } else {\n            msg.payload = { error: \"Markers not found\", raw: responseContent };\n        }\n\n        await browser.close();\n\n        node.status({fill:\"green\", shape:\"ring\", text:`Done (${requestCount}/${REQUEST_COUNT})`});\n        node.send(msg);\n\n        if (requestCount >= REQUEST_COUNT) {\n            stopCopilotProcess(true); \n        }\n\n    } catch (err) {\n        node.status({fill:\"red\", shape:\"ring\", text: err.message});\n        node.error(err.message);\n    }\n})();\n\nreturn;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [
+        "id": "debug_user_prompt",
+        "type": "debug",
+        "z": "full_research_agent",
+        "name": "USER INPUT NEEDED",
+        "active": true,
+        "tosidebar": true,
+        "x": 770,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "3ebc3a18ee9ee5c5",
+        "type": "inject",
+        "z": "full_research_agent",
+        "name": "🚀 Start Research",
+        "props": [
             {
-                "var": "playwright",
-                "module": "playwright"
+                "p": "initialRequest",
+                "v": "Research the current state of solid state batteries in 2024.",
+                "vt": "str"
             },
             {
-                "var": "node:child_process",
-                "module": "node:child_process"
+                "p": "iterations",
+                "v": "0",
+                "vt": "num"
             },
             {
-                "var": "path",
-                "module": "path"
+                "p": "maxResearchIterations",
+                "v": "5",
+                "vt": "num"
+            },
+            {
+                "p": "researchFindings",
+                "v": "[]",
+                "vt": "json"
+            },
+            {
+                "p": "messages",
+                "v": "[]",
+                "vt": "json"
             }
         ],
-        "x": 590,
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 270,
+        "y": 340,
+        "wires": [
+            [
+                "e0c7bc958c1e2c32"
+            ]
+        ]
+    },
+    {
+        "id": "e0c7bc958c1e2c32",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "⚖️ 1. Clarification",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\n\n(async () => {\n    try {\n        node.status({fill:\"blue\", shape:\"dot\", text:\"Checking clarity...\"});\n        if (!msg.messages.length) msg.messages.push({ role: 'user', content: msg.initialRequest });\n\n        const schema = {\n            type: \"object\",\n            properties: {\n                need_clarification: { type: \"boolean\" },\n                question: { type: \"string\" },\n                verification: { type: \"string\" }\n            },\n            required: [\"need_clarification\"]\n        };\n\n        const response = await model.withStructuredOutput(schema).invoke([\n            { role: 'system', content: \"Determine if this request is specific enough. History: \" + JSON.stringify(msg.messages) }\n        ]);\n\n        if (response.need_clarification) {\n            msg.payload = response.question;\n            node.status({fill:\"yellow\", shape:\"ring\", text:\"Waiting for User\"});\n            node.send([null, msg]);\n        } else {\n            msg.verification = response.verification;\n            node.status({fill:\"green\", shape:\"dot\", text:\"Verified\"});\n            node.send([msg, null]);\n        }\n    } catch (e) {\n        node.status({fill:\"red\", shape:\"dot\", text: \"Err: \" + e.message});\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 2,
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "8b96e8a48e3b6a4f"
+            ],
+            [
+                "44377a8e0e9cb6d8"
+            ]
+        ]
+    },
+    {
+        "id": "8b96e8a48e3b6a4f",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "📋 2. Briefing",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\n\n(async () => {\n    node.status({fill:\"blue\", shape:\"dot\", text:\"Generating brief...\"});\n    const response = await model.invoke([{ role: 'system', content: `Summarize into a brief: ${msg.initialRequest}` }]);\n    msg.brief = response.content;\n    node.status({fill:\"green\", shape:\"dot\", text:\"Brief Ready\"});\n    node.send(msg);\n})();\nreturn null;",
+        "outputs": 1,
+        "x": 680,
+        "y": 260,
+        "wires": [
+            [
+                "8551eb3ee29167f7"
+            ]
+        ]
+    },
+    {
+        "id": "8551eb3ee29167f7",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "👑 3. Supervisor",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0.1 });\n\n(async () => {\n    try {\n        if (msg.iterations >= msg.maxResearchIterations) {\n            node.status({fill:\"red\", shape:\"dot\", text:\"Max Iterations\"});\n            return node.send([null, msg]);\n        }\n\n        node.status({fill:\"blue\", shape:\"dot\", text:`Planning Loop ${msg.iterations + 1}...`});\n\n        const schema = {\n            type: \"object\",\n            properties: {\n                selected_tool: { type: \"string\", enum: [\"ConductResearch\", \"ResearchComplete\", \"think_tool\"] },\n                tool_args: {\n                    type: \"object\",\n                    properties: {\n                        research_topic: { type: \"string\" },\n                        reflection: { type: \"string\" }\n                    }\n                },\n                thought: { type: \"string\" }\n            },\n            required: [\"selected_tool\", \"thought\", \"tool_args\"]\n        };\n\n        const response = await model.withStructuredOutput(schema).invoke([\n            { role: 'system', content: `Supervisor. Brief: ${msg.brief}. You MUST provide tool_args for every tool.` },\n            ...msg.messages\n        ]);\n\n        msg.selection = response;\n        msg.iterations++;\n        msg.messages.push({ role: 'assistant', content: `Supervisor: ${response.thought}` });\n\n        node.status({fill:\"green\", shape:\"ring\", text: `Action: ${response.selected_tool}`});\n        node.send(response.selected_tool === \"ResearchComplete\" ? [null, msg] : [msg, null]);\n    } catch (e) {\n        node.status({fill:\"red\", shape:\"dot\", text:\"Supervisor Error\"});\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 2,
+        "x": 990,
+        "y": 280,
+        "wires": [
+            [
+                "49db3d8b2f5e72e5"
+            ],
+            [
+                "d4ca140a1aaf6536"
+            ]
+        ]
+    },
+    {
+        "id": "49db3d8b2f5e72e5",
+        "type": "switch",
+        "z": "full_research_agent",
+        "name": "⚖️ Router",
+        "property": "selection.selected_tool",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ConductResearch",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "think_tool",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1190,
         "y": 200,
         "wires": [
             [
-                "53acc0e3283d1e5b"
+                "4435fced47364221"
+            ],
+            [
+                "584f8962a7341fe3"
             ]
         ]
+    },
+    {
+        "id": "4435fced47364221",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "🔬 Researcher",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0.7 });\n\n(async () => {\n    try {\n        const topic = (msg.selection && msg.selection.tool_args && msg.selection.tool_args.research_topic) \n                      ? msg.selection.tool_args.research_topic \n                      : \"key developments\";\n\n        node.status({fill:\"blue\", shape:\"dot\", text:`Searching: ${topic}`});\n        \n        const result = await model.invoke([{ role: 'user', content: `Research: ${topic}` }]);\n        \n        msg.researchFindings.push(result.content);\n        msg.messages.push({ role: 'user', content: `RESEARCH FINDING: ${result.content}` });\n\n        node.status({fill:\"green\", shape:\"dot\", text:\"Data Found\"});\n        node.send(msg);\n    } catch (e) {\n        node.status({fill:\"red\", shape:\"dot\", text:\"Research Error\"});\n        node.error(e);\n    }\n})();\nreturn null;",
+        "outputs": 1,
+        "x": 980,
+        "y": 100,
+        "wires": [
+            [
+                "8551eb3ee29167f7"
+            ]
+        ]
+    },
+    {
+        "id": "584f8962a7341fe3",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "💭 Think",
+        "func": "const reflection = (msg.selection && msg.selection.tool_args && msg.selection.tool_args.reflection) \n                   ? msg.selection.tool_args.reflection \n                   : \"Reviewing research\";\n\nnode.status({fill:\"grey\", shape:\"dot\", text:\"Reflecting...\"});\nmsg.messages.push({ role: 'assistant', content: `Reflection: ${reflection}` });\n\nsetTimeout(() => {\n    node.status({fill:\"green\", shape:\"dot\", text:\"Ready\"});\n    node.send(msg);\n}, 800);\nreturn null;",
+        "outputs": 1,
+        "x": 1000,
+        "y": 400,
+        "wires": [
+            [
+                "8551eb3ee29167f7"
+            ]
+        ]
+    },
+    {
+        "id": "d4ca140a1aaf6536",
+        "type": "function",
+        "z": "full_research_agent",
+        "name": "📄 4. Final Report",
+        "func": "const { ChatOllama } = global.get('lcOllama');\nconst model = new ChatOllama({ model: \"qwen2.5:7b\", temperature: 0 });\n\n(async () => {\n    node.status({fill:\"blue\", shape:\"dot\", text:\"Writing Report...\"});\n    const data = msg.researchFindings.join(\"\\n\\n\");\n    const response = await model.invoke([{ role: 'user', content: `Final report based on: ${data}` }]);\n    msg.payload = response.content;\n    node.status({fill:\"green\", shape:\"dot\", text:\"Finished\"});\n    node.send(msg);\n})();\nreturn null;",
+        "outputs": 1,
+        "x": 1370,
+        "y": 380,
+        "wires": [
+            [
+                "01d481a1fdd435b0"
+            ]
+        ]
+    },
+    {
+        "id": "01d481a1fdd435b0",
+        "type": "debug",
+        "z": "full_research_agent",
+        "name": "OUT",
+        "active": true,
+        "tosidebar": true,
+        "x": 1590,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "44377a8e0e9cb6d8",
+        "type": "debug",
+        "z": "full_research_agent",
+        "name": "UI",
+        "active": true,
+        "tosidebar": true,
+        "x": 700,
+        "y": 440,
+        "wires": []
     }
 ]
