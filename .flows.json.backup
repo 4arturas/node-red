@@ -99,7 +99,7 @@
         "id": "1d45200c9172f37f",
         "type": "tab",
         "label": "Story Building System",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -123,6 +123,14 @@
         "id": "debd584ef029526b",
         "type": "tab",
         "label": "Copilot",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "95ea89fbd4e794bd",
+        "type": "tab",
+        "label": "Flow 1",
         "disabled": false,
         "info": "",
         "env": []
@@ -344,11 +352,6 @@
         "type": "websocket-listener",
         "path": "/ws/react",
         "wholemsg": "false"
-    },
-    {
-        "id": "cc2050a953749795",
-        "type": "openaiApiKey",
-        "name": ""
     },
     {
         "id": "8a9b6c5d4e3f2a10",
@@ -4577,8 +4580,7 @@
         "y": 240,
         "wires": [
             [
-                "18ad6b73a137a3e9",
-                "17eb20feaa270a42"
+                "18ad6b73a137a3e9"
             ]
         ]
     },
@@ -4597,8 +4599,7 @@
         "y": 300,
         "wires": [
             [
-                "6805cc5038232aba",
-                "f10ac68bb098d0b6"
+                "6805cc5038232aba"
             ]
         ]
     },
@@ -4617,8 +4618,7 @@
         "y": 360,
         "wires": [
             [
-                "dc49740613b266c8",
-                "04778b9e1033e275"
+                "dc49740613b266c8"
             ]
         ]
     },
@@ -4637,8 +4637,7 @@
         "y": 420,
         "wires": [
             [
-                "4ecee58dcc75b3dd",
-                "6a8667d08c39de68"
+                "4ecee58dcc75b3dd"
             ]
         ]
     },
@@ -4657,8 +4656,7 @@
         "y": 480,
         "wires": [
             [
-                "b7b4cc80c8e04e98",
-                "5381079e5ec44a5b"
+                "b7b4cc80c8e04e98"
             ]
         ]
     },
@@ -4677,8 +4675,7 @@
         "y": 540,
         "wires": [
             [
-                "6b79b7565b6f052a",
-                "8bd57055a53e7f11"
+                "6b79b7565b6f052a"
             ]
         ]
     },
@@ -4697,7 +4694,6 @@
         "y": 600,
         "wires": [
             [
-                "34aad3df3238250c",
                 "30cccb3dc02a54d3"
             ]
         ]
@@ -4716,27 +4712,9 @@
         "x": 720,
         "y": 700,
         "wires": [
-            [
-                "1a20954030d41d00"
-            ]
-        ],
-        "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
-    },
-    {
-        "id": "f10ac68bb098d0b6",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Explore",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 780,
-        "y": 140,
-        "wires": [
             []
         ],
-        "info": "Stories help us navigate confusing, unknown and changing situations. Make a map for you way ahead."
+        "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
     },
     {
         "id": "cde43a7535dcf280",
@@ -4766,118 +4744,6 @@
                 "10ecc36acd18b528"
             ]
         ]
-    },
-    {
-        "id": "17eb20feaa270a42",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Concept",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 680,
-        "y": 60,
-        "wires": [
-            []
-        ],
-        "info": "Stories shape how we see ourselves and the wold around us. Frame your work as an epic adventure."
-    },
-    {
-        "id": "04778b9e1033e275",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Character",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 860,
-        "y": 220,
-        "wires": [
-            []
-        ],
-        "info": "Stories connect us to other people. Show us why we can trust you."
-    },
-    {
-        "id": "6a8667d08c39de68",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Function",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 940,
-        "y": 300,
-        "wires": [
-            []
-        ],
-        "info": "Stories are more effective than facts or opinions by themselves. Put your stories to work."
-    },
-    {
-        "id": "5381079e5ec44a5b",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Structure",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 1020,
-        "y": 400,
-        "wires": [
-            []
-        ],
-        "info": "Stories carry us along thanks to a fiew basic patterns. Make your ideas flaw in a story-ish way."
-    },
-    {
-        "id": "8bd57055a53e7f11",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Style",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 1090,
-        "y": 500,
-        "wires": [
-            []
-        ],
-        "info": "Storries carry useful information. Make sure people remember yours."
-    },
-    {
-        "id": "34aad3df3238250c",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Organise",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 1180,
-        "y": 580,
-        "wires": [
-            []
-        ],
-        "info": "Stories work, so long as you use them well. Plan how you should tell yours."
-    },
-    {
-        "id": "1a20954030d41d00",
-        "type": "image viewer",
-        "z": "1d45200c9172f37f",
-        "name": "Receipe",
-        "width": "60",
-        "data": "payload",
-        "dataType": "msg",
-        "active": true,
-        "x": 1260,
-        "y": 680,
-        "wires": [
-            []
-        ],
-        "info": "Stories can change the world. See which problems you can solve by combining different story tactics."
     },
     {
         "id": "2cfca6c0f1e77435",
@@ -5216,5 +5082,131 @@
                 "53acc0e3283d1e5b"
             ]
         ]
+    },
+    {
+        "id": "bc46f6d8c2d0458d",
+        "type": "chat-ollama",
+        "z": "95ea89fbd4e794bd",
+        "name": "",
+        "baseUrl": "http://localhost:11434",
+        "modelName": "qwen2.5:7b",
+        "temperature": 0,
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "09160d1ad63d5294"
+            ]
+        ]
+    },
+    {
+        "id": "3e08b8ba3b949b86",
+        "type": "inject",
+        "z": "95ea89fbd4e794bd",
+        "name": "Research Query",
+        "props": [
+            {
+                "p": "payload_",
+                "v": "I want to research coffee shops in San Francisco.",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "bla bla bla",
+        "payloadType": "str",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "9907219b25e66484"
+            ]
+        ]
+    },
+    {
+        "id": "e8b56a2e586eb1a7",
+        "type": "debug",
+        "z": "95ea89fbd4e794bd",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9907219b25e66484",
+        "type": "template",
+        "z": "95ea89fbd4e794bd",
+        "name": "Clarification Prompt",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "These are the messages that have been exchanged so far from the user asking for the report: \n<Messages> \n{{payload}}\n</Messages> \nToday's date is {date}. \nAssess whether you need to ask a clarifying question, or if the user has already provided enough information for you to start research. \nIMPORTANT: If you can see in the messages history that you have already asked a clarifying question, you almost always do not need to ask another one. Only ask another question if ABSOLUTELY NECESSARY. \nIf there are acronyms, abbreviations, or unknown terms, ask the user to clarify. \nIf you need to ask a question, follow these guidelines: \n- Be concise while gathering all necessary information \n- Make sure to gather all the information needed to carry out the research task in a concise, well-structured manner. \n- Use bullet points or numbered lists if appropriate for clarity. Make sure that this uses markdown formatting and will be rendered correctly if the string output is passed to a markdown renderer. \n- Don't ask for unnecessary information, or information that the user has already provided. If you can see that the user has already provided the information, do not ask for it again. \nRespond in valid JSON format with these exact keys: \n\"need_clarification\": boolean, \n\"question\": \"<question to ask the user to clarify the report scope>\", \n\"verification\": \"<verification message that we will start research>\" \nIf you need to ask a clarifying question, return: \n\"need_clarification\": true, \n\"question\": \"<your clarifying question>\", \n\"verification\": \"\" \nIf you do not need to ask a clarifying question, return: \n\"need_clarification\": false, \n\"question\": \"\", \n\"verification\": \"<acknowledgement message that you will now start research based on the provided information>\" \nFor the verification message when no clarification is needed: \n- Acknowledge that you have sufficient information to proceed \n- Briefly summarize the key aspects of what you understand from their request \n- Confirm that you will now begin the research process \n- Keep the message concise and professional \n\n\n!!! IMPORTANT !!!\nDo not wrap response into\n```json\n```",
+        "output": "str",
+        "x": 210,
+        "y": 140,
+        "wires": [
+            [
+                "bc46f6d8c2d0458d"
+            ]
+        ]
+    },
+    {
+        "id": "09160d1ad63d5294",
+        "type": "switch",
+        "z": "95ea89fbd4e794bd",
+        "name": "Need Clarification?",
+        "property": "payload.need_clarification",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "7ecdd10cf8f47630"
+            ],
+            [
+                "e8b56a2e586eb1a7"
+            ]
+        ]
+    },
+    {
+        "id": "7ecdd10cf8f47630",
+        "type": "debug",
+        "z": "95ea89fbd4e794bd",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 80,
+        "wires": []
     }
 ]
