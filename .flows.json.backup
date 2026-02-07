@@ -130,8 +130,16 @@
     {
         "id": "95ea89fbd4e794bd",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Deep Research",
         "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5da98edae7a210d0",
+        "type": "tab",
+        "label": "Interactive console input",
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -5091,11 +5099,11 @@
         "baseUrl": "http://localhost:11434",
         "modelName": "qwen2.5:7b",
         "temperature": 0,
-        "x": 330,
-        "y": 200,
+        "x": 550,
+        "y": 160,
         "wires": [
             [
-                "09160d1ad63d5294"
+                "99f39e8b147faa21"
             ]
         ]
     },
@@ -5121,8 +5129,8 @@
         "topic": "",
         "payload": "bla bla bla",
         "payloadType": "str",
-        "x": 140,
-        "y": 80,
+        "x": 200,
+        "y": 60,
         "wires": [
             [
                 "9907219b25e66484"
@@ -5141,8 +5149,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
-        "y": 200,
+        "x": 1200,
+        "y": 340,
         "wires": []
     },
     {
@@ -5154,13 +5162,13 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "These are the messages that have been exchanged so far from the user asking for the report: \n<Messages> \n{{payload}}\n</Messages> \nToday's date is {date}. \nAssess whether you need to ask a clarifying question, or if the user has already provided enough information for you to start research. \nIMPORTANT: If you can see in the messages history that you have already asked a clarifying question, you almost always do not need to ask another one. Only ask another question if ABSOLUTELY NECESSARY. \nIf there are acronyms, abbreviations, or unknown terms, ask the user to clarify. \nIf you need to ask a question, follow these guidelines: \n- Be concise while gathering all necessary information \n- Make sure to gather all the information needed to carry out the research task in a concise, well-structured manner. \n- Use bullet points or numbered lists if appropriate for clarity. Make sure that this uses markdown formatting and will be rendered correctly if the string output is passed to a markdown renderer. \n- Don't ask for unnecessary information, or information that the user has already provided. If you can see that the user has already provided the information, do not ask for it again. \nRespond in valid JSON format with these exact keys: \n\"need_clarification\": boolean, \n\"question\": \"<question to ask the user to clarify the report scope>\", \n\"verification\": \"<verification message that we will start research>\" \nIf you need to ask a clarifying question, return: \n\"need_clarification\": true, \n\"question\": \"<your clarifying question>\", \n\"verification\": \"\" \nIf you do not need to ask a clarifying question, return: \n\"need_clarification\": false, \n\"question\": \"\", \n\"verification\": \"<acknowledgement message that you will now start research based on the provided information>\" \nFor the verification message when no clarification is needed: \n- Acknowledge that you have sufficient information to proceed \n- Briefly summarize the key aspects of what you understand from their request \n- Confirm that you will now begin the research process \n- Keep the message concise and professional \n\n\n!!! IMPORTANT !!!\nDo not wrap response into\n```json\n```",
+        "template": "These are the messages that have been exchanged so far from the user asking for the report:\n<Messages>\n{{payload}}\n</Messages>\n\nToday's date is {{date}}.\n\nAssess whether you need to ask a clarifying question, or if the user has already provided enough information for you to start research.\nIMPORTANT: If you can see in the messages history that you have already asked a clarifying question, you almost always do not need to ask another one. Only ask another question if ABSOLUTELY NECESSARY.\n\nIf there are acronyms, abbreviations, or unknown terms, ask the user to clarify.\nIf you need to ask a question, follow these guidelines:\n- Be concise while gathering all necessary information\n- Make sure to gather all the information needed to carry out the research task in a concise, well-structured manner.\n- Use bullet points or numbered lists if appropriate for clarity. Make sure that this uses markdown formatting and will be rendered correctly if the string output is passed to a markdown renderer.\n- Don't ask for unnecessary information, or information that the user has already provided. If you can see that the user has already provided the information, do not ask for it again.\n\nRespond in valid JSON format with these exact keys:\n\"need_clarification\": boolean,\n\"question\": \"<question to ask the user to clarify the report scope>\",\n\"verification\": \"<verification message that we will start research>\"\n\nIf you need to ask a clarifying question, return:\n\"need_clarification\": true,\n\"question\": \"<your clarifying question>\",\n\"verification\": \"\"\n\nIf you do not need to ask a clarifying question, return:\n\"need_clarification\": false,\n\"question\": \"\",\n\"verification\": \"<acknowledgement message that you will now start research based on the provided information>\"\n\nFor the verification message when no clarification is needed:\n- Acknowledge that you have sufficient information to proceed\n- Briefly summarize the key aspects of what you understand from their request\n- Confirm that you will now begin the research process\n- Keep the message concise and professional\n\n\n!!! IMPORTANT !!!\nDo not wrap response into\n```json\n```",
         "output": "str",
-        "x": 210,
-        "y": 140,
+        "x": 430,
+        "y": 100,
         "wires": [
             [
-                "bc46f6d8c2d0458d"
+                "646e4ca30d7f9a41"
             ]
         ]
     },
@@ -5182,11 +5190,12 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 560,
-        "y": 140,
+        "x": 930,
+        "y": 280,
         "wires": [
             [
-                "7ecdd10cf8f47630"
+                "7ecdd10cf8f47630",
+                "5a10952a1a02b1e0"
             ],
             [
                 "e8b56a2e586eb1a7"
@@ -5205,8 +5214,297 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
+        "x": 1200,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d1fb7a5c64761da4",
+        "type": "inject",
+        "z": "95ea89fbd4e794bd",
+        "name": "Research Query Clarification",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Human: I want to konw what is ko ko ko",
+        "payloadType": "str",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "9907219b25e66484"
+            ]
+        ]
+    },
+    {
+        "id": "99f39e8b147faa21",
+        "type": "json",
+        "z": "95ea89fbd4e794bd",
+        "name": "Convert Response To JSON",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 740,
+        "y": 220,
+        "wires": [
+            [
+                "09160d1ad63d5294"
+            ]
+        ]
+    },
+    {
+        "id": "050d6463c944477a",
+        "type": "function",
+        "z": "95ea89fbd4e794bd",
+        "name": "Input",
+        "func": "if(context.get(\"busy\")) return;\ncontext.set(\"busy\",true);\nnode.status({\"fill\":\"red\",\"text\":\"BUSY\"});\n\nvar cmdline = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n \ncmdline.question('Who are you?', name => {\n    console.log(`Hey there ${name}!`);\n    msg.payload = name;\n    node.send(msg);\n    cmdline.close();\n    context.set(\"busy\",false);\n    node.status({});\n});\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set(\"busy\",false);",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "readline",
+                "module": "readline"
+            },
+            {
+                "var": "process",
+                "module": "process"
+            }
+        ],
+        "x": 1190,
+        "y": 160,
+        "wires": [
+            [
+                "9e131fcc5cd55995"
+            ]
+        ]
+    },
+    {
+        "id": "143dce5a1905effe",
+        "type": "link in",
+        "z": "95ea89fbd4e794bd",
+        "name": "link in 1",
+        "links": [
+            "9e131fcc5cd55995"
+        ],
+        "x": 265,
+        "y": 160,
+        "wires": [
+            [
+                "9907219b25e66484"
+            ]
+        ]
+    },
+    {
+        "id": "9e131fcc5cd55995",
+        "type": "link out",
+        "z": "95ea89fbd4e794bd",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "143dce5a1905effe"
+        ],
+        "x": 1315,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5a10952a1a02b1e0",
+        "type": "function",
+        "z": "95ea89fbd4e794bd",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 60,
+        "wires": [
+            [
+                "9e131fcc5cd55995"
+            ]
+        ]
+    },
+    {
+        "id": "9d5ee8aa1e83ee7b",
+        "type": "comment",
+        "z": "95ea89fbd4e794bd",
+        "name": "",
+        "info": "Human: I want to konw what is ko ko ko.\nAI: - Could you provide more context on what 'ko ko ko' refers to?\n- Is it a phrase, an acronym, or something else?\nHuman: Ko Ko Ko is pu ki ki",
+        "x": 420,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b23be113833f31b1",
+        "type": "change",
+        "z": "95ea89fbd4e794bd",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
         "x": 760,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d311b20e70d29c81",
+        "type": "complete",
+        "z": "95ea89fbd4e794bd",
+        "name": "",
+        "scope": [
+            "d1fb7a5c64761da4",
+            "143dce5a1905effe",
+            "3e08b8ba3b949b86"
+        ],
+        "uncaught": false,
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "f77ece145312e5ce"
+            ]
+        ]
+    },
+    {
+        "id": "f77ece145312e5ce",
+        "type": "change",
+        "z": "95ea89fbd4e794bd",
+        "name": "CurrentDate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "currentDate",
+                "pt": "msg",
+                "to": "$now()",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "646e4ca30d7f9a41",
+        "type": "debug",
+        "z": "95ea89fbd4e794bd",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
         "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c509a2b7c658cb81",
+        "type": "function",
+        "z": "5da98edae7a210d0",
+        "name": "",
+        "func": "if(context.get(\"busy\")) return;\ncontext.set(\"busy\",true);\nnode.status({\"fill\":\"red\",\"text\":\"BUSY\"});\n\nvar cmdline = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n \ncmdline.question('Who are you?', name => {\n    console.log(`Hey there ${name}!`);\n    msg.payload = name;\n    node.send(msg);\n    cmdline.close();\n    context.set(\"busy\",false);\n    node.status({});\n});\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set(\"busy\",false);",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "readline",
+                "module": "readline"
+            },
+            {
+                "var": "process",
+                "module": "process"
+            }
+        ],
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "799e33757c87386e"
+            ]
+        ]
+    },
+    {
+        "id": "3b470373578a6274",
+        "type": "inject",
+        "z": "5da98edae7a210d0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "c509a2b7c658cb81"
+            ]
+        ]
+    },
+    {
+        "id": "799e33757c87386e",
+        "type": "debug",
+        "z": "5da98edae7a210d0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 120,
         "wires": []
     }
 ]
