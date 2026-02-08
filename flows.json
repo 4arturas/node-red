@@ -6298,72 +6298,6 @@
         ]
     },
     {
-        "id": "f3860bee1d5827d4",
-        "type": "inject",
-        "z": "691e8727dfaad640",
-        "name": "Inject Tools",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"tools\":[{\"tool\":\"ConductResearch\",\"arg\":\"Mission District analysis...\"},{\"tool\":\"ConductResearch\",\"arg\":\"Hayes Valley analysis...\"},{\"tool\":\"ConductResearch\",\"arg\":\"Other neighborhoods analysis...\"}],\"aiChaintOfThougt\":\"\",\"timestamp\":\"2026-02-08 07:24:06\",\"id\":1770528246988}",
-        "payloadType": "json",
-        "x": 660,
-        "y": 1060,
-        "wires": [
-            [
-                "4f63c880ec326372"
-            ]
-        ]
-    },
-    {
-        "id": "4f63c880ec326372",
-        "type": "split",
-        "z": "691e8727dfaad640",
-        "name": "Split into individual tools",
-        "splt": "\\n",
-        "spltType": "str",
-        "arraySplt": 1,
-        "arraySpltType": "len",
-        "stream": false,
-        "addname": "payload",
-        "property": "payload.tools",
-        "x": 1010,
-        "y": 820,
-        "wires": [
-            [
-                "709bed3647df570d"
-            ]
-        ]
-    },
-    {
-        "id": "5ee74dc41262493a",
-        "type": "debug",
-        "z": "691e8727dfaad640",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload.tools",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1800,
-        "y": 740,
-        "wires": []
-    },
-    {
         "id": "52edc7a877bcd8cc",
         "type": "json",
         "z": "691e8727dfaad640",
@@ -6375,7 +6309,7 @@
         "y": 760,
         "wires": [
             [
-                "4f63c880ec326372"
+                "f4327de3ff4bd54d"
             ]
         ]
     },
@@ -6437,11 +6371,60 @@
         ]
     },
     {
-        "id": "709bed3647df570d",
+        "id": "f3860bee1d5827d4",
+        "type": "inject",
+        "z": "691e8727dfaad640",
+        "name": "Inject Tools",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"tools\":[{\"tool\":\"ConductResearch\",\"arg\":\"Mission District analysis...\"},{\"tool\":\"ConductResearch\",\"arg\":\"Hayes Valley analysis...\"},{\"tool\":\"ConductResearch\",\"arg\":\"Other neighborhoods analysis...\"}],\"aiChaintOfThougt\":\"\",\"timestamp\":\"2026-02-08 07:24:06\",\"id\":1770528246988}",
+        "payloadType": "json",
+        "x": 630,
+        "y": 940,
+        "wires": [
+            [
+                "f4327de3ff4bd54d"
+            ]
+        ]
+    },
+    {
+        "id": "f4327de3ff4bd54d",
+        "type": "split",
+        "z": "691e8727dfaad640",
+        "name": "Split into individual tools",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "property": "payload.tools",
+        "x": 1010,
+        "y": 820,
+        "wires": [
+            [
+                "8d96461459e780ad"
+            ]
+        ]
+    },
+    {
+        "id": "8d96461459e780ad",
         "type": "switch",
         "z": "691e8727dfaad640",
         "name": "🔀 Route to Tool",
-        "property": "payload.tool",
+        "property": "payload.tools.tool",
         "propertyType": "msg",
         "rules": [
             {
@@ -6458,46 +6441,31 @@
                 "t": "eq",
                 "v": "ResearchComplete",
                 "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
+        "outputs": 4,
         "x": 1170,
-        "y": 760,
+        "y": 900,
         "wires": [
             [
-                "7096b4168fe0de80"
+                "2f8f5b47d3a8196f"
             ],
             [
-                "0a0fae12acde2978"
+                "aff2b99265bfbf3b"
             ],
             [
-                "9d02af3741d8429f"
-            ]
+                "bbf6b480e821f82e"
+            ],
+            []
         ]
     },
     {
-        "id": "7096b4168fe0de80",
-        "type": "template",
-        "z": "691e8727dfaad640",
-        "name": "Conduct Research Prompt",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "Conduct Research Prompt: {{payload.tool}} !",
-        "output": "str",
-        "x": 1580,
-        "y": 640,
-        "wires": [
-            [
-                "5ee74dc41262493a"
-            ]
-        ]
-    },
-    {
-        "id": "0a0fae12acde2978",
+        "id": "2f8f5b47d3a8196f",
         "type": "template",
         "z": "691e8727dfaad640",
         "name": "Think Research Prompt",
@@ -6507,7 +6475,7 @@
         "syntax": "mustache",
         "template": "Think Research Prompt: {{payload.tool}} !",
         "output": "str",
-        "x": 1510,
+        "x": 1450,
         "y": 860,
         "wires": [
             [
@@ -6516,7 +6484,26 @@
         ]
     },
     {
-        "id": "9d02af3741d8429f",
+        "id": "aff2b99265bfbf3b",
+        "type": "template",
+        "z": "691e8727dfaad640",
+        "name": "Conduct Research Prompt",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Conduct Research Prompt: {{payload.tools.arg}} !",
+        "output": "str",
+        "x": 1460,
+        "y": 900,
+        "wires": [
+            [
+                "5ee74dc41262493a"
+            ]
+        ]
+    },
+    {
+        "id": "bbf6b480e821f82e",
         "type": "template",
         "z": "691e8727dfaad640",
         "name": "Research Complete Prompt",
@@ -6526,11 +6513,57 @@
         "syntax": "mustache",
         "template": "Research Complete Prompt: {{payload.tool}} !",
         "output": "str",
-        "x": 1540,
-        "y": 980,
+        "x": 1460,
+        "y": 940,
         "wires": [
             [
                 "5ee74dc41262493a"
+            ]
+        ]
+    },
+    {
+        "id": "5ee74dc41262493a",
+        "type": "debug",
+        "z": "691e8727dfaad640",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1730,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "b9e8f49719535bca",
+        "type": "inject",
+        "z": "691e8727dfaad640",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Based on your interest in researching coffee shops in San Francisco, I propose the following detailed research question:  \"Provide an in-depth analysis of various coffee shops in San Francisco, considering factors such as location (neighborhoods like Mission District, Hayes Valley, etc.), type of coffee offerings (espresso-based drinks, pour-overs, cold brew, etc.), ambiance and atmosphere, customer reviews and ratings, popular menu items, pricing across different price ranges, unique features or services (such as free Wi-Fi, pet-friendly areas, community events), and any notable trends in the local coffee shop scene. Please include data from official sources such as Yelp, Google Reviews, and the San Francisco Business Improvement District website, as well as any relevant academic studies on urban café culture.\"  This research question ensures that all key dimensions are considered while remaining open to additional insights that may arise during the investigation.",
+        "payloadType": "str",
+        "x": 110,
+        "y": 940,
+        "wires": [
+            [
+                "90b13b4fb33862cf"
             ]
         ]
     }
