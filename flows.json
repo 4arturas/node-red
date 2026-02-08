@@ -289,6 +289,48 @@
         "h": 502
     },
     {
+        "id": "c6e47ecd49d89909",
+        "type": "group",
+        "z": "95ea89fbd4e794bd",
+        "name": "Clarification Stage",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "bc46f6d8c2d0458d",
+            "9907219b25e66484",
+            "09160d1ad63d5294",
+            "99f39e8b147faa21",
+            "050d6463c944477a",
+            "f77ece145312e5ce",
+            "03da7db91a34ebde",
+            "a1e167c0b88c507b",
+            "0a6c9f7210e9f4e7"
+        ],
+        "x": 354,
+        "y": 19,
+        "w": 1532,
+        "h": 182
+    },
+    {
+        "id": "61e9d40ae4ed73c3",
+        "type": "group",
+        "z": "95ea89fbd4e794bd",
+        "name": "Brief Create Stage",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a0ea78801fc87328",
+            "c48b03fc96c92bfc",
+            "70ca190b6917284f"
+        ],
+        "x": 1334,
+        "y": 259,
+        "w": 252,
+        "h": 202
+    },
+    {
         "id": "d3bab26f8ac33880",
         "type": "junction",
         "z": "5451c5648a7ae7eb",
@@ -5095,12 +5137,13 @@
         "id": "bc46f6d8c2d0458d",
         "type": "chat-ollama",
         "z": "95ea89fbd4e794bd",
+        "g": "c6e47ecd49d89909",
         "name": "",
         "baseUrl": "http://localhost:11434",
         "modelName": "qwen2.5:7b",
         "temperature": 0,
-        "x": 550,
-        "y": 160,
+        "x": 750,
+        "y": 100,
         "wires": [
             [
                 "99f39e8b147faa21"
@@ -5114,11 +5157,6 @@
         "name": "Research Query",
         "props": [
             {
-                "p": "payload_",
-                "v": "I want to research coffee shops in San Francisco.",
-                "vt": "str"
-            },
-            {
                 "p": "payload"
             }
         ],
@@ -5127,13 +5165,13 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "bla bla bla",
+        "payload": "Human: I want to research coffee shops in San Francisco.",
         "payloadType": "str",
         "x": 200,
         "y": 60,
         "wires": [
             [
-                "9907219b25e66484"
+                "f77ece145312e5ce"
             ]
         ]
     },
@@ -5146,17 +5184,19 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1200,
-        "y": 340,
+        "x": 1460,
+        "y": 540,
         "wires": []
     },
     {
         "id": "9907219b25e66484",
         "type": "template",
         "z": "95ea89fbd4e794bd",
+        "g": "c6e47ecd49d89909",
         "name": "Clarification Prompt",
         "field": "payload",
         "fieldType": "msg",
@@ -5164,11 +5204,11 @@
         "syntax": "mustache",
         "template": "These are the messages that have been exchanged so far from the user asking for the report:\n<Messages>\n{{payload}}\n</Messages>\n\nToday's date is {{date}}.\n\nAssess whether you need to ask a clarifying question, or if the user has already provided enough information for you to start research.\nIMPORTANT: If you can see in the messages history that you have already asked a clarifying question, you almost always do not need to ask another one. Only ask another question if ABSOLUTELY NECESSARY.\n\nIf there are acronyms, abbreviations, or unknown terms, ask the user to clarify.\nIf you need to ask a question, follow these guidelines:\n- Be concise while gathering all necessary information\n- Make sure to gather all the information needed to carry out the research task in a concise, well-structured manner.\n- Use bullet points or numbered lists if appropriate for clarity. Make sure that this uses markdown formatting and will be rendered correctly if the string output is passed to a markdown renderer.\n- Don't ask for unnecessary information, or information that the user has already provided. If you can see that the user has already provided the information, do not ask for it again.\n\nRespond in valid JSON format with these exact keys:\n\"need_clarification\": boolean,\n\"question\": \"<question to ask the user to clarify the report scope>\",\n\"verification\": \"<verification message that we will start research>\"\n\nIf you need to ask a clarifying question, return:\n\"need_clarification\": true,\n\"question\": \"<your clarifying question>\",\n\"verification\": \"\"\n\nIf you do not need to ask a clarifying question, return:\n\"need_clarification\": false,\n\"question\": \"\",\n\"verification\": \"<acknowledgement message that you will now start research based on the provided information>\"\n\nFor the verification message when no clarification is needed:\n- Acknowledge that you have sufficient information to proceed\n- Briefly summarize the key aspects of what you understand from their request\n- Confirm that you will now begin the research process\n- Keep the message concise and professional\n\n\n!!! IMPORTANT !!!\nDo not wrap response into\n```json\n```",
         "output": "str",
-        "x": 430,
-        "y": 100,
+        "x": 630,
+        "y": 160,
         "wires": [
             [
-                "646e4ca30d7f9a41"
+                "bc46f6d8c2d0458d"
             ]
         ]
     },
@@ -5176,6 +5216,7 @@
         "id": "09160d1ad63d5294",
         "type": "switch",
         "z": "95ea89fbd4e794bd",
+        "g": "c6e47ecd49d89909",
         "name": "Need Clarification?",
         "property": "payload.need_clarification",
         "propertyType": "msg",
@@ -5190,33 +5231,16 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 930,
-        "y": 280,
+        "x": 1070,
+        "y": 100,
         "wires": [
             [
-                "7ecdd10cf8f47630",
-                "5a10952a1a02b1e0"
+                "03da7db91a34ebde"
             ],
             [
-                "e8b56a2e586eb1a7"
+                "0a6c9f7210e9f4e7"
             ]
         ]
-    },
-    {
-        "id": "7ecdd10cf8f47630",
-        "type": "debug",
-        "z": "95ea89fbd4e794bd",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1200,
-        "y": 220,
-        "wires": []
     },
     {
         "id": "d1fb7a5c64761da4",
@@ -5239,7 +5263,7 @@
         "y": 100,
         "wires": [
             [
-                "9907219b25e66484"
+                "f77ece145312e5ce"
             ]
         ]
     },
@@ -5247,12 +5271,13 @@
         "id": "99f39e8b147faa21",
         "type": "json",
         "z": "95ea89fbd4e794bd",
+        "g": "c6e47ecd49d89909",
         "name": "Convert Response To JSON",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 740,
-        "y": 220,
+        "x": 900,
+        "y": 160,
         "wires": [
             [
                 "09160d1ad63d5294"
@@ -5263,8 +5288,9 @@
         "id": "050d6463c944477a",
         "type": "function",
         "z": "95ea89fbd4e794bd",
-        "name": "Input",
-        "func": "if(context.get(\"busy\")) return;\ncontext.set(\"busy\",true);\nnode.status({\"fill\":\"red\",\"text\":\"BUSY\"});\n\nvar cmdline = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n \ncmdline.question('Who are you?', name => {\n    console.log(`Hey there ${name}!`);\n    msg.payload = name;\n    node.send(msg);\n    cmdline.close();\n    context.set(\"busy\",false);\n    node.status({});\n});\n",
+        "g": "c6e47ecd49d89909",
+        "name": "AI Question",
+        "func": "if(context.get(\"busy\")) return;\ncontext.set(\"busy\",true);\nnode.status({\"fill\":\"red\",\"text\":\"BUSY\"});\n\nconsole.log(\"AI: \", msg.payload.question);\n\nvar cmdline = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n \n\ncmdline.question('Human: ', name => {\n    //console.log(`Hey there ${name}!`);\n    msg.payload = name;\n    node.send(msg);\n    cmdline.close();\n    context.set(\"busy\",false);\n    node.status({});\n});\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -5280,11 +5306,11 @@
                 "module": "process"
             }
         ],
-        "x": 1190,
-        "y": 160,
+        "x": 1510,
+        "y": 60,
         "wires": [
             [
-                "9e131fcc5cd55995"
+                "a1e167c0b88c507b"
             ]
         ]
     },
@@ -5297,10 +5323,10 @@
             "9e131fcc5cd55995"
         ],
         "x": 265,
-        "y": 160,
+        "y": 140,
         "wires": [
             [
-                "9907219b25e66484"
+                "f77ece145312e5ce"
             ]
         ]
     },
@@ -5313,95 +5339,29 @@
         "links": [
             "143dce5a1905effe"
         ],
-        "x": 1315,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "5a10952a1a02b1e0",
-        "type": "function",
-        "z": "95ea89fbd4e794bd",
-        "name": "function 1",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1150,
+        "x": 1955,
         "y": 60,
-        "wires": [
-            [
-                "9e131fcc5cd55995"
-            ]
-        ]
-    },
-    {
-        "id": "9d5ee8aa1e83ee7b",
-        "type": "comment",
-        "z": "95ea89fbd4e794bd",
-        "name": "",
-        "info": "Human: I want to konw what is ko ko ko.\nAI: - Could you provide more context on what 'ko ko ko' refers to?\n- Is it a phrase, an acronym, or something else?\nHuman: Ko Ko Ko is pu ki ki",
-        "x": 420,
-        "y": 520,
         "wires": []
-    },
-    {
-        "id": "b23be113833f31b1",
-        "type": "change",
-        "z": "95ea89fbd4e794bd",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 760,
-        "y": 460,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "d311b20e70d29c81",
-        "type": "complete",
-        "z": "95ea89fbd4e794bd",
-        "name": "",
-        "scope": [
-            "d1fb7a5c64761da4",
-            "143dce5a1905effe",
-            "3e08b8ba3b949b86"
-        ],
-        "uncaught": false,
-        "x": 210,
-        "y": 400,
-        "wires": [
-            [
-                "f77ece145312e5ce"
-            ]
-        ]
     },
     {
         "id": "f77ece145312e5ce",
         "type": "change",
         "z": "95ea89fbd4e794bd",
-        "name": "CurrentDate",
+        "g": "c6e47ecd49d89909",
+        "name": "Set Date & Request",
         "rules": [
             {
                 "t": "set",
                 "p": "date",
                 "pt": "msg",
-                "to": "$now()",
+                "to": "$now().$substring(0,10)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "researchQuery",
+                "pt": "msg",
+                "to": "payload",
                 "tot": "jsonata"
             }
         ],
@@ -5410,28 +5370,266 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 400,
-        "y": 400,
+        "x": 480,
+        "y": 100,
         "wires": [
-            []
+            [
+                "9907219b25e66484"
+            ]
         ]
     },
     {
-        "id": "646e4ca30d7f9a41",
+        "id": "03da7db91a34ebde",
+        "type": "change",
+        "z": "95ea89fbd4e794bd",
+        "g": "c6e47ecd49d89909",
+        "name": "Append AI Question",
+        "rules": [
+            {
+                "t": "set",
+                "p": "researchQuery",
+                "pt": "msg",
+                "to": "researchQuery & \"\\nAI: \" & payload.question",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1300,
+        "y": 60,
+        "wires": [
+            [
+                "050d6463c944477a"
+            ]
+        ]
+    },
+    {
+        "id": "a1e167c0b88c507b",
+        "type": "change",
+        "z": "95ea89fbd4e794bd",
+        "g": "c6e47ecd49d89909",
+        "name": "Append Human Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "researchQuery & \"\\nHuman: \" & payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1740,
+        "y": 60,
+        "wires": [
+            [
+                "9e131fcc5cd55995"
+            ]
+        ]
+    },
+    {
+        "id": "a0ea78801fc87328",
+        "type": "template",
+        "z": "95ea89fbd4e794bd",
+        "g": "61e9d40ae4ed73c3",
+        "name": "Brief Prompt",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "You will be given a set of messages that have been exchanged so far between yourself and the user. \nYour job is to translate these messages into a more detailed and concrete research question that will be used to guide the research.\n\nThe messages that have been exchanged so far between yourself and the user are:\n<Messages>\n{{researchQuery}}\n</Messages>\n\nToday's date is {{date}}.\n\nYou will return a single research question that will be used to guide the research.\n\nGuidelines:\n1. Maximize Specificity and Detail\n- Include all known user preferences and explicitly list key attributes or dimensions to consider.\n- It is important that all details from the user are included in the instructions.\n\n2. Handle Unstated Dimensions Carefully\n- When research quality requires considering additional dimensions that the user hasn't specified, acknowledge them as open considerations rather than assumed preferences.\n- Example: Instead of assuming \"budget-friendly options,\" say \"consider all price ranges unless cost constraints are specified.\"\n- Only mention dimensions that are genuinely necessary for comprehensive research in that domain.\n\n3. Avoid Unwarranted Assumptions\n- Never invent specific user preferences, constraints, or requirements that weren't stated.\n- If the user hasn't provided a particular detail, explicitly note this lack of specification.\n- Guide the researcher to treat unspecified aspects as flexible rather than making assumptions.\n\n4. Distinguish Between Research Scope and User Preferences\n- Research scope: What topics/dimensions should be investigated (can be broader than user's explicit mentions)\n- User preferences: Specific constraints, requirements, or preferences (must only include what user stated)\n- Example: \"Research coffee quality factors (including bean sourcing, roasting methods, brewing techniques) for San Francisco coffee shops, with primary focus on taste as specified by the user.\"\n\n5. Use the First Person\n- Phrase the request from the perspective of the user.\n\n6. Sources\n- If specific sources should be prioritized, specify them in the research question.\n- For product and travel research, prefer linking directly to official or primary websites (e.g., official brand sites, manufacturer pages, or reputable e-commerce platforms like Amazon for user reviews) rather than aggregator sites or SEO-heavy blogs.\n- For academic or scientific queries, prefer linking directly to the original paper or official journal publication rather than survey papers or secondary summaries.\n- For people, try linking directly to their LinkedIn profile, or their personal website if they have one.\n- If the query is in a specific language, prioritize sources published in that language.",
+        "output": "str",
+        "x": 1450,
+        "y": 300,
+        "wires": [
+            [
+                "c48b03fc96c92bfc"
+            ]
+        ]
+    },
+    {
+        "id": "c48b03fc96c92bfc",
+        "type": "change",
+        "z": "95ea89fbd4e794bd",
+        "g": "61e9d40ae4ed73c3",
+        "name": "Delete researchQuery",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "researchQuery",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1460,
+        "y": 360,
+        "wires": [
+            [
+                "70ca190b6917284f"
+            ]
+        ]
+    },
+    {
+        "id": "0a6c9f7210e9f4e7",
+        "type": "change",
+        "z": "95ea89fbd4e794bd",
+        "g": "c6e47ecd49d89909",
+        "name": "Append Human Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "researchQuery",
+                "pt": "msg",
+                "to": "researchQuery & \"\\nAI: \" & payload.verification",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1320,
+        "y": 140,
+        "wires": [
+            [
+                "a0ea78801fc87328"
+            ]
+        ]
+    },
+    {
+        "id": "70ca190b6917284f",
+        "type": "chat-ollama",
+        "z": "95ea89fbd4e794bd",
+        "g": "61e9d40ae4ed73c3",
+        "name": "",
+        "baseUrl": "http://localhost:11434",
+        "modelName": "qwen2.5:7b",
+        "temperature": 0,
+        "x": 1450,
+        "y": 420,
+        "wires": [
+            [
+                "e8b56a2e586eb1a7"
+            ]
+        ]
+    },
+    {
+        "id": "25d6e2ab48395b99",
+        "type": "template",
+        "z": "95ea89fbd4e794bd",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "You are a research supervisor. Your job is to conduct research by calling the \"ConductResearch\" tool. For context, today's date is {{date}}. \nCurrent iteration: {{iteration}}.\n<Task> \nYour focus is to call the \"ConductResearch\" tool to conduct research against the overall research question passed in by the user. \nWhen you are completely satisfied with the research findings returned from the tool calls, then you should call the \"ResearchComplete\" tool to indicate that you are done with your research. \n</Task> \n<Available Tools> \nYou have access to three main tools: \n1. **ConductResearch**: Delegate research tasks to specialized sub-agents \n2. **ResearchComplete**: Indicate that research is complete \n3. **think_tool**: For reflection and strategic planning during research \n**CRITICAL: Use think_tool before calling ConductResearch to plan your approach, and after each ConductResearch to assess progress** \n**PARALLEL RESEARCH**: When you identify multiple independent sub-topics that can be explored simultaneously, make multiple ConductResearch tool calls in a single response to enable parallel research execution. This is more efficient than sequential research for comparative or multi-faceted questions. Use at most {{max_concurrent_research_units}} parallel agents per iteration. \n</Available Tools> \n<Instructions> \nThink like a research manager with limited time and resources. Follow these steps: \n1. **Read the question carefully** - What specific information does the user need? \n2. **Decide how to delegate the research** - Carefully consider the question and decide how to delegate the research. Are there multiple independent directions that can be explored simultaneously? \n3. **After each call to ConductResearch, pause and assess** - Do I have enough to answer? What's still missing? \n</Instructions> \n<Hard Limits> \n**Task Delegation Budgets** (Prevent excessive delegation): \n- **Bias towards single agent** - Use single agent for simplicity unless the user request has clear opportunity for parallelization \n- **Stop when you can answer confidently** - Don't keep delegating research for perfection \n- **Limit tool calls** - Always stop after {{max_researcher_iterations}} tool calls to think_tool and ConductResearch if you cannot find the right sources \n</Hard Limits> \n<Show Your Thinking> \nBefore you call ConductResearch tool call, use think_tool to plan your approach: \n- Can the task be broken down into smaller sub-tasks? \nAfter each ConductResearch tool call, use think_tool to analyze the results: \n- What key information did I find? \n- What's missing? \n- Do I have enough to answer the question comprehensively? \n- Should I delegate more research or call ResearchComplete? \n</Show Your Thinking> \n<Scaling Rules> \n**Simple fact-finding, lists, and rankings** can use a single sub-agent: \n- *Example*: List the top 10 coffee shops in San Francisco → Use 1 sub-agent \n**Comparisons presented in the user request** can use a sub-agent for each element of the comparison: \n- *Example*: Compare OpenAI vs. Anthropic vs. DeepMind approaches to AI safety → Use 3 sub-agents \n- Delegate clear, distinct, non-overlapping subtopics \n**Important Reminders:** \n- Each ConductResearch call spawns a dedicated research agent for that specific topic \n- A separate agent will write the final report - you just need to gather information \n- When calling ConductResearch, provide complete standalone instructions - sub-agents can't see other agents' work \n- Do NOT use acronyms or abbreviations in your research questions, be very clear and specific \n</Scaling Rules>\n<Response>\n    {\n        \"tool\": \"ConductResearch\" or \"ResearchComplete\" or \"think_tool\",\n        \"args\": \"arguments for the tool always string\",\n        \"iteration\": \n    }    \n</Response>",
+        "output": "str",
+        "x": 540,
+        "y": 500,
+        "wires": [
+            [
+                "5a0437445976bc45"
+            ]
+        ]
+    },
+    {
+        "id": "5226c0c3fcd75509",
+        "type": "change",
+        "z": "95ea89fbd4e794bd",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "max_researcher_iterations",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "max_concurrent_research_units",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "iteration",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 440,
+        "wires": [
+            [
+                "25d6e2ab48395b99"
+            ]
+        ]
+    },
+    {
+        "id": "5a0437445976bc45",
         "type": "debug",
         "z": "95ea89fbd4e794bd",
-        "name": "debug 5",
+        "name": "debug 4",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 650,
-        "y": 80,
+        "x": 570,
+        "y": 560,
         "wires": []
+    },
+    {
+        "id": "9040e79c944a3004",
+        "type": "inject",
+        "z": "95ea89fbd4e794bd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 420,
+        "wires": [
+            [
+                "5226c0c3fcd75509"
+            ]
+        ]
     },
     {
         "id": "c509a2b7c658cb81",
